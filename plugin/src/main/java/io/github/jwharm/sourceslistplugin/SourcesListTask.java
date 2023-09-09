@@ -46,20 +46,28 @@ import java.util.*;
  */
 public abstract class SourcesListTask extends DefaultTask {
 
+    /**
+     * Specifies where to write the resulting json file.
+     */
     @OutputFile
     public abstract RegularFileProperty getOutputFile();
 
+    /**
+     * Specifies the value for the {@code "dest"} attribute in the json file.
+     * Defaults to {@code "localRepository"}.
+     */
     @Input
     @org.gradle.api.tasks.Optional
     public abstract Property<String> getDownloadDirectory();
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
-        Set<String> dependencies = new HashSet<>();
-        Map<String, String> transferLocations = new HashMap<>();
-        Map<String, String> artifacts = new HashMap<>();
+        final Set<String> dependencies = new HashSet<>();
+        final Map<String, String> artifacts = new HashMap<>();
+        final Map<String, String> transferLocations = new HashMap<>();
 
-        // Find all resolved dependencies (display names)
+        // Find all resolved dependencies (the "groupId:artifact:version" strings).
+        // This includes all recursively resolved dependencies
         for (var configuration : getProject().getConfigurations().stream()
                 .filter(Configuration::isCanBeResolved)
                 .toList()) {
@@ -75,7 +83,8 @@ public abstract class SourcesListTask extends DefaultTask {
                         dependencies.add(name);
                     });
 
-            // Calculate SHA512 hashes
+            // Gradle has already downloaded the artifacts into the build cache.
+            // Calculate the SHA-512 hashes from the cached jar files.
             for (var artifact : configuration
                     .getResolvedConfiguration()
                     .getResolvedArtifacts()) {
@@ -85,55 +94,69 @@ public abstract class SourcesListTask extends DefaultTask {
             }
         }
 
-        // Get all Maven repositories
+        // Get all Maven repositories that were declared in the build file
         List<Repository> repositories = getProject().getRepositories().stream()
                 .filter(repo -> repo instanceof MavenArtifactRepository)
                 .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
                 .toList();
 
-        // Get download locations
+        // Get download locations (URLs) for the dependencies.
+        // This seems impossible to achieve with just the Gradle plugin API.
+        // As a workaround, we use the `DependencyResolver` class from `bld` to figure out what the URLs are.
         for (String name : dependencies) {
-            // Get a download location for each repository
+            // The dependency artifact can be in any of the declared repositories.
+            // First, we generate download URLs for all repositories.
             var resolver = new DependencyResolver(ArtifactRetriever.instance(), repositories, Dependency.parse(name));
             List<String> locations = resolver.getTransferLocations();
 
-            // Get the first location that exists
-            var location = getFirstResolvableLocation(locations);
-            if (location.isEmpty())
-                continue;
-            String url = location.get();
+            // Next, we must determine in which repository the artifact is actually available.
+            // We try a HTTP GET request for each URL, until one responds with a 200 OK.
+            var location = getFirstResolvableLocation(name, locations);
 
-            var filename = url.substring(url.lastIndexOf("/") + 1);
-            transferLocations.put(filename, url);
+            // Now put the URL in the HashMap. The file name is the key
+            var filename = location.substring(location.lastIndexOf("/") + 1);
+            transferLocations.put(filename, location);
         }
 
-        // Write the results to the file
-        StringJoiner joiner = new StringJoiner(",\n", "[\n", "\n]\n");
+        // Generate the json blocks, and join them with a StringJoiner
+        var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
+        var dest = getDownloadDirectory().getOrElse("localRepository");
         artifacts.forEach((fileName, sha512) -> {
-            String spec = "  {\n" +
-                    "    \"type\": \"file\",\n" +
-                    "    \"url\": \"" + transferLocations.get(fileName) + "\"\n" +
-                    "    \"sha512\": \"" + sha512 + "\"\n" +
-                    "    \"dest\": \"" + getDownloadDirectory().getOrElse("localRepository") + "\"\n" +
-                    "    \"dest-filename\": \"" + fileName + "\"\n" +
-                    "  }";
+            var url = transferLocations.get(fileName);
+            var spec = """
+                      {
+                        "type": "file",
+                        "url": "%s",
+                        "sha512": "%s",
+                        "dest": "%s",
+                        "dest-filename": "%s"
+                      }"""
+                    .formatted(url, sha512, dest, fileName);
             joiner.add(spec);
         });
-        writeFile(getOutputFile().getAsFile().get(), joiner.toString());
+
+        // Write the results to the json file
+        var fileName = getOutputFile().getAsFile().get();
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(fileName))) {
+            output.write(joiner.toString());
+        }
     }
 
-    // Loop through the possible locations and return the first one that exists
-    private static Optional<String> getFirstResolvableLocation(List<String> locations) {
+    // Loop through the possible locations (repository URLs), and return the first one that exists
+    private static String getFirstResolvableLocation(String name, List<String> locations) throws FileNotFoundException {
         for (var location : locations) {
-            if (exists(location)) {
-                return Optional.of(location);
+            if (tryResolve(location)) {
+                return location;
             }
         }
-        return Optional.empty();
+        // When none of the urls seem to work, throw
+        throw new FileNotFoundException(
+                "Cannot resolve '" + name + "' from any of the following locations:"
+                        + String.join("\n  ", locations));
     }
 
     // Check if the file in this URL exists, without downloading it
-    private static boolean exists(String url) {
+    private static boolean tryResolve(String url) {
         try {
             URL fileUrl = new URL(url);
             HttpURLConnection.setFollowRedirects(false);
@@ -153,6 +176,7 @@ public abstract class SourcesListTask extends DefaultTask {
     }
 
     // Generate a SHA-512 hash for a file using MessageDigest
+    // Thanks ChatGPT
     private static String calculateSHA512(File file) throws NoSuchAlgorithmException, IOException {
         // Create a MessageDigest object for SHA-512
         MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -181,12 +205,5 @@ public abstract class SourcesListTask extends DefaultTask {
 
         // Return the SHA-512 hash as a string
         return sb.toString();
-    }
-
-    // Write String to file
-    private void writeFile(File destination, String content) throws IOException {
-        try (BufferedWriter output = new BufferedWriter(new FileWriter(destination))) {
-            output.write(content);
-        }
     }
 }
