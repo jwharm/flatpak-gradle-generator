@@ -111,7 +111,11 @@ public abstract class SourcesListTask extends DefaultTask {
 
             // Next, we must determine in which repository the artifact is actually available.
             // We try a HTTP GET request for each URL, until one responds with a 200 OK.
-            var location = getFirstResolvableLocation(name, locations);
+            var location = getFirstResolvableLocation(locations);
+            if (location == null) {
+                // Cannot download anything for this dependency
+                continue;
+            }
 
             // Now put the URL in the HashMap. The file name is the key
             var filename = location.substring(location.lastIndexOf("/") + 1);
@@ -123,7 +127,8 @@ public abstract class SourcesListTask extends DefaultTask {
         var dest = getDownloadDirectory().getOrElse("localRepository");
         artifacts.forEach((fileName, sha512) -> {
             var url = transferLocations.get(fileName);
-            var spec = """
+            if (url != null) {
+                var spec = """
                       {
                         "type": "file",
                         "url": "%s",
@@ -131,8 +136,9 @@ public abstract class SourcesListTask extends DefaultTask {
                         "dest": "%s",
                         "dest-filename": "%s"
                       }"""
-                    .formatted(url, sha512, dest, fileName);
-            joiner.add(spec);
+                        .formatted(url, sha512, dest, fileName);
+                joiner.add(spec);
+            }
         });
 
         // Write the results to the json file
@@ -143,16 +149,14 @@ public abstract class SourcesListTask extends DefaultTask {
     }
 
     // Loop through the possible locations (repository URLs), and return the first one that exists
-    private static String getFirstResolvableLocation(String name, List<String> locations) throws FileNotFoundException {
+    private static String getFirstResolvableLocation(List<String> locations) {
         for (var location : locations) {
             if (tryResolve(location)) {
                 return location;
             }
         }
-        // When none of the urls seem to work, throw
-        throw new FileNotFoundException(
-                "Cannot resolve '" + name + "' from any of the following locations:\n  "
-                        + String.join("\n  ", locations));
+        // When none of the urls seem to work, return null
+        return null;
     }
 
     // Check if the file in this URL exists, without downloading it
