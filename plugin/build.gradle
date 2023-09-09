@@ -1,5 +1,6 @@
 plugins {
     id 'java-gradle-plugin'
+    id 'maven-publish'
 }
 
 repositories {
@@ -21,6 +22,39 @@ gradlePlugin {
         sourceslistplugin {
             id = 'io.github.jwharm.sourceslistplugin'
             implementationClass = 'io.github.jwharm.sourceslistplugin.SourcesListPlugin'
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = "${groupId}:${artifactId}"
+                groupId = 'io.github.jwharm.sourceslistplugin'
+                description = 'A Gradle plugin to generate a sources file for use with Flatpak'
+                url = 'https://github.com/jwharm/sources-list-plugin/'
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License, version 2.1'
+                        url = 'https://www.gnu.org/licenses/lgpl-2.1.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'jwharm'
+                        name = 'Jan-Willem Harmannij'
+                        email = 'jwharmannij@gmail.com'
+                        url = 'https://github.com/jwharm'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/jwharm/sources-list-plugin.git'
+                    developerConnection = 'scm:git:ssh://github.com:jwharm/sources-list-plugin.git'
+                    url = 'http://github.com/jwharm/sources-list-plugin/tree/master'
+                }
+            }
         }
     }
 }
