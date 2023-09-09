@@ -66,7 +66,7 @@ class TestDependencyOutput {
                 }
                 
                 dependencies {
-                  compileOnly 'org.junit.jupiter:junit-jupiter:5.9.2'
+                  implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
                 }
                 
                 tasks.sourcesList {
@@ -88,6 +88,13 @@ class TestDependencyOutput {
 
         String expected = """
                 [
+                {
+                  "type": "file",
+                  "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar",
+                  "sha512": "99766a267099708337498c4b0cfe0b86733301cc59bb8b2b52a1151d78126a9226f4013d11d2bef990297c5e32b168e5b41b036f9a7cb9cc5b78ca0aacdc5a36",
+                  "dest": "localRepository",
+                  "dest-filename": "junit-platform-engine-1.9.2.jar"
+                },
                 {
                   "type": "file",
                   "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.9.2/junit-jupiter-params-5.9.2.jar",
@@ -129,6 +136,13 @@ class TestDependencyOutput {
                   "sha512": "36efb8800c40b359133cfe823723c3d6f34b0d39df91187fb8f7f90339a7d9984a34b4d091c945475afc862f3e5ad5412516c1577656b1aee963fe0f6da0d59e",
                   "dest": "localRepository",
                   "dest-filename": "junit-jupiter-api-5.9.2.jar"
+                },
+                {
+                  "type": "file",
+                  "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar",
+                  "sha512": "901f2910ed4b05984cfbd900e9a92122d363fd4556418b58cd0807af7e91a89c2653c73ee777e97d4d23e9fd364549b1d0430f5eb70fc259b522df5e0ed81578",
+                  "dest": "localRepository",
+                  "dest-filename": "junit-jupiter-engine-5.9.2.jar"
                 }
                 ]
                 """;
