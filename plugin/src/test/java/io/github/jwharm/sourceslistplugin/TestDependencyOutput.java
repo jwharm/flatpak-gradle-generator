@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * depends on Jetbrains Annotations. It should generate a
  * sources list that contains the annotations-24.0.1.jar file.
  */
-class SourcesListPluginFunctionalTest {
+class TestDependencyOutput {
     @TempDir
     File projectDir;
 
@@ -51,7 +51,7 @@ class SourcesListPluginFunctionalTest {
         return new File(projectDir, "output.txt");
     }
 
-    @Test void canRunTask() throws IOException {
+    @Test void testDependencyOutput() throws IOException {
         writeString(getSettingsFile(), "");
         writeString(getBuildFile(),
         """
