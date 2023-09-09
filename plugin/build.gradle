@@ -1,0 +1,26 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.uwyn.rife2:bld:1.7.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+gradlePlugin {
+    plugins {
+        sourceslistplugin {
+            id = 'io.github.jwharm.sourceslistplugin'
+            implementationClass = 'io.github.jwharm.sourceslistplugin.SourcesListPlugin'
+        }
+    }
+}
