@@ -151,7 +151,7 @@ public abstract class SourcesListTask extends DefaultTask {
         }
         // When none of the urls seem to work, throw
         throw new FileNotFoundException(
-                "Cannot resolve '" + name + "' from any of the following locations:"
+                "Cannot resolve '" + name + "' from any of the following locations:\n  "
                         + String.join("\n  ", locations));
     }
 
