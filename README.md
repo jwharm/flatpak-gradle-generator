@@ -1,7 +1,10 @@
 # sources-list-plugin
 A Gradle plugin to generate a sources file for use with Flatpak
 
+**Currently work-in-progress and unfinished.**
+
 Example `gradle.build`:
+
 ```groovy
 plugins {
   id 'io.github.jwharm.sourceslistplugin'
@@ -13,6 +16,7 @@ repositories {
 }
 
 dependencies {
+  // a random dependency for this example
   compileOnly 'org.jetbrains:annotations:24.0.1'
 }
 
@@ -22,7 +26,7 @@ tasks.sourcesList {
 }
 ```
 
-Run `gradle sourcesList` and it will write a json file with information about the dependencies. In the above example:
+Run `gradle sourcesList` and it will write a json file with information about the dependencies. For the above example:
 
 ```json
 [
