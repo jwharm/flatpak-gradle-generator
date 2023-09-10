@@ -25,6 +25,7 @@ import org.gradle.api.artifacts.UnknownConfigurationException;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.result.ResolvedDependencyResult;
 import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputFile;
@@ -64,12 +65,14 @@ public abstract class SourcesListTask extends DefaultTask {
     private Set<String> dependencies;
     private Map<String, String> artifacts;
     private Map<String, String> transferLocations;
+    private Set<Repository> repositories;
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
         dependencies = new HashSet<>();
         artifacts = new HashMap<>();
         transferLocations = new HashMap<>();
+        repositories = new HashSet<>();
 
         var project = getProject();
 
@@ -88,10 +91,19 @@ public abstract class SourcesListTask extends DefaultTask {
         } catch (UnknownConfigurationException ignored) {}
 
         // Get all Maven repositories that were declared in the build file
-        List<Repository> repositories = project.getRepositories().stream()
+        repositories.addAll(project.getRepositories().stream()
                 .filter(repo -> repo instanceof MavenArtifactRepository)
                 .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
-                .toList();
+                .toList()
+        );
+
+        // Get all Maven repositories that were declared in the settings file (pluginManagement block)
+        var settings = ((GradleInternal) project.getGradle()).getSettings();
+        repositories.addAll(settings.getPluginManagement().getRepositories().stream()
+                .filter(repo -> repo instanceof MavenArtifactRepository)
+                .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
+                .toList()
+        );
 
         // Get download locations (URLs) for the dependencies.
         // This seems impossible to achieve with just the Gradle plugin API.
@@ -99,7 +111,11 @@ public abstract class SourcesListTask extends DefaultTask {
         for (String name : dependencies) {
             // The dependency artifact can be in any of the declared repositories.
             // First, we generate download URLs for all repositories.
-            var resolver = new DependencyResolver(ArtifactRetriever.instance(), repositories, Dependency.parse(name));
+            var resolver = new DependencyResolver(
+                    ArtifactRetriever.instance(),
+                    repositories.stream().toList(),
+                    Dependency.parse(name)
+            );
             List<String> locations = resolver.getTransferLocations();
 
             // Next, we must determine in which repository the artifact is actually available.
@@ -201,7 +217,7 @@ public abstract class SourcesListTask extends DefaultTask {
 
             // Check if the response code indicates that the file exists (usually 200 OK)
             return responseCode == HttpURLConnection.HTTP_OK;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false; // File existence couldn't be determined
         }
     }
