@@ -21,6 +21,7 @@ package io.github.jwharm.sourceslistplugin;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.UnknownConfigurationException;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.result.ResolvedDependencyResult;
 import org.gradle.api.file.RegularFileProperty;
@@ -60,42 +61,34 @@ public abstract class SourcesListTask extends DefaultTask {
     @org.gradle.api.tasks.Optional
     public abstract Property<String> getDownloadDirectory();
 
+    private Set<String> dependencies;
+    private Map<String, String> artifacts;
+    private Map<String, String> transferLocations;
+
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
-        final Set<String> dependencies = new HashSet<>();
-        final Map<String, String> artifacts = new HashMap<>();
-        final Map<String, String> transferLocations = new HashMap<>();
+        dependencies = new HashSet<>();
+        artifacts = new HashMap<>();
+        transferLocations = new HashMap<>();
+
+        var project = getProject();
 
         // Find all resolved dependencies (the "groupId:artifact:version" strings).
         // This includes all recursively resolved dependencies
-        for (var configuration : getProject().getConfigurations().stream()
-                .filter(Configuration::isCanBeResolved)
-                .toList()) {
-            configuration
-                    .getIncoming()
-                    .getResolutionResult()
-                    .getAllDependencies()
-                    .stream()
-                    .filter(dependency -> dependency instanceof ResolvedDependencyResult)
-                    .forEach(result -> {
-                        var dependency = (ResolvedDependencyResult) result;
-                        String name = dependency.getSelected().getId().getDisplayName();
-                        dependencies.add(name);
-                    });
-
-            // Gradle has already downloaded the artifacts into the build cache.
-            // Calculate the SHA-512 hashes from the cached jar files.
-            for (var artifact : configuration
-                    .getResolvedConfiguration()
-                    .getResolvedArtifacts()) {
-                String name = artifact.getFile().getName();
-                String sha512 = calculateSHA512(artifact.getFile());
-                artifacts.put(name, sha512);
-            }
+        for (var configuration : project.getConfigurations()) {
+            listDependencies(configuration);
+            listArtifacts(configuration);
         }
 
+        // Do the same for the buildscript classpath configuration (plugin dependencies)
+        try {
+            var classpath = project.getBuildscript().getConfigurations().getByName("classpath");
+            listDependencies(classpath);
+            listArtifacts(classpath);
+        } catch (UnknownConfigurationException ignored) {}
+
         // Get all Maven repositories that were declared in the build file
-        List<Repository> repositories = getProject().getRepositories().stream()
+        List<Repository> repositories = project.getRepositories().stream()
                 .filter(repo -> repo instanceof MavenArtifactRepository)
                 .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
                 .toList();
@@ -145,6 +138,40 @@ public abstract class SourcesListTask extends DefaultTask {
         var fileName = getOutputFile().getAsFile().get();
         try (BufferedWriter output = new BufferedWriter(new FileWriter(fileName))) {
             output.write(joiner.toString());
+        }
+    }
+
+    // Find all resolved dependencies (direct and transitive)
+    private void listDependencies(Configuration configuration) {
+        if (!configuration.isCanBeResolved())
+            return;
+
+        configuration
+                .getIncoming()
+                .getResolutionResult()
+                .getAllDependencies()
+                .stream()
+                .filter(dependency -> dependency instanceof ResolvedDependencyResult)
+                .forEach(result -> {
+                    var dependency = (ResolvedDependencyResult) result;
+                    String name = dependency.getSelected().getId().getDisplayName();
+                    dependencies.add(name);
+                });
+    }
+
+    // Find all resolved artifacts and calculate a SHA-512 hash
+    private void listArtifacts(Configuration configuration) throws NoSuchAlgorithmException, IOException {
+        if (!configuration.isCanBeResolved())
+            return;
+
+        // Gradle has already downloaded the artifacts into the build cache.
+        // Calculate the SHA-512 hashes from the cached jar files.
+        for (var artifact : configuration
+                .getResolvedConfiguration()
+                .getResolvedArtifacts()) {
+            String name = artifact.getFile().getName();
+            String sha512 = calculateSHA512(artifact.getFile());
+            artifacts.put(name, sha512);
         }
     }
 
