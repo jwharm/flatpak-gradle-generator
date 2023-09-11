@@ -24,8 +24,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.io.FileWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.gradle.testkit.runner.GradleRunner;
-import org.gradle.testkit.runner.BuildResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,12 +48,17 @@ class TestDependencyOutput {
         return new File(projectDir, "settings.gradle");
     }
 
-    private File getOutputFile() {
-        return new File(projectDir, "output.txt");
+    private String getOutputFile() {
+        return new File(projectDir, "output.json")
+                .getAbsolutePath()
+                .replace("\\", "\\\\");
     }
 
     @Test void testDependencyOutput() throws IOException {
+        // Write temporary settings.gradle
         writeString(getSettingsFile(), "");
+
+        // Write temporary build.gradle
         writeString(getBuildFile(),
         """
                 plugins {
@@ -73,21 +79,21 @@ class TestDependencyOutput {
                   outputFile = file('%s')
                   downloadDirectory = 'localRepository'
                 }
-                """.formatted(getOutputFile().getAbsolutePath()));
+                """.formatted(getOutputFile()));
 
         // Run the build
-        GradleRunner runner = GradleRunner.create();
-        runner.forwardOutput();
-        runner.withPluginClasspath();
-        runner.withArguments("sourcesList");
-        runner.withProjectDir(projectDir);
-        BuildResult result = runner.build();
+        GradleRunner.create()
+            .forwardOutput()
+            .withPluginClasspath()
+            .withArguments("sourcesList")
+            .withProjectDir(projectDir)
+            .build();
 
         // Verify the result
-        String sourcesList = Files.readString(getOutputFile().toPath());
+        String sourcesList = Files.readString(Path.of(getOutputFile()));
 
         String expected = """
-                [
+              [
                 {
                   "type": "file",
                   "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar",
@@ -144,8 +150,8 @@ class TestDependencyOutput {
                   "dest": "localRepository",
                   "dest-filename": "junit-jupiter-engine-5.9.2.jar"
                 }
-                ]
-                """;
+              ]
+              """;
         assertEquals(expected, sourcesList);
     }
 
