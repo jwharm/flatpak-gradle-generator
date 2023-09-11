@@ -37,6 +37,7 @@ import rife.bld.dependencies.Repository;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -47,6 +48,9 @@ import java.util.*;
  * so they can be downloaded for an offline build.
  */
 public abstract class SourcesListTask extends DefaultTask {
+
+    private static final String DEFUALT_DOWNLOAD_DIRECTORY = "lib";
+    private static final String GRADLE_PLUGIN_REPOSITORY = "https://plugins.gradle.org/m2/";
 
     /**
      * Specifies where to write the resulting json file.
@@ -65,14 +69,12 @@ public abstract class SourcesListTask extends DefaultTask {
     private Set<String> dependencies;
     private Map<String, String> artifacts;
     private Map<String, String> transferLocations;
-    private Set<Repository> repositories;
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
         dependencies = new HashSet<>();
         artifacts = new HashMap<>();
         transferLocations = new HashMap<>();
-        repositories = new HashSet<>();
 
         var project = getProject();
 
@@ -91,11 +93,13 @@ public abstract class SourcesListTask extends DefaultTask {
         } catch (UnknownConfigurationException ignored) {}
 
         // Get all Maven repositories that were declared in the build file
-        repositories.addAll(project.getRepositories().stream()
+        Set<Repository> repositories = new HashSet<>(project.getRepositories().stream()
                 .filter(repo -> repo instanceof MavenArtifactRepository)
                 .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
-                .toList()
-        );
+                .toList());
+
+        // The Gradle plugin repository is always available
+        repositories.add(new Repository(GRADLE_PLUGIN_REPOSITORY));
 
         // Get all Maven repositories that were declared in the settings file (pluginManagement block)
         var settings = ((GradleInternal) project.getGradle()).getSettings();
@@ -133,19 +137,20 @@ public abstract class SourcesListTask extends DefaultTask {
 
         // Generate the json blocks, and join them with a StringJoiner
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
-        var dest = getDownloadDirectory().getOrElse("localRepository");
+        var dest = getDownloadDirectory().getOrElse(DEFUALT_DOWNLOAD_DIRECTORY);
         artifacts.forEach((fileName, sha512) -> {
             var url = transferLocations.get(fileName);
             if (url != null) {
                 var spec = """
-                      {
-                        "type": "file",
-                        "url": "%s",
-                        "sha512": "%s",
-                        "dest": "%s",
-                        "dest-filename": "%s"
-                      }"""
-                        .formatted(url, sha512, dest, fileName);
+                          {
+                            "type": "file",
+                            "url": "%s",
+                            "sha512": "%s",
+                            "dest": "%s",
+                            "dest-filename": "%s"
+                        """
+                        .formatted(url, sha512, dest, fileName)
+                        + "  }";
                 joiner.add(spec);
             }
         });
@@ -205,7 +210,7 @@ public abstract class SourcesListTask extends DefaultTask {
     // Check if the file in this URL exists, without downloading it
     private static boolean tryResolve(String url) {
         try {
-            URL fileUrl = new URL(url);
+            URL fileUrl = new URI(url).toURL();
             HttpURLConnection.setFollowRedirects(false);
             HttpURLConnection httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
 
