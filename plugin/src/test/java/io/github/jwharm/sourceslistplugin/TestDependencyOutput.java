@@ -33,8 +33,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test the plugin with a temporary created Gradle build that
- * depends on Jetbrains Annotations. It should generate a
- * sources list that contains the annotations-24.0.1.jar file.
+ * depends on junit-jupiter. It should generate a sources list
+ * that contains all dependencies.
  */
 class TestDependencyOutput {
     @TempDir
