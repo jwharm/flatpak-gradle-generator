@@ -1,6 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'signing'
 }
 
 repositories {
@@ -57,6 +58,24 @@ publishing {
                     url = 'http://github.com/jwharm/sources-list-plugin/tree/master'
                 }
             }
+        }
+    }
+
+    if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
+        repositories {
+            maven {
+                name = 'OSSRH'
+                def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username = ossrhUsername
+                    password = ossrhPassword
+                }
+            }
+        }
+        signing {
+            sign publishing.publications.mavenJava
         }
     }
 }
