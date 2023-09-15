@@ -5,7 +5,7 @@ Example `gradle.build`:
 
 ```groovy
 plugins {
-  id 'io.github.jwharm.sourceslistplugin'
+  id 'io.github.jwharm.sourceslistplugin' version '0.1'
   id 'application'
 }
 
@@ -19,7 +19,7 @@ dependencies {
 }
 
 tasks.sourcesList {
-  outputFile = file('sources-list.json')
+  outputFile = file('flatpak-sources.json')
   downloadDirectory = 'lib'
 }
 ```
@@ -45,9 +45,25 @@ build configurations, including plugin dependencies.
 The generated file can be used in a Flatpak build process to download 
 Maven dependencies before an offline build starts.
 
+### Snapshot dependencies
+Maven snapshot dependencies have a unique identifier in the filename. 
+The default behavior of the plugin is to set the `"dest-filename"` field 
+to this filename. If you want to set `"dest-filename"` to the more generic 
+`library-SNAPSHOT.jar` name, set the option `actualJarName` to `false`.
+
+### Modular builds
+In a modular Gradle build, you can add a `tasks.sourcesList {}` block in 
+the build files of the subprojects, to generate a file for each project.
+
+### Output sorting
+The JSON output is sorted by filename. This should make the output a bit 
+more deterministic for the same set of dependencies.
+
+### Requirements
+The plugin has been tested with Gradle 8.3. The published jar is built 
+with Java 17.
+
 ### Current status
-- The plugin has not been published yet. To test it, clone the repository 
+- The plugin has not been published yet. To test it, clone the repository, 
   publish the plugin to mavenLocal, and load it from there (follow
   [these instructions](https://elmland.blog/2019/08/10/add-mavenlocal-to-gradle-plugin-resolution/)).
-
-- There are a few issues when resolving snapshot dependencies.
