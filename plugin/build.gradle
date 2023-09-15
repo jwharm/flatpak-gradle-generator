@@ -16,6 +16,12 @@ dependencies {
 
 version = '0.1'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 test {
     useJUnitPlatform()
 }
