@@ -42,6 +42,8 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A task that creates a sources list file with all Gradle dependencies,
@@ -49,8 +51,9 @@ import java.util.*;
  */
 public abstract class SourcesListTask extends DefaultTask {
 
-    private static final String DEFUALT_DOWNLOAD_DIRECTORY = "lib";
+    private static final String DEFAULT_DOWNLOAD_DIRECTORY = "lib";
     private static final String GRADLE_PLUGIN_REPOSITORY = "https://plugins.gradle.org/m2/";
+    private static final String SNAPSHOT_FILENAME_PATTERN = "[\\d.-]+"; // example: 20230913.191535-4
 
     /**
      * Specifies where to write the resulting json file.
@@ -60,20 +63,33 @@ public abstract class SourcesListTask extends DefaultTask {
 
     /**
      * Specifies the value for the {@code "dest"} attribute in the json file.
+     * <p>
      * Defaults to {@code "localRepository"}.
      */
     @Input
     @org.gradle.api.tasks.Optional
     public abstract Property<String> getDownloadDirectory();
 
+    /**
+     * Whether to write the actual filename for snapshot dependencies.
+     * <ul>
+     * <li>When {@code actualJarName = true}: write {@code "dest-filename": "library-123456.123456-1.jar"}
+     * <li>When property is {@code actualJarName = false}: write {@code "dest-filename": "library-SNAPSHOT.jar"}
+     * </ul>
+     * Defaults to {@code true}.
+     */
+    @Input
+    @org.gradle.api.tasks.Optional
+    public abstract Property<Boolean> getActualJarName();
+
     private Set<String> dependencies;
-    private Map<String, String> artifacts;
+    private Map<String, String> hashes;
     private Map<String, String> transferLocations;
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
         dependencies = new HashSet<>();
-        artifacts = new HashMap<>();
+        hashes = new HashMap<>();
         transferLocations = new HashMap<>();
 
         var project = getProject();
@@ -135,11 +151,30 @@ public abstract class SourcesListTask extends DefaultTask {
             transferLocations.put(filename, location);
         }
 
+        // Sort the artifacts alphabetically, to achieve deterministic output for the
+        // same set of (non-snapshot) dependencies.
+        var artifacts = new ArrayList<>(hashes.keySet());
+        Collections.sort(artifacts);
+
         // Generate the json blocks, and join them with a StringJoiner
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
-        var dest = getDownloadDirectory().getOrElse(DEFUALT_DOWNLOAD_DIRECTORY);
-        artifacts.forEach((fileName, sha512) -> {
-            var url = transferLocations.get(fileName);
+        var dest = getDownloadDirectory().getOrElse(DEFAULT_DOWNLOAD_DIRECTORY);
+        for (var artifact : artifacts) {
+            var sha512 = hashes.get(artifact);
+            var fileName = artifact;
+            var url = transferLocations.get(artifact);
+            if (url == null) {
+                // Artifact filename ends with 'library-SNAPSHOT.jar', but the locations are
+                // indexed by the actual filename, like 'library-123456.123456-1.jar'
+                fileName = getSnapshotFileName(artifact);
+                url = transferLocations.get(fileName);
+
+                // When property is true: write "dest-filename": "library-123456.123456-1.jar"
+                // When property is false: write "dest-filename": "library-SNAPSHOT.jar"
+                if (!getActualJarName().getOrElse(true)) {
+                    fileName = artifact;
+                }
+            }
             if (url != null) {
                 var spec = """
                           {
@@ -153,7 +188,7 @@ public abstract class SourcesListTask extends DefaultTask {
                         + "  }";
                 joiner.add(spec);
             }
-        });
+        }
 
         // Write the results to the json file
         var fileName = getOutputFile().getAsFile().get();
@@ -176,8 +211,34 @@ public abstract class SourcesListTask extends DefaultTask {
                 .forEach(result -> {
                     var dependency = (ResolvedDependencyResult) result;
                     String name = dependency.getSelected().getId().getDisplayName();
-                    dependencies.add(name);
+                    dependencies.add(name.contains("-SNAPSHOT:") ? stripSnapshotDetails(name) : name);
                 });
+    }
+
+    // Strip snapshot details from the dependency id returned by Gradle.
+    // Otherwise, the generated url will contain this information twice.
+    private static String stripSnapshotDetails(String id) {
+        Pattern pattern = Pattern.compile("-SNAPSHOT:" + SNAPSHOT_FILENAME_PATTERN + "$");
+        Matcher matcher = pattern.matcher(id);
+        if (matcher.find()) {
+            return id.substring(0, id.lastIndexOf(":"));
+        } else {
+            return id;
+        }
+    }
+
+    // Get the actual filename for a '-SNAPSHOT.jar' artifact
+    private String getSnapshotFileName(String artifact) {
+        if (artifact.endsWith("-SNAPSHOT.jar")) {
+            var regex = artifact.substring(0, artifact.lastIndexOf("-")) + "-" + SNAPSHOT_FILENAME_PATTERN + "\\.jar$";
+            var pattern = Pattern.compile(regex);
+            for (var fileName : transferLocations.keySet()) {
+                if (pattern.matcher(fileName).find()) {
+                    return fileName;
+                }
+            }
+        }
+        return null;
     }
 
     // Find all resolved artifacts and calculate a SHA-512 hash
@@ -192,7 +253,7 @@ public abstract class SourcesListTask extends DefaultTask {
                 .getResolvedArtifacts()) {
             String name = artifact.getFile().getName();
             String sha512 = calculateSHA512(artifact.getFile());
-            artifacts.put(name, sha512);
+            hashes.put(name, sha512);
         }
     }
 
