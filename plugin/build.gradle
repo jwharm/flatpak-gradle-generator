@@ -9,7 +9,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.uwyn.rife2:bld:1.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

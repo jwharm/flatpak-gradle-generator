@@ -20,9 +20,11 @@
 package io.github.jwharm.sourceslistplugin;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.UnknownConfigurationException;
+import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.artifacts.result.ResolvedComponentResult;
 import org.gradle.api.artifacts.result.ResolvedDependencyResult;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.internal.GradleInternal;
@@ -30,10 +32,6 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
-import rife.bld.dependencies.ArtifactRetriever;
-import rife.bld.dependencies.Dependency;
-import rife.bld.dependencies.DependencyResolver;
-import rife.bld.dependencies.Repository;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -42,8 +40,6 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A task that creates a sources list file with all Gradle dependencies,
@@ -51,9 +47,9 @@ import java.util.regex.Pattern;
  */
 public abstract class SourcesListTask extends DefaultTask {
 
-    private static final String DEFAULT_DOWNLOAD_DIRECTORY = "lib";
+    private static final String DEFAULT_DOWNLOAD_DIRECTORY = "maven-local";
     private static final String GRADLE_PLUGIN_REPOSITORY = "https://plugins.gradle.org/m2/";
-    private static final String SNAPSHOT_FILENAME_PATTERN = "[\\d.-]+"; // example: 20230913.191535-4
+    private static final List<String> ARTIFACT_EXTENSIONS = List.of("jar", "pom", "module");
 
     /**
      * Specifies where to write the resulting json file.
@@ -82,111 +78,25 @@ public abstract class SourcesListTask extends DefaultTask {
     @org.gradle.api.tasks.Optional
     public abstract Property<Boolean> getActualJarName();
 
-    private Set<String> dependencies;
-    private Map<String, String> hashes;
-    private Map<String, String> transferLocations;
+    private HashSet<String> ids;
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
-        dependencies = new HashSet<>();
-        hashes = new HashMap<>();
-        transferLocations = new HashMap<>();
-
         var project = getProject();
-
-        // Find all resolved dependencies (the "groupId:artifact:version" strings).
-        // This includes all recursively resolved dependencies
-        for (var configuration : project.getConfigurations()) {
-            listDependencies(configuration);
-            listArtifacts(configuration);
-        }
-
-        // Do the same for the buildscript classpath configuration (plugin dependencies)
-        try {
-            var classpath = project.getBuildscript().getConfigurations().getByName("classpath");
-            listDependencies(classpath);
-            listArtifacts(classpath);
-        } catch (UnknownConfigurationException ignored) {}
-
-        // Get all Maven repositories that were declared in the build file
-        Set<Repository> repositories = new HashSet<>(project.getRepositories().stream()
-                .filter(repo -> repo instanceof MavenArtifactRepository)
-                .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
-                .toList());
-
-        // The Gradle plugin repository is always available
-        repositories.add(new Repository(GRADLE_PLUGIN_REPOSITORY));
-
-        // Get all Maven repositories that were declared in the settings file (pluginManagement block)
-        var settings = ((GradleInternal) project.getGradle()).getSettings();
-        repositories.addAll(settings.getPluginManagement().getRepositories().stream()
-                .filter(repo -> repo instanceof MavenArtifactRepository)
-                .map(repo -> new Repository(((MavenArtifactRepository) repo).getUrl().toString()))
-                .toList()
-        );
-
-        // Get download locations (URLs) for the dependencies.
-        // This seems impossible to achieve with just the Gradle plugin API.
-        // As a workaround, we use the `DependencyResolver` class from `bld` to figure out what the URLs are.
-        for (String name : dependencies) {
-            // The dependency artifact can be in any of the declared repositories.
-            // First, we generate download URLs for all repositories.
-            var resolver = new DependencyResolver(
-                    ArtifactRetriever.instance(),
-                    repositories.stream().toList(),
-                    Dependency.parse(name)
-            );
-            List<String> locations = resolver.getTransferLocations();
-
-            // Next, we must determine in which repository the artifact is actually available.
-            // We try a HTTP GET request for each URL, until one responds with a 200 OK.
-            var location = getFirstResolvableLocation(locations);
-            if (location == null) {
-                // Cannot download anything for this dependency
-                continue;
-            }
-
-            // Now put the URL in the HashMap. The file name is the key
-            var filename = location.substring(location.lastIndexOf("/") + 1);
-            transferLocations.put(filename, location);
-        }
-
-        // Sort the artifacts alphabetically, to achieve deterministic output for the
-        // same set of (non-snapshot) dependencies.
-        var artifacts = new ArrayList<>(hashes.keySet());
-        Collections.sort(artifacts);
-
-        // Generate the json blocks, and join them with a StringJoiner
+        ids = new HashSet<>();
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
-        var dest = getDownloadDirectory().getOrElse(DEFAULT_DOWNLOAD_DIRECTORY);
-        for (var artifact : artifacts) {
-            var sha512 = hashes.get(artifact);
-            var fileName = artifact;
-            var url = transferLocations.get(artifact);
-            if (url == null) {
-                // Artifact filename ends with 'library-SNAPSHOT.jar', but the locations are
-                // indexed by the actual filename, like 'library-123456.123456-1.jar'
-                fileName = getSnapshotFileName(artifact);
-                url = transferLocations.get(fileName);
 
-                // When property is true: write "dest-filename": "library-123456.123456-1.jar"
-                // When property is false: write "dest-filename": "library-SNAPSHOT.jar"
-                if (!getActualJarName().getOrElse(true)) {
-                    fileName = artifact;
-                }
-            }
-            if (url != null) {
-                var spec = """
-                          {
-                            "type": "file",
-                            "url": "%s",
-                            "sha512": "%s",
-                            "dest": "%s",
-                            "dest-filename": "%s"
-                        """
-                        .formatted(url, sha512, dest, fileName)
-                        + "  }";
-                joiner.add(spec);
+        var classpath = project.getBuildscript().getConfigurations().getByName("classpath");
+        if (classpath.isCanBeResolved()) {
+            var repositories = listPluginRepositories(project);
+            generateSourcesList(repositories, classpath, joiner);
+        }
+
+        var repositories = listRepositories(project);
+
+        for (var configuration : project.getConfigurations()) {
+            if (configuration.isCanBeResolved()) {
+                generateSourcesList(repositories, configuration, joiner);
             }
         }
 
@@ -197,78 +107,189 @@ public abstract class SourcesListTask extends DefaultTask {
         }
     }
 
-    // Find all resolved dependencies (direct and transitive)
-    private void listDependencies(Configuration configuration) {
-        if (!configuration.isCanBeResolved())
-            return;
+    // Get all Maven repositories that were declared in the build file
+    private List<String> listRepositories(Project project) {
+        return new ArrayList<>(project.getRepositories().stream()
+                .filter(repo -> repo instanceof MavenArtifactRepository)
+                .map(repo -> ((MavenArtifactRepository) repo).getUrl().toString())
+                .map(repo -> repo.endsWith("/") ? repo : repo + "/")
+                .toList());
+    }
 
-        configuration
+    // Get all Maven repositories that were declared in the settings file (pluginManagement block),
+    // and the Gradle plugin repository
+    private List<String> listPluginRepositories(Project project) {
+        var settings = ((GradleInternal) project.getGradle()).getSettings();
+        List<String> repositories = new ArrayList<>(settings.getPluginManagement().getRepositories().stream()
+                .filter(repo -> repo instanceof MavenArtifactRepository)
+                .map(repo -> ((MavenArtifactRepository) repo).getUrl().toString())
+                .map(repo -> repo.endsWith("/") ? repo : repo + "/")
+                .toList());
+
+        // The Gradle plugin repository is always available
+        repositories.add(GRADLE_PLUGIN_REPOSITORY);
+
+        return repositories;
+    }
+
+    private void generateSourcesList(List<String> repositories, Configuration configuration, StringJoiner joiner) throws NoSuchAlgorithmException, IOException {
+        for (var dependency : listDependencies(configuration)) {
+
+            // Don't process the same dependency multiple times
+            String id = dependency.getId().getDisplayName();
+            if (ids.contains(id))
+                continue;
+            ids.add(id);
+
+            var dep = DependencyDetails.of(id);
+
+            // Calculate sha512 hash of the locally cached artifact
+            var artifact = getArtifact(configuration, dependency.getModuleVersion());
+            if (artifact.isEmpty())
+                continue;
+            String sha512 = calculateSHA512(artifact.get());
+
+            for (String ext : ARTIFACT_EXTENSIONS) {
+                // The "dest"
+                var dest = getDest() + dep.path();
+                // The "dest-filename"
+                String destFilename = getActualJarName().getOrElse(true) ? dep.filename(ext) : dep.artifactName(ext);
+
+                // Generate a URL for each repository, and find the first repository that responds with HTTP 200 (OK).
+                var json = repositories.stream()
+                        .map(repo -> repo + dep.path() + "/" + dep.filename(ext))
+                        .filter(SourcesListTask::tryResolve)
+                        .findFirst()
+                        // Generate the JSON for this URL
+                        .map(url -> generateJsonBlock(url, sha512, dest, destFilename));
+
+                json.ifPresent(joiner::add);
+            }
+        }
+    }
+
+    /**
+     * Get the downloadDirectory property, fill in the default if necessary, and append a slash if necessary.
+      * @return the download directory, ending with a slash
+     */
+    private String getDest() {
+        String dest = getDownloadDirectory().getOrElse(DEFAULT_DOWNLOAD_DIRECTORY);
+        return dest.endsWith("/") ? dest : (dest + "/");
+    }
+
+    /**
+     * Simple record type to work with dependencies
+     * @param group the Maven groupId
+     * @param name the Maven artifact name
+     * @param version the Maven artifact version, for snapshots this ends with "-SNAPSHOT"
+     * @param snapshotDetail only for snapshot dependencies, format "yyyymmdd.hhmmss-n"
+     * @param isSnapshot whether this is a snapshot version
+     */
+    private record DependencyDetails(String group, String name, String version, String snapshotDetail, boolean isSnapshot) {
+
+        /**
+         * Parse a dependency record from this id
+         * @param id a Maven dependency id as returned by Gradle {@code ResolvedComponentResult.getId().getDisplayName()}
+         * @return a new dependency record for this id
+         */
+        static DependencyDetails of(String id) {
+            String[] parts = id.split(":");
+            return new DependencyDetails(
+                    parts[0],
+                    parts[1],
+                    parts[2],
+                    parts.length > 3 ? parts[3] : "",
+                    parts[2].endsWith("-SNAPSHOT")
+            );
+        }
+
+        /**
+         * Generate the path to use in the url (combines group and name, using slashes as separators)
+         * @return the path to use in the url
+         */
+        String path() {
+            return group.replace(".", "/") + "/" + name + "/" + version;
+        }
+
+        /**
+         * Generate the filename to use in the url. Format is name-version.jar.
+         * For snapshot versions, this is the actual filename, formatted as name-version-yyyymmdd.hhmmss-n.[ext]
+         * @param ext the extension to append to the filename
+         * @return the filename to use in the url
+         */
+        String filename(String ext) {
+            return "%s-%s.%s".formatted(name, version.replace("SNAPSHOT", snapshotDetail), ext);
+        }
+
+        /**
+         * Generate the filename. Format is name-version.jar.
+         * For snapshot versions, the name will contain "-SNAPSHOT" and not the actual filename.
+         * @param ext the extension to append to the filename
+         * @return the filename.
+         */
+        String artifactName(String ext) {
+            return "%s-%s%s.%s".formatted(name, version, isSnapshot ? "-SNAPSHOT" : "", ext);
+        }
+    }
+
+    /**
+     * Get the {@link File} object of the locally cached artifact for a dependency
+     * @param configuration the configuration with this dependency
+     * @param id the {@link ModuleVersionIdentifier} of the dependency
+     * @return the {@link File} object of the locally cached artifact, or empty when the artifact is not found
+     */
+    private Optional<File> getArtifact(Configuration configuration, ModuleVersionIdentifier id) {
+        for (var artifact : configuration.getResolvedConfiguration().getResolvedArtifacts()) {
+            if (artifact.getModuleVersion().getId().equals(id))
+                return Optional.of(artifact.getFile());
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Create a json string
+     * @param url the url
+     * @param sha512 the hash
+     * @param dest the target directory
+     * @param destFilename the filename
+     * @return the generated json string
+     */
+    private String generateJsonBlock(String url, String sha512, String dest, String destFilename) {
+        return """
+                          {
+                            "type": "file",
+                            "url": "%s",
+                            "sha512": "%s",
+                            "dest": "%s",
+                            "dest-filename": "%s"
+                        """
+                .formatted(url, sha512, dest, destFilename)
+                + "  }";
+    }
+
+    /**
+     * Find all resolved dependencies (both direct and transitive)
+     * @param configuration the configuration to list the dependencies for
+     * @return all resolved dependencies (both direct and transitive)
+     */
+    private List<ResolvedComponentResult> listDependencies(Configuration configuration) {
+        return configuration
                 .getIncoming()
                 .getResolutionResult()
                 .getAllDependencies()
                 .stream()
                 .filter(dependency -> dependency instanceof ResolvedDependencyResult)
-                .forEach(result -> {
-                    var dependency = (ResolvedDependencyResult) result;
-                    String name = dependency.getSelected().getId().getDisplayName();
-                    dependencies.add(name.contains("-SNAPSHOT:") ? stripSnapshotDetails(name) : name);
-                });
+                .map(result -> ((ResolvedDependencyResult) result))
+                .map(ResolvedDependencyResult::getSelected)
+                .toList();
     }
 
-    // Strip snapshot details from the dependency id returned by Gradle.
-    // Otherwise, the generated url will contain this information twice.
-    private static String stripSnapshotDetails(String id) {
-        Pattern pattern = Pattern.compile("-SNAPSHOT:" + SNAPSHOT_FILENAME_PATTERN + "$");
-        Matcher matcher = pattern.matcher(id);
-        if (matcher.find()) {
-            return id.substring(0, id.lastIndexOf(":"));
-        } else {
-            return id;
-        }
-    }
-
-    // Get the actual filename for a '-SNAPSHOT.jar' artifact
-    private String getSnapshotFileName(String artifact) {
-        if (artifact.endsWith("-SNAPSHOT.jar")) {
-            var regex = artifact.substring(0, artifact.lastIndexOf("-")) + "-" + SNAPSHOT_FILENAME_PATTERN + "\\.jar$";
-            var pattern = Pattern.compile(regex);
-            for (var fileName : transferLocations.keySet()) {
-                if (pattern.matcher(fileName).find()) {
-                    return fileName;
-                }
-            }
-        }
-        return null;
-    }
-
-    // Find all resolved artifacts and calculate a SHA-512 hash
-    private void listArtifacts(Configuration configuration) throws NoSuchAlgorithmException, IOException {
-        if (!configuration.isCanBeResolved())
-            return;
-
-        // Gradle has already downloaded the artifacts into the build cache.
-        // Calculate the SHA-512 hashes from the cached jar files.
-        for (var artifact : configuration
-                .getResolvedConfiguration()
-                .getResolvedArtifacts()) {
-            String name = artifact.getFile().getName();
-            String sha512 = calculateSHA512(artifact.getFile());
-            hashes.put(name, sha512);
-        }
-    }
-
-    // Loop through the possible locations (repository URLs), and return the first one that exists
-    private static String getFirstResolvableLocation(List<String> locations) {
-        for (var location : locations) {
-            if (tryResolve(location)) {
-                return location;
-            }
-        }
-        // When none of the urls seem to work, return null
-        return null;
-    }
-
-    // Check if the file in this URL exists, without downloading it
+    /**
+     * Check if the file in this url exists, without downloading it. This will send an HTTP request
+     * and check if the response code is HTTP 200 (OK).
+     * @param url the url to check
+     * @return true if the url is valid (HTTP 200 OK), otherwise false
+     */
     private static boolean tryResolve(String url) {
         try {
             URL fileUrl = new URI(url).toURL();
@@ -288,8 +309,13 @@ public abstract class SourcesListTask extends DefaultTask {
         }
     }
 
-    // Generate a SHA-512 hash for a file using MessageDigest
-    // Thanks ChatGPT
+    /**
+     * Generate an SHA-512 hash for a file using MessageDigest.
+     * @param file the file to calculate the hash for
+     * @return the hash string
+     * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
+     * @throws IOException error reading the file
+     */
     private static String calculateSHA512(File file) throws NoSuchAlgorithmException, IOException {
         // Create a MessageDigest object for SHA-512
         MessageDigest md = MessageDigest.getInstance("SHA-512");
