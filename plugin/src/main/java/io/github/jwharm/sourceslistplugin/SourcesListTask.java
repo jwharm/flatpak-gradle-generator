@@ -143,13 +143,13 @@ public abstract class SourcesListTask extends DefaultTask {
 
             var dep = DependencyDetails.of(id);
 
-            // Calculate sha512 hash of the locally cached artifact
-            var artifact = getArtifact(configuration, dependency.getModuleVersion());
-            if (artifact.isEmpty())
-                continue;
-            String sha512 = calculateSHA512(artifact.get());
-
             for (String ext : ARTIFACT_EXTENSIONS) {
+                // Calculate sha512 hash of the locally cached artifact
+                var artifact = getArtifact(configuration, dependency.getModuleVersion(), ext);
+                if (artifact.isEmpty())
+                    continue;
+                String sha512 = calculateSHA512(artifact.get());
+
                 // The "dest"
                 var dest = getDest() + dep.path();
                 // The "dest-filename"
@@ -238,11 +238,22 @@ public abstract class SourcesListTask extends DefaultTask {
      * @param id the {@link ModuleVersionIdentifier} of the dependency
      * @return the {@link File} object of the locally cached artifact, or empty when the artifact is not found
      */
-    private Optional<File> getArtifact(Configuration configuration, ModuleVersionIdentifier id) {
+    private Optional<File> getArtifact(Configuration configuration, ModuleVersionIdentifier id, String ext) {
         for (var artifact : configuration.getResolvedConfiguration().getResolvedArtifacts()) {
-            if (artifact.getModuleVersion().getId().equals(id))
-                return Optional.of(artifact.getFile());
+            if (artifact.getModuleVersion().getId().equals(id)) {
+                // Found the jar artifact.
+                // Find the artifact with the requested extension. It should exist in a sibling directory.
+                File parentDir = artifact.getFile().getParentFile().getParentFile();
+                for (var dir : Objects.requireNonNull(parentDir.listFiles())) {
+                    // Check if there is exactly one file in this directory, with the requested extension.
+                    File[] files = dir.listFiles(($, name) -> name.endsWith("." + ext));
+                    if (files != null && files.length == 1) {
+                        return Optional.of(files[0]);
+                    }
+                }
+            }
         }
+        // Artifact not found in the cache.
         return Optional.empty();
     }
 
