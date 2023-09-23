@@ -305,8 +305,10 @@ public abstract class SourcesListTask extends DefaultTask {
     private static boolean tryResolve(String url) {
         try {
             URL fileUrl = new URI(url).toURL();
-            HttpURLConnection.setFollowRedirects(false);
             HttpURLConnection httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
+
+            // Set the request to follow redirects (303 for example)
+            httpURLConnection.setInstanceFollowRedirects(true);
 
             // Set the request method to HEAD (only retrieve headers, not the entire file)
             httpURLConnection.setRequestMethod("HEAD");
