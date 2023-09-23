@@ -159,6 +159,7 @@ public abstract class SourcesListTask extends DefaultTask {
                 // Generate a URL for each repository, and find the first repository that responds with HTTP 200 (OK).
                 var json = repositories.stream()
                         .map(repo -> repo + dep.path() + "/" + dep.filename(ext))
+                        .distinct()
                         .filter(SourcesListTask::tryResolve)
                         .findFirst()
                         // Generate the JSON for this URL
