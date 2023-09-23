@@ -87,12 +87,13 @@ public abstract class SourcesListTask extends DefaultTask {
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
 
         var classpath = project.getBuildscript().getConfigurations().getByName("classpath");
+        var buildScriptRepositories = listPluginRepositories(project);
         if (classpath.isCanBeResolved()) {
-            var repositories = listPluginRepositories(project);
-            generateSourcesList(repositories, classpath, joiner);
+            generateSourcesList(buildScriptRepositories, classpath, joiner);
         }
 
         var repositories = listRepositories(project);
+        repositories.addAll(buildScriptRepositories);
 
         for (var configuration : project.getConfigurations()) {
             if (configuration.isCanBeResolved()) {
