@@ -48,4 +48,3 @@ with Java 17.
 - The plugin has not been published yet. To test it, clone the repository, 
   publish the plugin to mavenLocal, and load it from there (follow
   [these instructions](https://elmland.blog/2019/08/10/add-mavenlocal-to-gradle-plugin-resolution/)).
-- Parent poms are not added to the list.
