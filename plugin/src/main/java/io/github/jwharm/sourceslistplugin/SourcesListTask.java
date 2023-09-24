@@ -69,7 +69,7 @@ public abstract class SourcesListTask extends DefaultTask {
     /**
      * Whether to write the actual filename for snapshot dependencies.
      * <ul>
-     * <li>When {@code actualJarName = true}: write {@code "dest-filename": "library-123456.123456-1.jar"}
+     * <li>When {@code actualJarName = true}: write {@code "dest-filename": "library-yyyymmdd.hhmmss-n.jar"}
      * <li>When property is {@code actualJarName = false}: write {@code "dest-filename": "library-SNAPSHOT.jar"}
      * </ul>
      * Defaults to {@code true}.
@@ -78,30 +78,36 @@ public abstract class SourcesListTask extends DefaultTask {
     @org.gradle.api.tasks.Optional
     public abstract Property<Boolean> getActualJarName();
 
+    // Set of generated dependency specs, to prevent generating duplicate entries
     private HashSet<String> ids;
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
         var project = getProject();
         ids = new HashSet<>();
+
+        // StringJoiner is used to build the json file
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
 
+        // Buildscript classpath dependencies
         var classpath = project.getBuildscript().getConfigurations().getByName("classpath");
         var buildScriptRepositories = listPluginRepositories(project);
         if (classpath.isCanBeResolved()) {
             generateSourcesList(buildScriptRepositories, classpath, joiner);
         }
 
+        // List the declared repositories; include the buildscript classpath repositories too
         var repositories = listRepositories(project);
         repositories.addAll(buildScriptRepositories);
 
+        // Loop through configurations and generate json blocks for the resolved dependencies
         for (var configuration : project.getConfigurations()) {
             if (configuration.isCanBeResolved()) {
                 generateSourcesList(repositories, configuration, joiner);
             }
         }
 
-        // Write the results to the json file
+        // Write the StringJoiner result to the json file
         var fileName = getOutputFile().getAsFile().get();
         try (BufferedWriter output = new BufferedWriter(new FileWriter(fileName))) {
             output.write(joiner.toString());
@@ -121,7 +127,7 @@ public abstract class SourcesListTask extends DefaultTask {
     // and the Gradle plugin repository
     private List<String> listPluginRepositories(Project project) {
         var settings = ((GradleInternal) project.getGradle()).getSettings();
-        List<String> repositories = new ArrayList<>(settings.getPluginManagement().getRepositories().stream()
+        var repositories = new ArrayList<>(settings.getPluginManagement().getRepositories().stream()
                 .filter(repo -> repo instanceof MavenArtifactRepository)
                 .map(repo -> ((MavenArtifactRepository) repo).getUrl().toString())
                 .map(repo -> repo.endsWith("/") ? repo : repo + "/")
@@ -133,7 +139,10 @@ public abstract class SourcesListTask extends DefaultTask {
         return repositories;
     }
 
-    private void generateSourcesList(List<String> repositories, Configuration configuration, StringJoiner joiner) throws NoSuchAlgorithmException, IOException {
+    // Generate json blocks for all dependencies in the provided configuration,
+    // and add them to the StringJoiner
+    private void generateSourcesList(List<String> repositories, Configuration configuration, StringJoiner joiner)
+            throws NoSuchAlgorithmException, IOException {
         for (var dependency : listDependencies(configuration)) {
 
             // Don't process the same dependency multiple times
@@ -142,28 +151,33 @@ public abstract class SourcesListTask extends DefaultTask {
                 continue;
             ids.add(id);
 
+            // Build simple helper object
             var dep = DependencyDetails.of(id);
 
-            for (String ext : ARTIFACT_EXTENSIONS) {
-                // Calculate sha512 hash of the locally cached artifact
+            for (String ext : ARTIFACT_EXTENSIONS) {  // .jar, .pom and .module
+                // Find the locally cached artifact
                 var artifact = getArtifact(configuration, dependency.getModuleVersion(), ext);
                 if (artifact.isEmpty())
                     continue;
+
+                // the "sha512"
                 String sha512 = calculateSHA512(artifact.get());
 
                 // The "dest"
                 var dest = getDest() + dep.path();
-                // The "dest-filename"
-                String destFilename = getActualJarName().getOrElse(true) ? dep.filename(ext) : dep.artifactName(ext);
 
-                // Generate a URL for each repository, and find the first repository that responds with HTTP 200 (OK).
+                // The "dest-filename"
+                String destFilename = getActualJarName()
+                        .getOrElse(true) ? dep.filename(ext) : dep.artifactName(ext);
+
+                // Generate an url for each repository,
+                // and find the first repository that responds with HTTP 200 (OK).
                 var json = repositories.stream()
-                        .map(repo -> repo + dep.path() + "/" + dep.filename(ext))
-                        .distinct()
-                        .filter(SourcesListTask::tryResolve)
-                        .findFirst()
-                        // Generate the JSON for this URL
-                        .map(url -> generateJsonBlock(url, sha512, dest, destFilename));
+                        .map(repo -> repo + dep.path() + "/" + dep.filename(ext))        // build the url
+                        .distinct()                                                      // skip duplicate repositories
+                        .filter(this::tryResolve)                                        // filter for valid urls
+                        .findFirst()                                                     // keep the first valid url
+                        .map(url -> generateJsonBlock(url, sha512, dest, destFilename)); // generate the json
 
                 json.ifPresent(joiner::add);
             }
@@ -187,7 +201,13 @@ public abstract class SourcesListTask extends DefaultTask {
      * @param snapshotDetail only for snapshot dependencies, format "yyyymmdd.hhmmss-n"
      * @param isSnapshot whether this is a snapshot version
      */
-    private record DependencyDetails(String group, String name, String version, String snapshotDetail, boolean isSnapshot) {
+    private record DependencyDetails(
+            String group,
+            String name,
+            String version,
+            String snapshotDetail,
+            boolean isSnapshot
+    ) {
 
         /**
          * Parse a dependency record from this id
@@ -303,7 +323,7 @@ public abstract class SourcesListTask extends DefaultTask {
      * @param url the url to check
      * @return true if the url is valid (HTTP 200 OK), otherwise false
      */
-    private static boolean tryResolve(String url) {
+    private boolean tryResolve(String url) {
         try {
             URL fileUrl = new URI(url).toURL();
             HttpURLConnection httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
