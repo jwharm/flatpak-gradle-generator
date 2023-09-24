@@ -67,18 +67,6 @@ public abstract class SourcesListTask extends DefaultTask {
     @org.gradle.api.tasks.Optional
     public abstract Property<String> getDownloadDirectory();
 
-    /**
-     * Whether to write the actual filename for snapshot dependencies.
-     * <ul>
-     * <li>When {@code actualJarName = true}: write {@code "dest-filename": "library-yyyymmdd.hhmmss-n.jar"}
-     * <li>When property is {@code actualJarName = false}: write {@code "dest-filename": "library-SNAPSHOT.jar"}
-     * </ul>
-     * Defaults to {@code true}.
-     */
-    @Input
-    @org.gradle.api.tasks.Optional
-    public abstract Property<Boolean> getActualJarName();
-
     // Set of generated dependency specs, to prevent generating duplicate entries
     private HashSet<String> ids;
 
@@ -168,8 +156,7 @@ public abstract class SourcesListTask extends DefaultTask {
                 var dest = getDest() + dep.path();
 
                 // The "dest-filename"
-                String destFilename = getActualJarName()
-                        .getOrElse(true) ? dep.filename(ext) : dep.artifactName(ext);
+                String destFilename = dep.filename(ext);
 
                 // Generate an url for each repository,
                 // and find the first repository that responds with HTTP 200 (OK).
@@ -243,16 +230,6 @@ public abstract class SourcesListTask extends DefaultTask {
          */
         String filename(String ext) {
             return "%s-%s.%s".formatted(name, version.replace("SNAPSHOT", snapshotDetail), ext);
-        }
-
-        /**
-         * Generate the filename. Format is name-version.jar.
-         * For snapshot versions, the name will contain "-SNAPSHOT" and not the actual filename.
-         * @param ext the extension to append to the filename
-         * @return the filename.
-         */
-        String artifactName(String ext) {
-            return "%s-%s%s.%s".formatted(name, version, isSnapshot ? "-SNAPSHOT" : "", ext);
         }
     }
 

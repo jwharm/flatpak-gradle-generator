@@ -36,19 +36,9 @@ Maven dependencies before an offline build starts. The downloaded
 artifacts are pom, jar and module files and will be stored in a 
 Maven repository layout.
 
-### Snapshot dependencies
-Maven snapshot dependencies have a unique identifier in the filename. 
-The default behavior of the plugin is to set the `"dest-filename"` field 
-to this filename. If you want to set `"dest-filename"` to the more generic 
-`library-SNAPSHOT.jar` name, set the option `actualJarName` to `false`.
-
 ### Modular builds
 In a modular Gradle build, you can add a `tasks.sourcesList {}` block in 
 the build files of the subprojects, to generate a file for each project.
-
-### Output sorting
-The JSON output is sorted by filename. This should make the output a bit 
-more deterministic for the same set of dependencies.
 
 ### Requirements
 The plugin has been tested with Gradle 8.3. The published jar is built 
@@ -58,3 +48,4 @@ with Java 17.
 - The plugin has not been published yet. To test it, clone the repository, 
   publish the plugin to mavenLocal, and load it from there (follow
   [these instructions](https://elmland.blog/2019/08/10/add-mavenlocal-to-gradle-plugin-resolution/)).
+- Parent poms are not added to the list.
