@@ -37,6 +37,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -48,7 +49,7 @@ import java.util.*;
 public abstract class SourcesListTask extends DefaultTask {
 
     private static final String DEFAULT_DOWNLOAD_DIRECTORY = "maven-local";
-    private static final String GRADLE_PLUGIN_REPOSITORY = "https://plugins.gradle.org/m2/";
+    private static final String GRADLE_PLUGIN_PORTAL = "https://plugins.gradle.org/m2/";
     private static final List<String> ARTIFACT_EXTENSIONS = List.of("jar", "pom", "module");
 
     /**
@@ -134,7 +135,7 @@ public abstract class SourcesListTask extends DefaultTask {
                 .toList());
 
         // The Gradle plugin repository is always available
-        repositories.add(GRADLE_PLUGIN_REPOSITORY);
+        repositories.add(GRADLE_PLUGIN_PORTAL);
 
         return repositories;
     }
@@ -177,6 +178,7 @@ public abstract class SourcesListTask extends DefaultTask {
                         .distinct()                                                      // skip duplicate repositories
                         .filter(this::tryResolve)                                        // filter for valid urls
                         .findFirst()                                                     // keep the first valid url
+                        .map(url -> addPluginMarker(url, dep, artifact.get(), joiner))   // add marker artifact
                         .map(url -> generateJsonBlock(url, sha512, dest, destFilename)); // generate the json
 
                 json.ifPresent(joiner::add);
@@ -315,6 +317,67 @@ public abstract class SourcesListTask extends DefaultTask {
                 .map(result -> ((ResolvedDependencyResult) result))
                 .map(ResolvedDependencyResult::getSelected)
                 .toList();
+    }
+
+    /**
+     * For Gradle plugins, we add the plugin marker artifact to the JSON file.
+     * @param url a valid artifact url
+     * @param dep details about the dependency
+     * @param artifact the locally cached file for the dependency
+     * @param joiner the StringJoiner to which the marker artifact JSON will be added
+     * @return the original url to facilitate method chaining
+     */
+    private String addPluginMarker(String url, DependencyDetails dep, File artifact, StringJoiner joiner) {
+        try {
+            // Only run for jar files that are downloaded from the Gradle Plugin Portal
+            if (url.startsWith(GRADLE_PLUGIN_PORTAL) && url.endsWith(".jar")) {
+
+                // This is the marker artifact we are looking for
+                var marker = new DependencyDetails(
+                        dep.group().substring("gradle.plugin.".length()),
+                        dep.group().substring("gradle.plugin.".length()) + ".gradle.plugin",
+                        dep.version(),
+                        dep.snapshotDetail(),
+                        dep.isSnapshot()
+                );
+
+                // Find the locally cached pom file of the marker artifact
+                File pom = null;
+                var path = artifact.toPath()
+                        .getParent().getParent().getParent().getParent().getParent()
+                        .resolve(Path.of(marker.group(), marker.name(), marker.version()))
+                        .toFile();
+                for (var dir : Objects.requireNonNull(path.listFiles())) {
+                    // Check if there is exactly one .pom file in this directory.
+                    File[] files = dir.listFiles(($, name) -> name.endsWith(".pom"));
+                    if (files != null && files.length == 1) {
+                        pom = files[0];
+                        break;
+                    }
+                }
+                if (pom == null)
+                    throw new FileNotFoundException();
+
+                // Calculate sha512 for the marker pom
+                String sha512 = calculateSHA512(pom);
+
+                // Build the url
+                String markerUrl = GRADLE_PLUGIN_PORTAL + marker.path() + "/" + pom.getName();
+
+                // Try to resolve the url
+                if (tryResolve(markerUrl)) {
+                    // Build "dest" path
+                    String dest = getDest() + marker.path();
+
+                    // Generate json and add it to the StringJoiner
+                    var json = generateJsonBlock(markerUrl, sha512, dest, pom.getName());
+                    joiner.add(json);
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        // Always return the original artifact url
+        return url;
     }
 
     /**
