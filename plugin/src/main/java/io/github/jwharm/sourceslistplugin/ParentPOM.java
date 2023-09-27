@@ -6,6 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.StringJoiner;
 
+/**
+ * Helper class to parse POM files for parent declarations
+ */
 final class ParentPOM {
 
     private final ArtifactResolver resolver;

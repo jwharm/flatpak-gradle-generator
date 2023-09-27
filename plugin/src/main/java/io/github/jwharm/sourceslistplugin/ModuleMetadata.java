@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Helper class to parse module files
+ */
 final class ModuleMetadata {
 
     // Use getInstance()
@@ -15,6 +18,13 @@ final class ModuleMetadata {
         return new ModuleMetadata();
     }
 
+    /**
+     * Parse the module json file and return the jar filename for the requested variant
+     * @param contents the contents of the module file
+     * @param variant the requested variant
+     * @return the jar filename
+     * @throws RedirectedException when the module redirects to another module file
+     */
     public String process(String contents, String variant) throws RedirectedException {
         var gson = new Gson();
         var module = gson.fromJson(contents, ModuleDTO.class);
@@ -41,6 +51,9 @@ final class ModuleMetadata {
                 .orElseThrow();
     }
 
+    /**
+     * Thrown when a module redirects to another module with an "available-at" field
+     */
     static class RedirectedException extends RuntimeException {
 
         private final String url;
@@ -54,30 +67,26 @@ final class ModuleMetadata {
         }
     }
 
-    private record ModuleDTO(
-            ComponentDTO component,
-            List<VariantDTO> variants) {
+    private static class ModuleDTO {
+            List<VariantDTO> variants;
     }
-    private record ComponentDTO(
-            String group,
-            String module,
-            String version) {
+
+    private static class VariantDTO {
+            String name;
+            AttributeDTO attributes;
+            @SerializedName(value="available-at") AvailableAtDTO availableAt;
+            List<FileDTO> files;
     }
-    private record VariantDTO(
-            String name,
-            AttributeDTO attributes,
-            @SerializedName(value="available-at")AvailableAtDTO availableAt,
-            List<FileDTO> files) {
+
+    private static class AttributeDTO {
+            @SerializedName(value="org.gradle.category") String category;
     }
-    private record AttributeDTO(
-            @SerializedName(value="org.gradle.category") String category) {
+
+    private static class AvailableAtDTO {
+            String url;
     }
-    private record AvailableAtDTO(
-            String url) {
-    }
-    private record FileDTO(
-            String name,
-            String url,
-            String sha512) {
+
+    private static class FileDTO {
+            String name;
     }
 }

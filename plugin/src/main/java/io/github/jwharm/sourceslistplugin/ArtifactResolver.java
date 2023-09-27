@@ -16,6 +16,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.StringJoiner;
 
+/**
+ * Helper class for resolving artifacts
+ */
 final class ArtifactResolver {
 
     private final String dest;
