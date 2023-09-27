@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
   // a random dependency for this example
-  implementation 'org.jetbrains:annotations:24.0.1'
+  implementation 'io.github.jwharm.javagi:adw:0.7.1'
 }
 
 tasks.sourcesList {
@@ -26,7 +26,33 @@ tasks.sourcesList {
 ```
 
 Run `gradle sourcesList` and it will write a json file with information 
-about the dependencies.
+about the dependencies:
+
+```json
+[
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.module",
+    "sha512": "d265d970864b3fb4c97b0fe87030ba76eafb252531d9da37cd7a51296b32e95bb70154f0075f6a0d0bc1e41fbd7f23280bdc6b317a1d5808c5a0c4b3a5ac70b5",
+    "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
+    "dest-filename": "adw-0.7.1.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.jar",
+    "sha512": "356a1c8f8ae89d7212bdfccd9afcd607ae86301485dd850d11eb378cbfe6f05f00cee27be368f907b0b941a065564f7ca3fb7ee18b21f4aaf8bec4d4176ba65a",
+    "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
+    "dest-filename": "adw-0.7.1.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.pom",
+    "sha512": "7f62d93f16ba52cd88b690919219ee46b8507c71fcb77e295d42fb6724f27cda65b7a04673f35083a68d5f6b00aba4e2ef5cb37967d3c6c1687f92f640680a88",
+    "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
+    "dest-filename": "adw-0.7.1.pom"
+  },
+  etc...
+```
 
 The plugin will output all direct and transitive dependencies for all 
 build configurations, including plugin dependencies.
