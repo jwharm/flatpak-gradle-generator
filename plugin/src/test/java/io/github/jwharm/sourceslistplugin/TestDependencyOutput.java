@@ -96,6 +96,13 @@ class TestDependencyOutput {
                 [
                   {
                     "type": "file",
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.9.2/junit-jupiter-5.9.2.module",
+                    "sha512": "bde3475b10061efc50139c82e180d43da289f2ddf7041158cb21ed0aefef446251c0bd9baea70f1b062ca03eecc54524cd24dce32ffe150dfbd4318e8e24390d",
+                    "dest": "maven-local/org/junit/jupiter/junit-jupiter/5.9.2",
+                    "dest-filename": "junit-jupiter-5.9.2.module"
+                  },
+                  {
+                    "type": "file",
                     "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.9.2/junit-jupiter-5.9.2.jar",
                     "sha512": "518967645266167d50416f234eaf324bbf6d701c19a96fe5699824b9078d765146335b1a57a5fdfce7a50e8f489c8a6edd4068cb9acf4acee130d6e7cfa3fb9d",
                     "dest": "maven-local/org/junit/jupiter/junit-jupiter/5.9.2",
@@ -110,10 +117,24 @@ class TestDependencyOutput {
                   },
                   {
                     "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter/5.9.2/junit-jupiter-5.9.2.module",
-                    "sha512": "bde3475b10061efc50139c82e180d43da289f2ddf7041158cb21ed0aefef446251c0bd9baea70f1b062ca03eecc54524cd24dce32ffe150dfbd4318e8e24390d",
-                    "dest": "maven-local/org/junit/jupiter/junit-jupiter/5.9.2",
-                    "dest-filename": "junit-jupiter-5.9.2.module"
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.9.2/junit-bom-5.9.2.module",
+                    "sha512": "6c10c7ef2a443d30e72fad055607731cd6b52a1da3cb2037e48a214478b17bc77f58ea6ab0c09c246c38492245c3d69c91ea7d3f549155bc994e28165c7ce366",
+                    "dest": "maven-local/org/junit/junit-bom/5.9.2",
+                    "dest-filename": "junit-bom-5.9.2.module"
+                  },
+                  {
+                    "type": "file",
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.9.2/junit-bom-5.9.2.pom",
+                    "sha512": "f7f727af2d3a0718f33f3e1a42eaeb645a1b7cb3401349111a6747aab3ef01b767b4d8cfc1b2c1449019207f2d63dc490a2e2632c60ca564ff85a81be00472f8",
+                    "dest": "maven-local/org/junit/junit-bom/5.9.2",
+                    "dest-filename": "junit-bom-5.9.2.pom"
+                  },
+                  {
+                    "type": "file",
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.module",
+                    "sha512": "92818cf2c805b10aabdefb1b27eb7711485449daa1b3ce017ed72b5275dc421357c3eab5e455e3814d030c03dfc96e301db4944f2596928d565ca997e096ff42",
+                    "dest": "maven-local/org/junit/jupiter/junit-jupiter-api/5.9.2",
+                    "dest-filename": "junit-jupiter-api-5.9.2.module"
                   },
                   {
                     "type": "file",
@@ -131,13 +152,6 @@ class TestDependencyOutput {
                   },
                   {
                     "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.module",
-                    "sha512": "92818cf2c805b10aabdefb1b27eb7711485449daa1b3ce017ed72b5275dc421357c3eab5e455e3814d030c03dfc96e301db4944f2596928d565ca997e096ff42",
-                    "dest": "maven-local/org/junit/jupiter/junit-jupiter-api/5.9.2",
-                    "dest-filename": "junit-jupiter-api-5.9.2.module"
-                  },
-                  {
-                    "type": "file",
                     "url": "https://repo.maven.apache.org/maven2/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar",
                     "sha512": "17f77797a260eb2bd1666a90e25efc79a5413afa9df1c1cb6c4cd1949d61c38b241e3bb20956396b5f54d144720303d72a2ac00bc5bf245a260a3c3099e01c74",
                     "dest": "maven-local/org/opentest4j/opentest4j/1.2.0",
@@ -149,6 +163,13 @@ class TestDependencyOutput {
                     "sha512": "28ce0d0b5cceeac5adfcdd16ee6f5fbefd43eef8057b924993fb7a9f4b7a7085b980f3e808db5fb7750a53d0072b7fe7b118f5c0011e3ef0efe6c9a90a87b868",
                     "dest": "maven-local/org/opentest4j/opentest4j/1.2.0",
                     "dest-filename": "opentest4j-1.2.0.pom"
+                  },
+                  {
+                    "type": "file",
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.module",
+                    "sha512": "fa1e7ef9ccb17374fb7fd6a0a6bbd9174c5733015fe07a73b3131cbe7193c7dd8d0f4e35c4f593d2f9ffc1e5e4bb3b143241591a074025656c28eec9ef8baa02",
+                    "dest": "maven-local/org/junit/platform/junit-platform-commons/1.9.2",
+                    "dest-filename": "junit-platform-commons-1.9.2.module"
                   },
                   {
                     "type": "file",
@@ -166,10 +187,10 @@ class TestDependencyOutput {
                   },
                   {
                     "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.module",
-                    "sha512": "fa1e7ef9ccb17374fb7fd6a0a6bbd9174c5733015fe07a73b3131cbe7193c7dd8d0f4e35c4f593d2f9ffc1e5e4bb3b143241591a074025656c28eec9ef8baa02",
-                    "dest": "maven-local/org/junit/platform/junit-platform-commons/1.9.2",
-                    "dest-filename": "junit-platform-commons-1.9.2.module"
+                    "url": "https://repo.maven.apache.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.module",
+                    "sha512": "b8f1e5623d4d146caf73a869e8ee719746831d67e0259ecff8dec276c0563b92c65ee6bf2dd40b6e80b309e5da805730a39869f8942321626f793f69b57f11ff",
+                    "dest": "maven-local/org/apiguardian/apiguardian-api/1.1.2",
+                    "dest-filename": "apiguardian-api-1.1.2.module"
                   },
                   {
                     "type": "file",
@@ -187,10 +208,10 @@ class TestDependencyOutput {
                   },
                   {
                     "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.module",
-                    "sha512": "b8f1e5623d4d146caf73a869e8ee719746831d67e0259ecff8dec276c0563b92c65ee6bf2dd40b6e80b309e5da805730a39869f8942321626f793f69b57f11ff",
-                    "dest": "maven-local/org/apiguardian/apiguardian-api/1.1.2",
-                    "dest-filename": "apiguardian-api-1.1.2.module"
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.9.2/junit-jupiter-params-5.9.2.module",
+                    "sha512": "c8f00a7c07272bd9d41a4ccebc53a9858db5c2270cf48f3ad224e5e93b7a7d2d0f75feab12b1ab2aeb2111bc843a697978827060b8a24f72d7565f20b625f02f",
+                    "dest": "maven-local/org/junit/jupiter/junit-jupiter-params/5.9.2",
+                    "dest-filename": "junit-jupiter-params-5.9.2.module"
                   },
                   {
                     "type": "file",
@@ -208,10 +229,10 @@ class TestDependencyOutput {
                   },
                   {
                     "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-params/5.9.2/junit-jupiter-params-5.9.2.module",
-                    "sha512": "c8f00a7c07272bd9d41a4ccebc53a9858db5c2270cf48f3ad224e5e93b7a7d2d0f75feab12b1ab2aeb2111bc843a697978827060b8a24f72d7565f20b625f02f",
-                    "dest": "maven-local/org/junit/jupiter/junit-jupiter-params/5.9.2",
-                    "dest-filename": "junit-jupiter-params-5.9.2.module"
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.module",
+                    "sha512": "3e8807bf880c02c8dce17cf33141e2add7fc9c56fa50c2ccb905d10c2846697c9126ab1ca31c387194297cd017d669d9262f8e97191255d883de100bd5071659",
+                    "dest": "maven-local/org/junit/jupiter/junit-jupiter-engine/5.9.2",
+                    "dest-filename": "junit-jupiter-engine-5.9.2.module"
                   },
                   {
                     "type": "file",
@@ -229,10 +250,10 @@ class TestDependencyOutput {
                   },
                   {
                     "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.module",
-                    "sha512": "3e8807bf880c02c8dce17cf33141e2add7fc9c56fa50c2ccb905d10c2846697c9126ab1ca31c387194297cd017d669d9262f8e97191255d883de100bd5071659",
-                    "dest": "maven-local/org/junit/jupiter/junit-jupiter-engine/5.9.2",
-                    "dest-filename": "junit-jupiter-engine-5.9.2.module"
+                    "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.module",
+                    "sha512": "81bf3f5be568ad0459ed02cded8bdef71d0cdebc429cdfe4296540a3c7c43eb22a9a73ebbbbd95c1bad815c36723aeeced3f49832d47a4376991763df5b4c7b1",
+                    "dest": "maven-local/org/junit/platform/junit-platform-engine/1.9.2",
+                    "dest-filename": "junit-platform-engine-1.9.2.module"
                   },
                   {
                     "type": "file",
@@ -247,13 +268,6 @@ class TestDependencyOutput {
                     "sha512": "9f673ab4654993c6a6dc5daff4b18a49e4bce9894eba65db86c9f8d48ecd13d3c880de1f2f2edb66c59840d1fa91f91c9c730e860e87443fe7ba3fcbb1cef8b5",
                     "dest": "maven-local/org/junit/platform/junit-platform-engine/1.9.2",
                     "dest-filename": "junit-platform-engine-1.9.2.pom"
-                  },
-                  {
-                    "type": "file",
-                    "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.module",
-                    "sha512": "81bf3f5be568ad0459ed02cded8bdef71d0cdebc429cdfe4296540a3c7c43eb22a9a73ebbbbd95c1bad815c36723aeeced3f49832d47a4376991763df5b4c7b1",
-                    "dest": "maven-local/org/junit/platform/junit-platform-engine/1.9.2",
-                    "dest-filename": "junit-platform-engine-1.9.2.module"
                   }
                 ]
                 """;
