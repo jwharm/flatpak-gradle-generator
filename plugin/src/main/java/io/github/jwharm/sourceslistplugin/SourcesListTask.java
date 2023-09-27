@@ -75,10 +75,11 @@ public abstract class SourcesListTask extends DefaultTask {
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
 
         // Buildscript classpath dependencies
-        var classpath = project.getBuildscript().getConfigurations().getByName("classpath");
         var buildScriptRepositories = listPluginRepositories(project);
-        if (classpath.isCanBeResolved()) {
-            generateSourcesList(buildScriptRepositories, classpath, joiner);
+        for (var configuration : project.getBuildscript().getConfigurations()) {
+            if (configuration.isCanBeResolved()) {
+                generateSourcesList(buildScriptRepositories, configuration, joiner);
+            }
         }
 
         // List the declared repositories; include the buildscript classpath repositories too
@@ -150,8 +151,6 @@ public abstract class SourcesListTask extends DefaultTask {
             ids.add(id);
 
             String variant = dependency.getResolvedVariant().getDisplayName();
-
-            System.out.printf("%s: %s\n", configuration.getName(), id);
 
             // Build simple helper object with the Maven coordinates of the artifact
             var dep = DependencyDetails.of(id);
