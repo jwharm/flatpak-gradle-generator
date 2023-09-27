@@ -28,7 +28,7 @@ tasks.sourcesList {
 Run `gradle sourcesList` and it will write a json file with information 
 about the dependencies:
 
-```json
+```
 [
   {
     "type": "file",
@@ -51,7 +51,14 @@ about the dependencies:
     "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
     "dest-filename": "adw-0.7.1.pom"
   },
-  etc...
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/gtk/0.7.1/gtk-0.7.1.module",
+    "sha512": "ba28d5819b5765133be9d6be804f1688673f79315f06023452ad30ed61872a29a56013e7f24b05129b8c8f6d0d3350c042bc5e9170e005143b7511ba0458b275",
+    "dest": "./maven-local/io/github/jwharm/javagi/gtk/0.7.1",
+    "dest-filename": "gtk-0.7.1.module"
+  },
+  ...etc...
 ```
 
 The plugin will output all direct and transitive dependencies for all 
