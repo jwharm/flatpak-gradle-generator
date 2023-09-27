@@ -62,14 +62,17 @@ public abstract class SourcesListTask extends DefaultTask {
     // Set of generated dependency specs, to prevent generating duplicate entries
     private HashSet<String> ids;
 
-    private final ArtifactResolver resolver = ArtifactResolver.getInstance(getDest());
-    private final ParentPOM parentPOM = ParentPOM.getInstance(resolver);
-    private final ModuleMetadata moduleMetadata = ModuleMetadata.getInstance();
+    private ArtifactResolver resolver;
+    private ParentPOM parentPOM;
+    private ModuleMetadata moduleMetadata;
 
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
         var project = getProject();
         ids = new HashSet<>();
+        resolver = ArtifactResolver.getInstance(getDest());
+        parentPOM = ParentPOM.getInstance(resolver);
+        moduleMetadata = ModuleMetadata.getInstance();
 
         // StringJoiner is used to build the json file
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
@@ -157,6 +160,11 @@ public abstract class SourcesListTask extends DefaultTask {
 
             // Loop through the repositories, skip duplicates
             for (var repository : repositories.stream().distinct().toList()) {
+
+                // Skip local repositories
+                if (repository.startsWith("file:/"))
+                    continue;
+
                 // Download .module artifact
                 var result = resolver.tryResolve(dep, repository, dep.filename("module"), joiner);
 
