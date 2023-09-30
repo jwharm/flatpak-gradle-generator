@@ -63,13 +63,17 @@ record DependencyDetails(
     }
 
     /**
-     * Generate the filename to use in the url. Format is name-version.jar.
-     * For snapshot versions, this is the actual filename, formatted as name-version-yyyymmdd.hhmmss-n.[ext]
+     * Generate the filename to use in the url. Format is name-version.[ext].
+     * For snapshot jar files, the filename is formatted as name-version-yyyymmdd.hhmmss-n.[ext]
      *
      * @param ext the extension to append to the filename
      * @return the filename to use in the url
      */
     String filename(String ext) {
-        return "%s-%s.%s".formatted(name, version.replace("SNAPSHOT", snapshotDetail), ext);
+        if (ext.equals("jar")) {
+            return "%s-%s.%s".formatted(name, version.replace("SNAPSHOT", snapshotDetail), ext);
+        } else {
+            return "%s-%s.%s".formatted(name, version, ext);
+        }
     }
 }
