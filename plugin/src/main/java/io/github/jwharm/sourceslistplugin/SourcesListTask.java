@@ -146,7 +146,9 @@ public abstract class SourcesListTask extends DefaultTask {
      */
     private void generateSourcesList(List<String> repositories, Configuration configuration, StringJoiner joiner)
             throws IOException, NoSuchAlgorithmException {
+
         for (var dependency : listDependencies(configuration)) {
+
             // Don't process the same dependency multiple times
             String id = dependency.getSelected().getId().getDisplayName();
             if (ids.contains(id))
@@ -154,6 +156,10 @@ public abstract class SourcesListTask extends DefaultTask {
             ids.add(id);
 
             String variant = dependency.getResolvedVariant().getDisplayName();
+
+            // Skip dependencies on local Gradle projects
+            if (id.startsWith("project "))
+                continue;
 
             // Build simple helper object with the Maven coordinates of the artifact
             var dep = DependencyDetails.of(id);
@@ -166,19 +172,19 @@ public abstract class SourcesListTask extends DefaultTask {
                     continue;
 
                 // Download .module artifact
-                var result = resolver.tryResolve(dep, repository, dep.filename("module"), joiner);
+                var module = resolver.tryResolve(dep, repository, dep.filename("module"), joiner);
 
                 // Add .jar artifact from information in the .module file
-                if (result.isPresent()) {
+                if (module.isPresent()) {
                     try {
                         String jarFilename = null;
                         try {
-                            jarFilename = moduleMetadata.process(new String(result.get()), variant);
+                            jarFilename = moduleMetadata.process(new String(module.get()), variant);
                         } catch (ModuleMetadata.RedirectedException redirected) {
                             // Download .module artifact from alternate URL
-                            result = resolver.tryResolve(dep, repository, redirected.url(), joiner);
-                            if (result.isPresent())
-                                jarFilename = moduleMetadata.process(new String(result.get()), variant);
+                            module = resolver.tryResolve(dep, repository, redirected.url(), joiner);
+                            if (module.isPresent())
+                                jarFilename = moduleMetadata.process(new String(module.get()), variant);
                         }
                         if (jarFilename != null)
                             resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
@@ -199,11 +205,11 @@ public abstract class SourcesListTask extends DefaultTask {
                 }
 
                 // Download .pom artifact
-                result = resolver.tryResolve(dep, repository, dep.filename("pom"), joiner);
+                var pom = resolver.tryResolve(dep, repository, dep.filename("pom"), joiner);
 
                 // Add parent POMs
-                if (result.isPresent())
-                    parentPOM.addParentPOMs(result.get(), repository, joiner);
+                if (pom.isPresent())
+                    parentPOM.addParentPOMs(pom.get(), repository, joiner);
 
                 // Add marker artifact
                 // Only for plugin jar files downloaded from the Gradle Plugin Portal
@@ -211,7 +217,8 @@ public abstract class SourcesListTask extends DefaultTask {
                     addPluginMarker(dep, joiner);
 
                 // Success! No need to resolve this dependency against other repositories
-                break;
+                if (module.isPresent() || pom.isPresent())
+                    break;
             }
         }
     }
