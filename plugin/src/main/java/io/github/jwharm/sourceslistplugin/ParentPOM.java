@@ -81,7 +81,9 @@ final class ParentPOM {
             StringBuilder characters = new StringBuilder();
 
             // This is used to construct the Maven coordinates
-            StringBuilder id = new StringBuilder();
+            StringBuilder groupId = new StringBuilder();
+            StringBuilder artifactId = new StringBuilder();
+            StringBuilder versionId = new StringBuilder();
 
             // Name of the current element
             String name;
@@ -108,12 +110,14 @@ final class ParentPOM {
                     name = nextEvent.asEndElement().getName().getLocalPart();
                     if (inParentElement) {
                         switch (name) {
-                            case "groupId" -> id.append(characters);
-                            case "artifactId", "version" -> id.append(":").append(characters);
+                            case "groupId" -> groupId.append(characters);
+                            case "artifactId" -> artifactId.append(characters);
+                            case "version" -> versionId.append(characters);
                             case "parent" -> {
                                 // We are leaving the parent element
                                 // Return the Maven coordinates of the parent artifact
-                                return Optional.of(DependencyDetails.of(id.toString()));
+                                String id = "%s:%s:%s".formatted(groupId, artifactId, versionId);
+                                return Optional.of(DependencyDetails.of(id));
                             }
                             default -> {} // ignored
                         }
