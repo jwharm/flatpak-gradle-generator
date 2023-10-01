@@ -80,6 +80,13 @@ final class ArtifactResolver {
 
             // Generate and append the json
             generateJsonBlock(url, sha512, dest, destFilename, joiner);
+
+            // For snapshot versions, generate a second json with "-SNAPSHOT" instead of the actual filename
+            if (dep.isSnapshot()) {
+                String ext = destFilename.substring(destFilename.lastIndexOf(".") + 1);
+                destFilename = "%s-%s.%s".formatted(dep.name(), dep.version(), ext);
+                generateJsonBlock(url, sha512, dest, destFilename, joiner);
+            }
         }
         // Return the file contents
         return contents;

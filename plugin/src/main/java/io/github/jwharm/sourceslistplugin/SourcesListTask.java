@@ -186,9 +186,12 @@ public abstract class SourcesListTask extends DefaultTask {
                             if (module.isPresent())
                                 jarFilename = moduleMetadata.process(new String(module.get()), variant);
                         }
-                        if (jarFilename != null)
+                        if (jarFilename != null) {
+                            if (jarFilename.contains("SNAPSHOT"))
+                                jarFilename = jarFilename.replace("SNAPSHOT", dep.snapshotDetail());
                             resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
                                     dep, repository, jarFilename, joiner);
+                        }
 
                     } catch (NoSuchElementException noJar) {
                         // No jar file declared for this variant in the .module file
