@@ -28,17 +28,17 @@ import java.util.StringJoiner;
 /**
  * Helper class to parse POM files for parent declarations
  */
-final class ParentPOM {
+final class ParentPom {
 
     private final ArtifactResolver resolver;
 
     // Use getInstance()
-    private ParentPOM(ArtifactResolver resolver) {
+    private ParentPom(ArtifactResolver resolver) {
         this.resolver = resolver;
     }
 
-    static ParentPOM getInstance(ArtifactResolver resolver) {
-        return new ParentPOM(resolver);
+    static ParentPom getInstance(ArtifactResolver resolver) {
+        return new ParentPom(resolver);
     }
 
     /**

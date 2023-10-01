@@ -63,7 +63,7 @@ public abstract class SourcesListTask extends DefaultTask {
     private HashSet<String> ids;
 
     private ArtifactResolver resolver;
-    private ParentPOM parentPOM;
+    private ParentPom parentPOM;
     private ModuleMetadata moduleMetadata;
 
     @TaskAction
@@ -71,7 +71,7 @@ public abstract class SourcesListTask extends DefaultTask {
         var project = getProject();
         ids = new HashSet<>();
         resolver = ArtifactResolver.getInstance(getDest());
-        parentPOM = ParentPOM.getInstance(resolver);
+        parentPOM = ParentPom.getInstance(resolver);
         moduleMetadata = ModuleMetadata.getInstance();
 
         // StringJoiner is used to build the json file
