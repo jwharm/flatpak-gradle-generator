@@ -1,3 +1,22 @@
+/* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
+ * Copyright (C) 2023 Jan-Willem Harmannij
+ *
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ */
+
 package io.github.jwharm.sourceslistplugin;
 
 import org.junit.jupiter.api.Test;
@@ -41,7 +60,7 @@ public class TestModuleMetadata {
                   },
                   "files": [
                     {
-                      "name": "cairo-1.16.2.jar",
+                      "name": "cairo-1.16.2.jar (INVALID)",
                       "url": "cairo-1.16.2.jar",
                       "size": 179193,
                       "sha512": "b01b894f1c218188ab302a2c348164fa886bf702a2ede3c0229997e5e2552f8c6859eb7bdc258a26360b867592740bf2a58c1ff8370727873aefdc8d6030e461",

@@ -1,0 +1,16 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'commons-io:commons-io:2.14.0'
+}
+
+tasks.sourcesList {
+    outputFile = file('%s')
+}

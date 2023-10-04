@@ -1,4 +1,4 @@
-/* SourcesListPlugin - a Gradle plugin to generate a list of dependencies
+/* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
  * Copyright (C) 2023 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
@@ -31,7 +31,7 @@ class TestPluginRegistered {
     @Test void pluginRegistersATask() {
         // Create a test project and apply the plugin
         Project project = ProjectBuilder.builder().build();
-        project.getPlugins().apply("io.github.jwharm.sourceslistplugin");
+        project.getPlugins().apply("io.github.jwharm.flatpak-gradle-generator");
 
         // Verify the result
         assertNotNull(project.getTasks().findByName("sourcesList"));

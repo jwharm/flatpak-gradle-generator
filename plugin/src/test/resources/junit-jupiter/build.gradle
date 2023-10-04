@@ -1,0 +1,18 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+}
+
+tasks.sourcesList {
+    outputFile = file('%s')
+    downloadDirectory = 'maven-local'
+}

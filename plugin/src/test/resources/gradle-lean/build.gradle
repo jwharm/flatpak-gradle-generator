@@ -1,0 +1,8 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'com.github.gradle-lean' version '0.1.2'
+}
+
+tasks.sourcesList {
+    outputFile = file('%s')
+}
