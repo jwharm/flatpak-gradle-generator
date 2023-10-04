@@ -46,6 +46,8 @@ public abstract class SourcesListTask extends DefaultTask {
 
     /**
      * Specifies where to write the resulting json file.
+     *
+     * @return the output file
      */
     @OutputFile
     public abstract RegularFileProperty getOutputFile();
@@ -54,6 +56,8 @@ public abstract class SourcesListTask extends DefaultTask {
      * Specifies the value for the {@code "dest"} attribute in the json file.
      * <p>
      * Defaults to {@code "localRepository"}.
+     *
+     * @return the download directory
      */
     @Input
     @org.gradle.api.tasks.Optional
@@ -66,6 +70,12 @@ public abstract class SourcesListTask extends DefaultTask {
     private ParentPom parentPOM;
     private ModuleMetadata moduleMetadata;
 
+    /**
+     * Run the sourcesList task
+     *
+     * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
+     * @throws IOException              error writing json list to output file
+     */
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
         var project = getProject();
