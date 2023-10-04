@@ -1,11 +1,11 @@
-# sources-list-plugin
+# flatpak-gradle-generator
 A Gradle plugin to generate a sources file for offline Flatpak builds.
 
 Example `gradle.build`:
 
 ```groovy
 plugins {
-  id 'io.github.jwharm.sourceslistplugin' version '0.1'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '0.1'
   id 'application'
 }
 

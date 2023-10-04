@@ -1,6 +1,5 @@
 plugins {
-    id 'java-gradle-plugin'
-    id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '1.2.1'
     id 'signing'
 }
 
@@ -15,6 +14,7 @@ dependencies {
 }
 
 version = '0.1'
+group = 'io.github.jwharm.flatpak-gradle-generator'
 
 java {
     toolchain {
@@ -28,60 +28,9 @@ test {
 
 gradlePlugin {
     plugins {
-        sourceslistplugin {
-            id = 'io.github.jwharm.sourceslistplugin'
+        flatpakGradleGenerator {
+            id = 'io.github.jwharm.flatpak-gradle-generator'
             implementationClass = 'io.github.jwharm.sourceslistplugin.SourcesListPlugin'
-        }
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            pom {
-                name = "${groupId}:${artifactId}"
-                groupId = 'io.github.jwharm.sourceslistplugin'
-                description = 'A Gradle plugin to generate a sources file for use with Flatpak'
-                url = 'https://github.com/jwharm/sources-list-plugin/'
-                licenses {
-                    license {
-                        name = 'GNU Lesser General Public License, version 2.1'
-                        url = 'https://www.gnu.org/licenses/lgpl-2.1.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'jwharm'
-                        name = 'Jan-Willem Harmannij'
-                        email = 'jwharmannij@gmail.com'
-                        url = 'https://github.com/jwharm'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/jwharm/sources-list-plugin.git'
-                    developerConnection = 'scm:git:ssh://github.com:jwharm/sources-list-plugin.git'
-                    url = 'http://github.com/jwharm/sources-list-plugin/tree/master'
-                }
-            }
-        }
-    }
-
-    if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-        repositories {
-            maven {
-                name = 'OSSRH'
-                def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-                def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-                credentials {
-                    username = ossrhUsername
-                    password = ossrhPassword
-                }
-            }
-        }
-        signing {
-            sign publishing.publications.mavenJava
         }
     }
 }

@@ -1,4 +1,4 @@
-/* SourcesListPlugin - a Gradle plugin to generate a list of dependencies
+/* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
  * Copyright (C) 2023 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
