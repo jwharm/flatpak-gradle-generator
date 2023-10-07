@@ -29,7 +29,7 @@ public class TestModuleMetadata {
     public void testModuleMetadata() {
         var mod = ModuleMetadata.getInstance();
         var result = mod.process(MODULE_FILE, "runtimeElements");
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         assertEquals("cairo-1.16.2.jar", result.get(0).url);
     }
 
