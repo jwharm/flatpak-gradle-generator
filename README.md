@@ -5,7 +5,7 @@ Example `gradle.build`:
 
 ```groovy
 plugins {
-  id 'io.github.jwharm.flatpak-gradle-generator' version '0.1'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '1.0.0'
   id 'application'
 }
 
@@ -19,13 +19,13 @@ dependencies {
   implementation 'io.github.jwharm.javagi:adw:0.7.1'
 }
 
-tasks.sourcesList {
+tasks.flatpakGradleGenerator {
   outputFile = file('flatpak-sources.json')
   downloadDirectory = './maven-local'
 }
 ```
 
-Run `gradle sourcesList` and it will write a json file with information 
+Run `gradle flatpakGradleGenerator` and it will write a json file with information 
 about the dependencies:
 
 ```
@@ -70,7 +70,7 @@ artifacts are pom, jar and module files and will be stored in a
 Maven repository layout.
 
 ### Modular builds
-In a modular Gradle build, you can add a `tasks.sourcesList {}` block in 
+In a modular Gradle build, you can add a `tasks.flatpakGradleGenerator {}` block in 
 the build files of the subprojects, to generate a file for each project.
 
 ### Requirements

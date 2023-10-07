@@ -35,7 +35,7 @@ gradlePlugin {
             displayName = 'Flatpak sources list generator for Gradle dependencies'
             description = 'A Gradle plugin to generate a sources file for use with Flatpak'
             tags.addAll(['flatpak'])
-            implementationClass = 'io.github.jwharm.sourceslistplugin.SourcesListPlugin'
+            implementationClass = 'io.github.jwharm.flatpakgradlegenerator.FlatpakGradleGeneratorPlugin'
         }
     }
 }

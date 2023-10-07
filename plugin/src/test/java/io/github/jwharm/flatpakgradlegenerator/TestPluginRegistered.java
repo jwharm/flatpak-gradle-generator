@@ -17,17 +17,23 @@
  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.jwharm.sourceslistplugin;
+package io.github.jwharm.flatpakgradlegenerator;
 
+import org.gradle.testfixtures.ProjectBuilder;
 import org.gradle.api.Project;
-import org.gradle.api.Plugin;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * A plugin that creates a sources list file with all Gradle dependencies,
- * so they can be downloaded for an offline build.
+ * A simple unit test for the 'io.github.jwharm.flatpakgradlegenerator' plugin.
  */
-public class SourcesListPlugin implements Plugin<Project> {
-    public void apply(Project project) {
-        project.getTasks().register("sourcesList", SourcesListTask.class);
+class TestPluginRegistered {
+    @Test void pluginRegistersATask() {
+        // Create a test project and apply the plugin
+        Project project = ProjectBuilder.builder().build();
+        project.getPlugins().apply("io.github.jwharm.flatpak-gradle-generator");
+
+        // Verify the result
+        assertNotNull(project.getTasks().findByName("flatpakGradleGenerator"));
     }
 }

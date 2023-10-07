@@ -12,7 +12,7 @@ dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
 
-tasks.sourcesList {
+tasks.flatpakGradleGenerator {
     outputFile = file('%s')
     downloadDirectory = 'maven-local'
 }

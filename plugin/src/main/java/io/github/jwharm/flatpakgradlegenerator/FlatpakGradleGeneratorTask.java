@@ -17,7 +17,7 @@
  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.jwharm.sourceslistplugin;
+package io.github.jwharm.flatpakgradlegenerator;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
@@ -39,7 +39,7 @@ import java.util.*;
  * A task that creates a sources list file with all Gradle dependencies,
  * so they can be downloaded for an offline build.
  */
-public abstract class SourcesListTask extends DefaultTask {
+public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
     private static final String DEFAULT_DOWNLOAD_DIRECTORY = "maven-local";
     private static final String GRADLE_PLUGIN_PORTAL = "https://plugins.gradle.org/m2/";
@@ -71,7 +71,7 @@ public abstract class SourcesListTask extends DefaultTask {
     private ModuleMetadata moduleMetadata;
 
     /**
-     * Run the sourcesList task
+     * Run the flatpakGradleGenerator task
      *
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      * @throws IOException              error writing json list to output file

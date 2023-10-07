@@ -12,7 +12,7 @@ dependencies {
     implementation 'org.gtkkn:gtk4-linuxx64:0.0.1-SNAPSHOT:20230531.114618-3'
 }
 
-tasks.sourcesList {
+tasks.flatpakGradleGenerator {
     outputFile = file('%s')
     downloadDirectory = 'maven-local'
 }

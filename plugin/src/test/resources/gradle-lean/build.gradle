@@ -3,6 +3,6 @@ plugins {
     id 'com.github.gradle-lean' version '0.1.2'
 }
 
-tasks.sourcesList {
+tasks.flatpakGradleGenerator {
     outputFile = file('%s')
 }

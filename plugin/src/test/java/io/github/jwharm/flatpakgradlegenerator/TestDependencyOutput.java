@@ -17,7 +17,7 @@
  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.jwharm.sourceslistplugin;
+package io.github.jwharm.flatpakgradlegenerator;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -71,7 +71,7 @@ class TestDependencyOutput {
         testDependencyOutput("kotlin-gradle-plugin-api");
     }
 
-    // Run the sourcesList task on a temporary Gradle build, and compare the results with the expected output
+    // Run the flatpakGradleGenerator task on a temporary Gradle build, and compare the results with the expected output
     private void testDependencyOutput(String variant) throws IOException {
         // Temporary build directory
         File projectDir = createTempSubdirectory(variant);
@@ -89,7 +89,7 @@ class TestDependencyOutput {
         GradleRunner.create()
             .forwardOutput()
             .withPluginClasspath()
-            .withArguments("sourcesList")
+            .withArguments("flatpakGradleGenerator")
             .withProjectDir(projectDir)
             .build();
 
