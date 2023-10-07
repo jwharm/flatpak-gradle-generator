@@ -61,6 +61,16 @@ class TestDependencyOutput {
         testDependencyOutput("commons-io");
     }
 
+    @Test
+    void testDokka() throws IOException {
+        testDependencyOutput("dokka");
+    }
+
+    @Test
+    void testKotlinGradlePluginApi() throws IOException {
+        testDependencyOutput("kotlin-gradle-plugin-api");
+    }
+
     // Run the sourcesList task on a temporary Gradle build, and compare the results with the expected output
     private void testDependencyOutput(String variant) throws IOException {
         // Temporary build directory

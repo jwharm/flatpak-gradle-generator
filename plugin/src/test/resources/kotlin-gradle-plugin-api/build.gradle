@@ -1,0 +1,17 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.8.10'
+}
+
+tasks.sourcesList {
+    outputFile = file('%s')
+    downloadDirectory = '.m2/repository/'
+}

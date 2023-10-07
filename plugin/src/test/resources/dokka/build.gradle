@@ -1,0 +1,8 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'org.jetbrains.dokka' version '1.8.10'
+}
+
+tasks.sourcesList {
+    outputFile = file('%s')
+}

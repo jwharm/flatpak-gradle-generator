@@ -1,0 +1,18 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation 'org.gtkkn:gtk4-linuxx64:0.0.1-SNAPSHOT:20230531.114618-3'
+}
+
+tasks.sourcesList {
+    outputFile = file('%s')
+    downloadDirectory = 'maven-local'
+}
