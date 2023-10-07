@@ -106,22 +106,33 @@ final class ArtifactResolver {
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
     void tryResolveCached(Configuration configuration, ModuleVersionIdentifier id, DependencyDetails dep,
-                          String repository, String filename, StringJoiner joiner) throws IOException, NoSuchAlgorithmException {
+                          String repository, String filename, boolean checkName, String altName, StringJoiner joiner) throws IOException, NoSuchAlgorithmException {
+
         // Build the url and check if it exists
         String url = repository + dep.path() + "/" + filename;
-        if (isValid(url)) {
+        var isValid = isValid(url);
 
+        if ((! isValid) && filename.contains("SNAPSHOT")) {
+            // Try again, but this time, replace SNAPSHOT with snapshot details
+            url = repository + dep.path() + "/" + filename.replace("SNAPSHOT", dep.snapshotDetail());
+            isValid = isValid(url);
+        }
+
+        if (isValid) {
             // Find the jar in the local Gradle cache
             for (var artifact : configuration.getResolvedConfiguration().getResolvedArtifacts()) {
                 if (artifact.getModuleVersion().getId().equals(id)) {
+                    File file = artifact.getFile();
+                    if (checkName)
+                        if (! (file.getName().equals(filename) || file.getName().equals(altName)))
+                            continue;
 
                     // Read the file from the local Gradle cache and calculate the SHA-512 hash
-                    File jar = artifact.getFile();
-                    byte[] bytes = Files.readAllBytes(jar.toPath());
+                    byte[] bytes = Files.readAllBytes(file.toPath());
                     String sha512 = calculateSHA512(bytes);
 
                     // Generate and append the json
-                    generateJsonBlock(url, sha512, dep.path(), jar.getName(), joiner);
+                    generateJsonBlock(url, sha512, dep.path(), checkName ? filename : file.getName(), joiner);
                 }
             }
         }

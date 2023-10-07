@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Helper class to parse module files
@@ -38,13 +39,13 @@ final class ModuleMetadata {
     }
 
     /**
-     * Parse the module json file and return the jar filename for the requested variant
+     * Parse the module json file and return the artifact filenames for the requested variant
      * @param contents the contents of the module file
      * @param variant the requested variant
-     * @return the jar filename
+     * @return the filenames
      * @throws RedirectedException when the module redirects to another module file
      */
-    public String process(String contents, String variant) throws RedirectedException {
+    public List<FileDTO> process(String contents, String variant) throws RedirectedException {
         var gson = new Gson();
         var module = gson.fromJson(contents, ModuleDTO.class);
 
@@ -59,15 +60,16 @@ final class ModuleMetadata {
         }
 
         // The module file contains sha-512 strings, but they are not always correct.
-        // We return only the filename.
+        // We return only the filenames and urls.
 
         return module.variants.stream()
-                .filter(v -> v.name.equals(variant))
                 .filter(v -> v.attributes.category == null || v.attributes.category.equals("library"))
-                .filter(v -> v.files.size() == 1)
-                .map(v -> v.files.get(0).name)
-                .findFirst()
-                .orElseThrow();
+                .filter(v -> v.files != null)
+                .filter(v -> ! v.files.isEmpty())
+                .map(v -> v.files)
+                .flatMap(List::stream)
+                .distinct()
+                .toList();
     }
 
     /**
@@ -86,26 +88,40 @@ final class ModuleMetadata {
         }
     }
 
-    private static class ModuleDTO {
-            List<VariantDTO> variants;
+    static class ModuleDTO {
+        List<VariantDTO> variants;
     }
 
-    private static class VariantDTO {
-            String name;
-            AttributeDTO attributes;
-            @SerializedName(value="available-at") AvailableAtDTO availableAt;
-            List<FileDTO> files;
+    static class VariantDTO {
+        String name;
+        AttributeDTO attributes;
+        @SerializedName(value="available-at") AvailableAtDTO availableAt;
+        List<FileDTO> files;
     }
 
-    private static class AttributeDTO {
-            @SerializedName(value="org.gradle.category") String category;
+    static class AttributeDTO {
+        @SerializedName(value="org.gradle.category") String category;
     }
 
-    private static class AvailableAtDTO {
-            String url;
+    static class AvailableAtDTO {
+        String url;
     }
 
-    private static class FileDTO {
-            String name;
+    static class FileDTO {
+        String name;
+        String url;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            FileDTO fileDTO = (FileDTO) o;
+            return Objects.equals(url, fileDTO.url) && Objects.equals(name, fileDTO.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(url, name);
+        }
     }
 }

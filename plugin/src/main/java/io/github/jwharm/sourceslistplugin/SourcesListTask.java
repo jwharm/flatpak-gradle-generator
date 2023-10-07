@@ -184,37 +184,36 @@ public abstract class SourcesListTask extends DefaultTask {
                 // Download .module artifact
                 var module = resolver.tryResolve(dep, repository, dep.filename("module"), joiner);
 
-                // Add .jar artifact from information in the .module file
+                // Add file artifacts from information in the .module file
                 if (module.isPresent()) {
                     try {
-                        String jarFilename = null;
+                        List<ModuleMetadata.FileDTO> files = null;
                         try {
-                            jarFilename = moduleMetadata.process(new String(module.get()), variant);
+                            files = moduleMetadata.process(new String(module.get()), variant);
                         } catch (ModuleMetadata.RedirectedException redirected) {
                             // Download .module artifact from alternate URL
                             module = resolver.tryResolve(dep, repository, redirected.url(), joiner);
                             if (module.isPresent())
-                                jarFilename = moduleMetadata.process(new String(module.get()), variant);
+                                files = moduleMetadata.process(new String(module.get()), variant);
                         }
-                        if (jarFilename != null) {
-                            if (jarFilename.contains("SNAPSHOT"))
-                                jarFilename = jarFilename.replace("SNAPSHOT", dep.snapshotDetail());
-                            resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
-                                    dep, repository, jarFilename, joiner);
+                        if (files != null) {
+                            for (var file : files) {
+                                resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
+                                        dep, repository, file.url, true, file.name, joiner);
+                            }
                         }
-
                     } catch (NoSuchElementException noJar) {
-                        // No jar file declared for this variant in the .module file
+                        // No files declared for this variant in the .module file
                         // Get .jar artifact from local Gradle cache
                         resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
-                                dep, repository, dep.filename("jar"), joiner);
+                                dep, repository, dep.filename("jar"), false, null, joiner);
                     }
                 }
 
                 // Get .jar artifact from local Gradle cache
                 else {
                     resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
-                            dep, repository, dep.filename("jar"), joiner);
+                            dep, repository, dep.filename("jar"), false, null, joiner);
                 }
 
                 // Download .pom artifact
