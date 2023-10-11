@@ -106,7 +106,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
             }
         }
 
-        // Write the StringJoiner result to the json file
+        // Join the json blocks with a StringJoiner and write the result to the output file
         var fileName = getOutputFile().getAsFile().get();
         var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
         for (var json : output)
@@ -151,7 +151,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     }
 
     /**
-     * Generate json blocks for all dependencies in the provided configuration, and add them to the StringJoiner
+     * Generate json blocks for all dependencies in the provided configuration, and add them to the output
      * @param repositories the list of declared repositories
      * @param configuration a configuration that may hold dependencies
      * @param output the set of generated JSON blocks
