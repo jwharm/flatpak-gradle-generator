@@ -23,7 +23,7 @@ import javax.xml.stream.XMLInputFactory;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringJoiner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -52,20 +52,20 @@ final class PomHandler {
      * download it from the repository, and generate and append the json, recursively.
      * @param pom the contents of the POM file
      * @param repository the repository from which this POM was downloaded
-     * @param joiner the StringJoiner to build the JSON sources list
+     * @param output the set of generated JSON blocks
      */
-    void addParentPOMs(byte[] pom, String repository, StringJoiner joiner) {
+    void addParentPOMs(byte[] pom, String repository, Set<String> output) {
         // Does this pom have a parent pom?
-        parsePomForParentDetails(pom, repository, joiner);
+        parsePomForParentDetails(pom, repository, output);
     }
 
     /**
      * Parse an XML file to retrieve the groupId, artifactId and version elements from the parent element
      * @param contents XML file contents
      * @param repository the repository from which this POM was downloaded
-     * @param joiner the StringJoiner to build the JSON sources list
+     * @param output the set of generated JSON blocks
      */
-    private void parsePomForParentDetails(byte[] contents, String repository, StringJoiner joiner) {
+    private void parsePomForParentDetails(byte[] contents, String repository, Set<String> output) {
         try {
             // Construct XML parser
             var reader = xmlInputFactory.createXMLEventReader(new ByteArrayInputStream(contents));
@@ -114,7 +114,7 @@ final class PomHandler {
                                 var dep = DependencyDetails.of(id);
 
                                 // Download and add the parent pom to the list
-                                var parent = resolver.tryResolve(dep, repository, dep.filename("pom"), joiner);
+                                var parent = resolver.tryResolve(dep, repository, dep.filename("pom"), output);
 
                                 // Reset string builders
                                 groupId = new StringBuilder();
@@ -123,7 +123,7 @@ final class PomHandler {
 
                                 // Recursively add the parent pom of the parent pom
                                 if (name.equals("parent")) {
-                                    parent.ifPresent(bytes -> addParentPOMs(bytes, repository, joiner));
+                                    parent.ifPresent(bytes -> addParentPOMs(bytes, repository, output));
                                 }
                             }
                             default -> {} // ignored

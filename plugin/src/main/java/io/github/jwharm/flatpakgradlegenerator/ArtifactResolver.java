@@ -33,7 +33,7 @@ import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
-import java.util.StringJoiner;
+import java.util.Set;
 
 /**
  * Helper class for resolving artifacts
@@ -56,12 +56,12 @@ final class ArtifactResolver {
      * @param dep a DependencyDetail instance with the Maven coordinates of the artifact
      * @param repository the repository to try to download from
      * @param filename the filename of the artifact
-     * @param joiner the StringJoiner to add the json snippet to
+     * @param output the set of generated JSON blocks
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-     Optional<byte[]> tryResolve(DependencyDetails dep, String repository, String filename, StringJoiner joiner)
+     Optional<byte[]> tryResolve(DependencyDetails dep, String repository, String filename, Set<String> output)
             throws NoSuchAlgorithmException {
         // Build the url and try to download the file
         String url = repository + dep.path() + "/" + filename;
@@ -79,13 +79,13 @@ final class ArtifactResolver {
             }
 
             // Generate and append the json
-            generateJsonBlock(url, sha512, dest, destFilename, joiner);
+            generateJsonBlock(url, sha512, dest, destFilename, output);
 
             // For snapshot versions, generate a second json with "-SNAPSHOT" instead of the actual filename
             if (dep.isSnapshot()) {
                 String ext = destFilename.substring(destFilename.lastIndexOf(".") + 1);
                 destFilename = "%s-%s.%s".formatted(dep.name(), dep.version(), ext);
-                generateJsonBlock(url, sha512, dest, destFilename, joiner);
+                generateJsonBlock(url, sha512, dest, destFilename, output);
             }
         }
         // Return the file contents
@@ -101,12 +101,12 @@ final class ArtifactResolver {
      * @param dep a DependencyDetail instance with the Maven coordinates of the artifact
      * @param repository the repository to try to download from
      * @param filename the filename of the artifact
-     * @param joiner the StringJoiner to add the json snippet to
+     * @param output the set of generated JSON blocks
      * @throws IOException error while reading the jar file
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
     void tryResolveCached(Configuration configuration, ModuleVersionIdentifier id, DependencyDetails dep,
-                          String repository, String filename, boolean checkName, String altName, StringJoiner joiner) throws IOException, NoSuchAlgorithmException {
+                          String repository, String filename, boolean checkName, String altName, Set<String> output) throws IOException, NoSuchAlgorithmException {
 
         // Build the url and check if it exists
         String url = repository + dep.path() + "/" + filename;
@@ -132,7 +132,7 @@ final class ArtifactResolver {
                     String sha512 = calculateSHA512(bytes);
 
                     // Generate and append the json
-                    generateJsonBlock(url, sha512, dep.path(), checkName ? filename : file.getName(), joiner);
+                    generateJsonBlock(url, sha512, dep.path(), checkName ? filename : file.getName(), output);
                 }
             }
         }
@@ -166,17 +166,17 @@ final class ArtifactResolver {
      * @param sha512 the hash
      * @param path the path in the target directory
      * @param destFilename the filename
-     * @param joiner the StringJoiner to add the json string to
+     * @param output the set of generated JSON blocks
      */
-    void generateJsonBlock(String url, String sha512, String path, String destFilename, StringJoiner joiner) {
-        joiner.add("""
-                          {
-                            "type": "file",
-                            "url": "%s",
-                            "sha512": "%s",
-                            "dest": "%s",
-                            "dest-filename": "%s"
-                        """
+    void generateJsonBlock(String url, String sha512, String path, String destFilename, Set<String> output) {
+        output.add("""
+                  {
+                    "type": "file",
+                    "url": "%s",
+                    "sha512": "%s",
+                    "dest": "%s",
+                    "dest-filename": "%s"
+                """
                 .formatted(url, sha512, this.dest + path, destFilename)
                 + "  }");
     }
