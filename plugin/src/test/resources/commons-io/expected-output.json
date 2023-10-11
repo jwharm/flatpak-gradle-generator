@@ -15,6 +15,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom",
+    "sha512": "fb4733395ecf56bd7e55eaebbe98cdd08de17e75ecbdf207370d66775eabafa2b4f34213d7300e7c55530e70cd66e63e4a56eb692a7570644cae8010afaf3065",
+    "dest": "maven-local/org/apache/apache/30",
+    "dest-filename": "apache-30.pom"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/62/commons-parent-62.pom",
     "sha512": "732b7acc6be2f5efa1939918df205de1e16187c118f517b2d98b486aba35b909b2770cea5f26318325d01360aac1d0e750926889d7be014e288ec2bf766e1cfb",
     "dest": "maven-local/org/apache/commons/commons-parent/62",
@@ -22,9 +29,9 @@
   },
   {
     "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom",
-    "sha512": "fb4733395ecf56bd7e55eaebbe98cdd08de17e75ecbdf207370d66775eabafa2b4f34213d7300e7c55530e70cd66e63e4a56eb692a7570644cae8010afaf3065",
-    "dest": "maven-local/org/apache/apache/30",
-    "dest-filename": "apache-30.pom"
+    "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.10.0/junit-bom-5.10.0.pom",
+    "sha512": "f7770a3aaef0b9b8669bd2614315c66eb9c237b342a1da160397cdeba30c642281370f88a2dd28a7f28fe8d80aeee6d98374f247f8a545c0df19f1499c6084b0",
+    "dest": "maven-local/org/junit/junit-bom/5.10.0",
+    "dest-filename": "junit-bom-5.10.0.pom"
   }
 ]

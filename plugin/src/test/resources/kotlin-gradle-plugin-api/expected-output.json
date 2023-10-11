@@ -1,17 +1,17 @@
 [
   {
     "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.10/kotlin-gradle-plugin-api-1.8.10.module",
-    "sha512": "4dd6584231eb3e78dd441e1cb6171536b62fefd6d977a5c19a4597cae25ee72006d766bb22cb901381addf8233d3f0a868a1c3741f1506ff59926090d58fcf4f",
-    "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.10",
-    "dest-filename": "kotlin-gradle-plugin-api-1.8.10.module"
-  },
-  {
-    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.10/kotlin-gradle-plugin-api-1.8.10.jar",
     "sha512": "e96ab87598f5d35b6602927ed39496253e3c29c2569e88402ddc136e615b559e346445b5f2bb1fee61de745d0760d060d41d59f48c1bfd0e3ef25f291898371a",
     "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.10",
     "dest-filename": "kotlin-gradle-plugin-api-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.10/kotlin-gradle-plugin-api-1.8.10.module",
+    "sha512": "4dd6584231eb3e78dd441e1cb6171536b62fefd6d977a5c19a4597cae25ee72006d766bb22cb901381addf8233d3f0a868a1c3741f1506ff59926090d58fcf4f",
+    "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.10",
+    "dest-filename": "kotlin-gradle-plugin-api-1.8.10.module"
   },
   {
     "type": "file",
@@ -33,20 +33,6 @@
     "sha512": "44967c66379379c0ccd720474a234947eced3eca29ce93b3464a5e13498ed5796fbb99b9c3b8512e7b05cada235da43bed7c8b70eccab9b723d4b887aff0e408",
     "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-native-utils/1.8.10",
     "dest-filename": "kotlin-native-utils-1.8.10.pom"
-  },
-  {
-    "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-util-io/1.8.10/kotlin-util-io-1.8.10.jar",
-    "sha512": "e3f3a2637f14abb3f3e0dc0df6c9f90fd2b7a7f7b12f2b31a63e3104564e56df5b9d0412956c9acd963b8de364bafc26331ca5b26bfbe4860ef871be617519f4",
-    "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-util-io/1.8.10",
-    "dest-filename": "kotlin-util-io-1.8.10.jar"
-  },
-  {
-    "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-util-io/1.8.10/kotlin-util-io-1.8.10.pom",
-    "sha512": "276f47bdc247f3a5bcb6006562fefbb4b9e39cb79bf755dbdbd8588db86a2e350837584a353f2bc3d8f3676c32305092fee43ab9fe70a100e916417a5e467b33",
-    "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-util-io/1.8.10",
-    "dest-filename": "kotlin-util-io-1.8.10.pom"
   },
   {
     "type": "file",
@@ -75,5 +61,19 @@
     "sha512": "fe11b222bd012e17f1e4025e19d779d8a3ab327f395ea9b2a51a42e44849910ac333aebf8903dcba616a86356f416eca5a76c7e279a4405c4472f95e18fec0af",
     "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-tooling-core/1.8.10",
     "dest-filename": "kotlin-tooling-core-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-util-io/1.8.10/kotlin-util-io-1.8.10.jar",
+    "sha512": "e3f3a2637f14abb3f3e0dc0df6c9f90fd2b7a7f7b12f2b31a63e3104564e56df5b9d0412956c9acd963b8de364bafc26331ca5b26bfbe4860ef871be617519f4",
+    "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-util-io/1.8.10",
+    "dest-filename": "kotlin-util-io-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-util-io/1.8.10/kotlin-util-io-1.8.10.pom",
+    "sha512": "276f47bdc247f3a5bcb6006562fefbb4b9e39cb79bf755dbdbd8588db86a2e350837584a353f2bc3d8f3676c32305092fee43ab9fe70a100e916417a5e467b33",
+    "dest": ".m2/repository/org/jetbrains/kotlin/kotlin-util-io/1.8.10",
+    "dest-filename": "kotlin-util-io-1.8.10.pom"
   }
 ]
