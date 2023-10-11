@@ -62,6 +62,11 @@ class TestDependencyOutput {
     }
 
     @Test
+    void testCommonsCodecDependencies() throws IOException {
+        testDependencyOutput("commons-codec");
+    }
+
+    @Test
     void testDokka() throws IOException {
         testDependencyOutput("dokka");
     }

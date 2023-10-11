@@ -1,0 +1,16 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'commons-codec:commons-codec:1.16.0'
+}
+
+tasks.flatpakGradleGenerator {
+    outputFile = file('%s')
+}
