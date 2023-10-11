@@ -11,7 +11,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.8.10'
 }
 
-tasks.sourcesList {
+tasks.flatpakGradleGenerator {
     outputFile = file('%s')
     downloadDirectory = '.m2/repository/'
 }

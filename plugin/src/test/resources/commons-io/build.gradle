@@ -11,6 +11,6 @@ dependencies {
     implementation 'commons-io:commons-io:2.14.0'
 }
 
-tasks.sourcesList {
+tasks.flatpakGradleGenerator {
     outputFile = file('%s')
 }
