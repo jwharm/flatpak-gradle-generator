@@ -67,7 +67,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     private HashSet<String> ids;
 
     private ArtifactResolver resolver;
-    private ParentPom parentPOM;
+    private PomHandler POMHandler;
     private ModuleMetadata moduleMetadata;
 
     /**
@@ -81,7 +81,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         var project = getProject();
         ids = new HashSet<>();
         resolver = ArtifactResolver.getInstance(getDest());
-        parentPOM = ParentPom.getInstance(resolver);
+        POMHandler = PomHandler.getInstance(resolver);
         moduleMetadata = ModuleMetadata.getInstance();
 
         // StringJoiner is used to build the json file
@@ -220,8 +220,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 var pom = resolver.tryResolve(dep, repository, dep.filename("pom"), joiner);
 
                 // Add parent POMs
-                if (pom.isPresent())
-                    parentPOM.addParentPOMs(pom.get(), repository, joiner);
+                pom.ifPresent(bytes -> POMHandler.addParentPOMs(bytes, repository, joiner));
 
                 // Add marker artifact
                 // Only for plugin jar files downloaded from the Gradle Plugin Portal
