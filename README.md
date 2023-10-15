@@ -1,17 +1,23 @@
 # flatpak-gradle-generator
 A Gradle plugin to generate a sources file for offline Flatpak builds.
 
+The plugin will output all direct and transitive dependencies for all build 
+configurations (including plugin dependencies) in a JSON file. The JSON file 
+can be used in a Flatpak build process to download Maven dependencies before 
+an offline build starts. The downloaded files will be stored in a local Maven 
+repository layout.
+
 Example `gradle.build`:
 
 ```groovy
 plugins {
-  id 'io.github.jwharm.flatpak-gradle-generator' version '1.0.0'
   id 'application'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '1.0.0'
 }
 
 repositories {
   mavenCentral()
-  maven { url './maven-local' }
+  maven { url './maven-local' } // the offline repository
 }
 
 dependencies {
@@ -25,8 +31,8 @@ tasks.flatpakGradleGenerator {
 }
 ```
 
-Run `gradle flatpakGradleGenerator` and it will write a json file with information 
-about the dependencies:
+Run `gradle flatpakGradleGenerator` and it will write a json file with 
+information about the dependencies:
 
 ```
 [
@@ -44,40 +50,20 @@ about the dependencies:
     "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
     "dest-filename": "adw-0.7.1.jar"
   },
-  {
-    "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.pom",
-    "sha512": "7f62d93f16ba52cd88b690919219ee46b8507c71fcb77e295d42fb6724f27cda65b7a04673f35083a68d5f6b00aba4e2ef5cb37967d3c6c1687f92f640680a88",
-    "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
-    "dest-filename": "adw-0.7.1.pom"
-  },
-  {
-    "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/gtk/0.7.1/gtk-0.7.1.module",
-    "sha512": "ba28d5819b5765133be9d6be804f1688673f79315f06023452ad30ed61872a29a56013e7f24b05129b8c8f6d0d3350c042bc5e9170e005143b7511ba0458b275",
-    "dest": "./maven-local/io/github/jwharm/javagi/gtk/0.7.1",
-    "dest-filename": "gtk-0.7.1.module"
-  },
   ...etc...
 ```
 
-The plugin will output all direct and transitive dependencies for all 
-build configurations, including plugin dependencies.
-
-The generated file can be used in a Flatpak build process to download 
-Maven dependencies before an offline build starts. The downloaded 
-artifacts are pom, jar and module files and will be stored in a 
-Maven repository layout.
-
 ### Modular builds
-In a modular Gradle build, you can add a `tasks.flatpakGradleGenerator {}` block in 
-the build files of the subprojects, to generate a file for each project.
+In a modular Gradle build, you can add a `tasks.flatpakGradleGenerator {}` 
+block in the build files of the subprojects, to generate a file for each 
+project.
 
 ### Requirements
-The plugin has been tested with Gradle 8.3. The published jar is built 
+The plugin has been tested with Gradle 8.3 and 8.4. The published jar is built 
 with Java 17.
 
 ### Current status
 - The plugin has not been published yet. To test it, clone the repository, 
   publish the plugin to mavenLocal, and load it from there (follow
   [these instructions](https://elmland.blog/2019/08/10/add-mavenlocal-to-gradle-plugin-resolution/)).
+
