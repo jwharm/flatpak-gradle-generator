@@ -17,7 +17,7 @@ plugins {
 
 repositories {
   mavenCentral()
-  maven { url './maven-local' } // the offline repository
+  maven { url './offline-repository' }
 }
 
 dependencies {
@@ -27,7 +27,7 @@ dependencies {
 
 tasks.flatpakGradleGenerator {
   outputFile = file('flatpak-sources.json')
-  downloadDirectory = './maven-local'
+  downloadDirectory = './offline-repository'
 }
 ```
 
@@ -40,30 +40,32 @@ information about the dependencies:
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.module",
     "sha512": "d265d970864b3fb4c97b0fe87030ba76eafb252531d9da37cd7a51296b32e95bb70154f0075f6a0d0bc1e41fbd7f23280bdc6b317a1d5808c5a0c4b3a5ac70b5",
-    "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
+    "dest": "./offline-repository/io/github/jwharm/javagi/adw/0.7.1",
     "dest-filename": "adw-0.7.1.module"
   },
   {
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.jar",
     "sha512": "356a1c8f8ae89d7212bdfccd9afcd607ae86301485dd850d11eb378cbfe6f05f00cee27be368f907b0b941a065564f7ca3fb7ee18b21f4aaf8bec4d4176ba65a",
-    "dest": "./maven-local/io/github/jwharm/javagi/adw/0.7.1",
+    "dest": "./offline-repository/io/github/jwharm/javagi/adw/0.7.1",
     "dest-filename": "adw-0.7.1.jar"
   },
   ...etc...
 ```
 
+Add the JSON filename to the `sources` list in your Flatpak manifest, and 
+flatpak-builder will automatically download all dependencies into the offline 
+Maven repository folder.
+
 ### Modular builds
+Because a task from one Gradle project [is not allowed](https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html#sub:resolving-unsafe-configuration-resolution-errors)
+to directly resolve a configuration in another project, the plugin is limited
+to the project context in which the `flatpakGradleGenerator` task is declared.
+
 In a modular Gradle build, you can add a `tasks.flatpakGradleGenerator {}` 
-block in the build files of the subprojects, to generate a file for each 
-project.
+block in the build files of the subprojects, to generate separate files for 
+each project.
 
 ### Requirements
-The plugin has been tested with Gradle 8.3 and 8.4. The published jar is built 
-with Java 17.
-
-### Current status
-- The plugin has not been published yet. To test it, clone the repository, 
-  publish the plugin to mavenLocal, and load it from there (follow
-  [these instructions](https://elmland.blog/2019/08/10/add-mavenlocal-to-gradle-plugin-resolution/)).
-
+The plugin has been tested with Gradle 8.3, 8.4 and 8.6. The published jar is 
+built with Java 17.
