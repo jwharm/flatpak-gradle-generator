@@ -3,140 +3,140 @@
     "type": "file",
     "url": "https://plugins.gradle.org/m2/com/github/gradle-lean/com.github.gradle-lean.gradle.plugin/0.1.2/com.github.gradle-lean.gradle.plugin-0.1.2.pom",
     "sha512": "f3324769748dc7578fb66149c2ec1804c9888e8802ba390a1e49721a82b659a11c75a07cc9ec1ac10198d6227dc48fc3c3762fc315c874368b67bd7b4578b9bb",
-    "dest": "maven-local/com/github/gradle-lean/com.github.gradle-lean.gradle.plugin/0.1.2",
+    "dest": "offline-repository/com/github/gradle-lean/com.github.gradle-lean.gradle.plugin/0.1.2",
     "dest-filename": "com.github.gradle-lean.gradle.plugin-0.1.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/commons-io/commons-io/2.6/commons-io-2.6.jar",
     "sha512": "4de22e2a50711f756a5542474395d8619dca0a8be0407b722605005a1167f8c306bc5eef7f0b8252f5508c817c1ceb759171e4e18d4eb9697dfdd809ac39673f",
-    "dest": "maven-local/commons-io/commons-io/2.6",
+    "dest": "offline-repository/commons-io/commons-io/2.6",
     "dest-filename": "commons-io-2.6.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/commons-io/commons-io/2.6/commons-io-2.6.pom",
     "sha512": "370c85ef9a124c057953d660381c34ef817ea36b842f8a34929619d668024972c052e72991d1c1a6eb5a12b3cb5597df1e7fa734a27fd0451e0a102d4ff74c53",
-    "dest": "maven-local/commons-io/commons-io/2.6",
+    "dest": "offline-repository/commons-io/commons-io/2.6",
     "dest-filename": "commons-io-2.6.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/gradle/plugin/com/github/gradle-lean/gradle-lean/0.1.2/gradle-lean-0.1.2.jar",
     "sha512": "7aef5e96f365b6c475a76c4c325f5503225292718e21f768a1810992cc814817151904e5ba5b3a9287079389360602bd4e9ebe2d6a6c3d43f9e84a0bea1b13c3",
-    "dest": "maven-local/gradle/plugin/com/github/gradle-lean/gradle-lean/0.1.2",
+    "dest": "offline-repository/gradle/plugin/com/github/gradle-lean/gradle-lean/0.1.2",
     "dest-filename": "gradle-lean-0.1.2.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/gradle/plugin/com/github/gradle-lean/gradle-lean/0.1.2/gradle-lean-0.1.2.pom",
     "sha512": "253ec2a6f8d33cd8806a0fb9d05f639a7b79b6c69c528c095550e232574cd8ecf240599b4f69fb5d035274d643d2421a90fc8c34f9e0b0d19cc38a836d52c84d",
-    "dest": "maven-local/gradle/plugin/com/github/gradle-lean/gradle-lean/0.1.2",
+    "dest": "offline-repository/gradle/plugin/com/github/gradle-lean/gradle-lean/0.1.2",
     "dest-filename": "gradle-lean-0.1.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/apache/apache/18/apache-18.pom",
     "sha512": "9ef6f99b30fe2603ad8f2c88116072de36bd2dc99590fd9e7eecf153dbf50cbd766694d861e666138d2a26137be69fe98cc38a491f6a2a68e8d421d656731ed1",
-    "dest": "maven-local/org/apache/apache/18",
+    "dest": "offline-repository/org/apache/apache/18",
     "dest-filename": "apache-18.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/apache/commons/commons-parent/42/commons-parent-42.pom",
     "sha512": "a35d1f7919551adbeada88d9f47a4d6de200380aa43266f91d4b65255120cbf4b11f73bb3f9b98eeb960fd9f1b0793dd48095b46270ed2376ce3b122861a94d6",
-    "dest": "maven-local/org/apache/commons/commons-parent/42",
+    "dest": "offline-repository/org/apache/commons/commons-parent/42",
     "dest-filename": "commons-parent-42.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-analysis/6.2/asm-analysis-6.2.jar",
     "sha512": "b2ee54095d0451bd503ac9ce0c0ac447fd292a926e6c0e129043a1dfaa1bd1a28d37f7cb2c56d87a2386dbaadab319dd760ce2441403d46067fdce3c6a7f1c10",
-    "dest": "maven-local/org/ow2/asm/asm-analysis/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-analysis/6.2",
     "dest-filename": "asm-analysis-6.2.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-analysis/6.2/asm-analysis-6.2.pom",
     "sha512": "853742bb74ffae42314c162f624c8bb2a6149a3fc7763a9ac2ec2528f2381c5b84d7bfd41c61f89e59bd1650a06faf64d4124f6e0fa2cfd23554257949d6006b",
-    "dest": "maven-local/org/ow2/asm/asm-analysis/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-analysis/6.2",
     "dest-filename": "asm-analysis-6.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-commons/6.2/asm-commons-6.2.jar",
     "sha512": "e884f2dce3d203b00970c61ac956199dc1c168d8364de9b561d2305a31778ba1a8786bcfca5c59dbac0b08414d9c8ed1d7fb53ebb75f8604f532c2950ad5a6b1",
-    "dest": "maven-local/org/ow2/asm/asm-commons/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-commons/6.2",
     "dest-filename": "asm-commons-6.2.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-commons/6.2/asm-commons-6.2.pom",
     "sha512": "c8033bde09af20576aee78237e555620f22de6fccfa9ab8840d7e09657f6d92cf2b467080c18207cf978c4a21af86eba120bd9a19430b264822b55fbfefa5e4f",
-    "dest": "maven-local/org/ow2/asm/asm-commons/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-commons/6.2",
     "dest-filename": "asm-commons-6.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-tree/6.2/asm-tree-6.2.jar",
     "sha512": "2492fb82610fbed9df0ded5825cc6bcc106a1ec8d1f362acdfc9712766618dbe39b78c5a80d2d6d79e876d86677c48bacbcf6be020472a30e3785050d2f931c3",
-    "dest": "maven-local/org/ow2/asm/asm-tree/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-tree/6.2",
     "dest-filename": "asm-tree-6.2.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-tree/6.2/asm-tree-6.2.pom",
     "sha512": "cb8eec7d54024595cd2c13a7fb2e8fec9d04f83ccd0c50b71745fd51a6fb6f4e5e56521b86932f9da3e775dd2a0d3a1fe90c8bf2da3c2ee39453b1019e0efd43",
-    "dest": "maven-local/org/ow2/asm/asm-tree/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-tree/6.2",
     "dest-filename": "asm-tree-6.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-util/6.2/asm-util-6.2.jar",
     "sha512": "72289f8dcaa203675747eba75ace7d2650bfbfb353a1dc1574b6665ff500c4acf9bb94dcd43708f09bc2fe25b03abec5fb3a4f96ebd3ad30b70b11ae24d03f97",
-    "dest": "maven-local/org/ow2/asm/asm-util/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-util/6.2",
     "dest-filename": "asm-util-6.2.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-util/6.2/asm-util-6.2.pom",
     "sha512": "0fcf4c8c0dc98b71cd53f1e2253a5f8293bfed4a673b2d231993365645326a27f8ded6a2879e3f9a341ffeb2cdbb5b8d659c789ee1bd3ed109676f505b61bc18",
-    "dest": "maven-local/org/ow2/asm/asm-util/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm-util/6.2",
     "dest-filename": "asm-util-6.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm/6.2/asm-6.2.jar",
     "sha512": "1e819b65d6dd55da6e325b4d223f661cf25c04f1a8b3b52e766dab8c9add91ddec816703ccc6196a7e7b46995b7f6463f18a2e50bf6598d034b04786790ccda1",
-    "dest": "maven-local/org/ow2/asm/asm/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm/6.2",
     "dest-filename": "asm-6.2.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm/6.2/asm-6.2.pom",
     "sha512": "a6cebb211772ac4e13df2c519593da5ce0742bb88d928fc0c2cf9094141f88c4e88dbff29ca6f7b7b3749d0ada02ddc07c27c25493c6562be8dbcecf8a1fcad5",
-    "dest": "maven-local/org/ow2/asm/asm/6.2",
+    "dest": "offline-repository/org/ow2/asm/asm/6.2",
     "dest-filename": "asm-6.2.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/ow2/1.5/ow2-1.5.pom",
     "sha512": "5445748e294cf9f23fe8f1e18e2ebb7108800d40f81a4566a73f9434fe21d2058d05acf3bc4d15f629151df47c42bcf948de3bba0b6a37982dfc3a8f1baf244d",
-    "dest": "maven-local/org/ow2/ow2/1.5",
+    "dest": "offline-repository/org/ow2/ow2/1.5",
     "dest-filename": "ow2-1.5.pom"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/vafer/jdependency/2.0/jdependency-2.0.jar",
     "sha512": "b028fba03c9084ef5c76817aa1cb1ec0c1425ccaf88045896b2ab525ba3ad6e4c02b2f290924fc494bc4cfdfda8e1ff0ca061d0e55c7ffd136f8adfbe13a4a6a",
-    "dest": "maven-local/org/vafer/jdependency/2.0",
+    "dest": "offline-repository/org/vafer/jdependency/2.0",
     "dest-filename": "jdependency-2.0.jar"
   },
   {
     "type": "file",
     "url": "https://plugins.gradle.org/m2/org/vafer/jdependency/2.0/jdependency-2.0.pom",
     "sha512": "f40cc19402a0d77f68bb059d86d4e87e951e49f0eb76674d73e69250a85fad5d1710f9bec0c38f08902545818a30e90c2702125f64192b9c3be7872da5d68220",
-    "dest": "maven-local/org/vafer/jdependency/2.0",
+    "dest": "offline-repository/org/vafer/jdependency/2.0",
     "dest-filename": "jdependency-2.0.pom"
   }
 ]

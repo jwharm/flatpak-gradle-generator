@@ -14,5 +14,5 @@ dependencies {
 
 tasks.flatpakGradleGenerator {
     outputFile = file('%s')
-    downloadDirectory = 'maven-local'
+    downloadDirectory = 'offline-repository'
 }

@@ -3,35 +3,35 @@
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/commons-io/commons-io/2.14.0/commons-io-2.14.0.jar",
     "sha512": "b98a5739f029d535207d50854a63c581334864e6021ec81ef960c23971d0b4fffaebbaee4830025a307d65b586017fe0ebc5901a2e5271f54fba401bde7f5e8b",
-    "dest": "maven-local/commons-io/commons-io/2.14.0",
+    "dest": "offline-repository/commons-io/commons-io/2.14.0",
     "dest-filename": "commons-io-2.14.0.jar"
   },
   {
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/commons-io/commons-io/2.14.0/commons-io-2.14.0.pom",
     "sha512": "bf0b9feb8f7a64136a1d86967d86faf53e40b8d44186b6f09694f0dd06c5b2443c8c9b3b0a03f661b946c12bac82e70b0958497a96d5a4352ebe7bd55b969e77",
-    "dest": "maven-local/commons-io/commons-io/2.14.0",
+    "dest": "offline-repository/commons-io/commons-io/2.14.0",
     "dest-filename": "commons-io-2.14.0.pom"
   },
   {
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom",
     "sha512": "fb4733395ecf56bd7e55eaebbe98cdd08de17e75ecbdf207370d66775eabafa2b4f34213d7300e7c55530e70cd66e63e4a56eb692a7570644cae8010afaf3065",
-    "dest": "maven-local/org/apache/apache/30",
+    "dest": "offline-repository/org/apache/apache/30",
     "dest-filename": "apache-30.pom"
   },
   {
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/62/commons-parent-62.pom",
     "sha512": "732b7acc6be2f5efa1939918df205de1e16187c118f517b2d98b486aba35b909b2770cea5f26318325d01360aac1d0e750926889d7be014e288ec2bf766e1cfb",
-    "dest": "maven-local/org/apache/commons/commons-parent/62",
+    "dest": "offline-repository/org/apache/commons/commons-parent/62",
     "dest-filename": "commons-parent-62.pom"
   },
   {
     "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.10.0/junit-bom-5.10.0.pom",
     "sha512": "f7770a3aaef0b9b8669bd2614315c66eb9c237b342a1da160397cdeba30c642281370f88a2dd28a7f28fe8d80aeee6d98374f247f8a545c0df19f1499c6084b0",
-    "dest": "maven-local/org/junit/junit-bom/5.10.0",
+    "dest": "offline-repository/org/junit/junit-bom/5.10.0",
     "dest-filename": "junit-bom-5.10.0.pom"
   }
 ]

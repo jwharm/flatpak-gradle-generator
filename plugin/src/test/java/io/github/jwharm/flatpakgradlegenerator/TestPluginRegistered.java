@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -25,10 +25,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * A simple unit test for the 'io.github.jwharm.flatpakgradlegenerator' plugin.
+ * Test whether the plugin and task can be registered successfully.
  */
 class TestPluginRegistered {
-    @Test void pluginRegistersATask() {
+
+    @Test
+    public void pluginRegistersATask() {
         // Create a test project and apply the plugin
         Project project = ProjectBuilder.builder().build();
         project.getPlugins().apply("io.github.jwharm.flatpak-gradle-generator");

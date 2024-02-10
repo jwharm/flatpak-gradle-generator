@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * that contains all dependencies.
  */
 class TestDependencyOutput {
+
     @TempDir
     File projectDir;
 
@@ -76,26 +77,38 @@ class TestDependencyOutput {
         testDependencyOutput("kotlin-gradle-plugin-api");
     }
 
-    // Run the flatpakGradleGenerator task on a temporary Gradle build, and compare the results with the expected output
+    /**
+     * Run the flatpakGradleGenerator task on a temporary Gradle build, and
+     * compare the results with the expected output.
+     *
+     * @param variant the resource name
+     */
     private void testDependencyOutput(String variant) throws IOException {
         // Temporary build directory
-        File projectDir = createTempSubdirectory(variant);
+        File tempDir = createTempDir(variant);
 
         // Full path to output file
-        String outputFile = new File(projectDir, "output.json")
+        String outputFile = new File(tempDir, "output.json")
+                .getAbsolutePath()
                 // Escape Windows-style path separators
-                .getAbsolutePath().replace("\\", "\\\\");
+                .replace("\\", "\\\\");
 
         // Write settings.gradle and build.gradle
-        writeString(new File(projectDir, "settings.gradle"), readString(variant, "settings.gradle"));
-        writeString(new File(projectDir, "build.gradle"), readString(variant, "build.gradle").formatted(outputFile));
+        writeString(
+                new File(tempDir, "settings.gradle"),
+                readString(variant, "settings.gradle")
+        );
+        writeString(
+                new File(tempDir, "build.gradle"),
+                readString(variant, "build.gradle").formatted(outputFile)
+        );
 
         // Run the build
         GradleRunner.create()
             .forwardOutput()
             .withPluginClasspath()
             .withArguments("flatpakGradleGenerator")
-            .withProjectDir(projectDir)
+            .withProjectDir(tempDir)
             .build();
 
         // Verify the result
@@ -105,7 +118,7 @@ class TestDependencyOutput {
     }
 
     // Create subdirectory in a JUnit temp dir
-    private File createTempSubdirectory(String variant) throws IOException {
+    private File createTempDir(String variant) throws IOException {
         File dir = new File(projectDir, variant);
         if (dir.mkdir())
             return dir;
