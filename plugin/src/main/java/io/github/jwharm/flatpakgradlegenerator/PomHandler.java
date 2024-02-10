@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -23,23 +23,24 @@ import javax.xml.stream.XMLInputFactory;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * Helper class to parse POM files for parent declarations and dependencies
+ * Helper class to parse POM files for parent declarations and dependencies.
  */
 final class PomHandler {
 
-    private static final Pattern VAR_PATTERN = Pattern.compile("\\$\\{(.+?)\\}");
+    private static final Pattern VAR_PATTERN = Pattern.compile("\\$\\{(.+?)}");
 
     private final ArtifactResolver resolver;
-    private final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+    private final XMLInputFactory xmlInputFactory;
+
     private HashMap<String, String> properties;
 
     // Use getInstance()
     private PomHandler(ArtifactResolver resolver) {
         this.resolver = resolver;
+        this.xmlInputFactory = XMLInputFactory.newInstance();
     }
 
     static PomHandler getInstance(ArtifactResolver resolver) {
@@ -50,33 +51,23 @@ final class PomHandler {
      * A POM can refer to a parent POM, which must be available in the local repository.
      * This method will parse the parent groupId:artifactId:version from the POM,
      * download it from the repository, and generate and append the json, recursively.
-     * @param pom the contents of the POM file
+     *
+     * @param contents   the contents of the POM file
      * @param repository the repository from which this POM was downloaded
-     * @param output the set of generated JSON blocks
      */
-    void addParentPOMs(byte[] pom, String repository, Set<String> output) {
-        // Does this pom have a parent pom?
-        parsePomForParentDetails(pom, repository, output);
-    }
-
-    /**
-     * Parse an XML file to retrieve the groupId, artifactId and version elements from the parent element
-     * @param contents XML file contents
-     * @param repository the repository from which this POM was downloaded
-     * @param output the set of generated JSON blocks
-     */
-    private void parsePomForParentDetails(byte[] contents, String repository, Set<String> output) {
+    void addParentPOMs(byte[] contents, String repository) {
         try {
             // Construct XML parser
-            var reader = xmlInputFactory.createXMLEventReader(new ByteArrayInputStream(contents));
+            var reader = xmlInputFactory.createXMLEventReader(
+                    new ByteArrayInputStream(contents));
 
             // Buffer for characters inside elements
             StringBuilder characters = new StringBuilder();
 
-            // This is used to construct the Maven coordinates
-            StringBuilder groupId = new StringBuilder();
+            // Buffers for the GAV coordinates
+            StringBuilder groupId    = new StringBuilder();
             StringBuilder artifactId = new StringBuilder();
-            StringBuilder versionId = new StringBuilder();
+            StringBuilder versionId  = new StringBuilder();
 
             var xpath = new XPath();
             properties = new HashMap<>();
@@ -88,47 +79,53 @@ final class PomHandler {
                 // Start element
                 if (nextEvent.isStartElement()) {
                     xpath.add(nextEvent.asStartElement().getName().getLocalPart());
-                    if (xpath.inParentElement() || xpath.inDependencyElement()) {
+
+                    if (xpath.inParentElement() || xpath.inDependencyElement())
                         characters = new StringBuilder();
-                    }
                 }
+
                 // Characters read
                 else if (nextEvent.isCharacters()) {
                     characters.append(nextEvent.asCharacters().getData().strip());
                 }
+
                 // End element
                 else if (nextEvent.isEndElement()) {
                     String name = nextEvent.asEndElement().getName().getLocalPart();
-                    if (xpath.inProperties()) {
+
+                    if (xpath.inProperties())
                         properties.put(name, characters.toString());
-                    }
+
                     if (xpath.inParentElement() || xpath.inDependencyElement()) {
                         switch (name) {
-                            case "groupId" -> groupId.append(parse(characters));
+                            // GAV
+                            case "groupId"    ->    groupId.append(parse(characters));
                             case "artifactId" -> artifactId.append(parse(characters));
-                            case "version" -> versionId.append(parse(characters));
+                            case "version"    ->  versionId.append(parse(characters));
+
+                            // We are leaving the parent element
                             case "parent", "dependency" -> {
-                                // We are leaving the parent element
+
                                 // Get the Maven coordinates of the parent artifact
                                 String id = "%s:%s:%s".formatted(groupId, artifactId, versionId);
                                 var dep = DependencyDetails.of(id);
 
                                 // Download and add the parent pom to the list
-                                var parent = resolver.tryResolve(dep, repository, dep.filename("pom"), output);
+                                var parent = resolver.tryResolve(dep, repository, dep.filename("pom"));
 
                                 // Reset string builders
-                                groupId = new StringBuilder();
+                                groupId    = new StringBuilder();
                                 artifactId = new StringBuilder();
-                                versionId = new StringBuilder();
+                                versionId  = new StringBuilder();
 
                                 // Recursively add the parent pom of the parent pom
-                                if (name.equals("parent")) {
-                                    parent.ifPresent(bytes -> addParentPOMs(bytes, repository, output));
-                                }
+                                if (name.equals("parent"))
+                                    parent.ifPresent(bytes -> addParentPOMs(bytes, repository));
                             }
                             default -> {} // ignored
                         }
                     }
+
                     // Reset the characters buffer
                     characters = new StringBuilder();
                     xpath.remove();
@@ -139,8 +136,10 @@ final class PomHandler {
     }
 
     /**
-     * Replace "${property-name} references with the value of the property
-     * @param raw the raw text from the XML
+     * Replace "{@code ${property-name}}" references with the value of the
+     * property.
+     *
+     * @param  raw the raw text from the XML
      * @return the text with property references replaced by their value
      */
     private String parse(Object raw) {
@@ -151,7 +150,7 @@ final class PomHandler {
     }
 
     /**
-     * Small helper class to construct the path to the current XML element
+     * Small helper class to construct the path to the current XML element.
      */
     private static class XPath {
         private final ArrayList<String> list = new ArrayList<>();

@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -25,8 +25,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.function.Predicate.not;
+
 /**
- * Helper class to parse module files
+ * Helper class to parse Gradle module files.
  */
 final class ModuleMetadata {
 
@@ -39,13 +41,18 @@ final class ModuleMetadata {
     }
 
     /**
-     * Parse the module json file and return the artifact filenames for the requested variant
-     * @param contents the contents of the module file
-     * @param variant the requested variant
+     * Parse the module json file and return the artifact filenames for the
+     * requested variant.
+     *
+     * @param  contents the contents of the module file
+     * @param  variant  the requested variant
      * @return the filenames
+     *
      * @throws RedirectedException when the module redirects to another module file
      */
-    public List<FileDTO> process(String contents, String variant) throws RedirectedException {
+    public List<FileDTO> process(String contents, String variant)
+            throws RedirectedException {
+
         var gson = new Gson();
         var module = gson.fromJson(contents, ModuleDTO.class);
 
@@ -55,18 +62,18 @@ final class ModuleMetadata {
                 .filter(v -> v.availableAt != null && v.availableAt.url != null)
                 .map(v -> v.availableAt.url)
                 .findFirst();
-        if (redirectUrl.isPresent()) {
+
+        if (redirectUrl.isPresent())
             throw new RedirectedException(redirectUrl.get());
-        }
 
         // The module file contains sha-512 strings, but they are not always correct.
         // We return only the filenames and urls.
 
         return module.variants.stream()
                 .filter(v -> v.attributes.category == null || v.attributes.category.equals("library"))
-                .filter(v -> v.files != null)
-                .filter(v -> ! v.files.isEmpty())
                 .map(v -> v.files)
+                .filter(Objects::nonNull)
+                .filter(not(List::isEmpty))
                 .flatMap(List::stream)
                 .distinct()
                 .toList();
@@ -76,17 +83,12 @@ final class ModuleMetadata {
      * Thrown when a module redirects to another module with an "available-at" field
      */
     static class RedirectedException extends RuntimeException {
-
         private final String url;
-
-        RedirectedException(String url) {
-            this.url = url;
-        }
-
-        String url() {
-            return url;
-        }
+        RedirectedException(String url) { this.url = url; }
+        String url()                    { return url; }
     }
+
+    // The DTO classes for json deserialization:
 
     static class ModuleDTO {
         List<VariantDTO> variants;

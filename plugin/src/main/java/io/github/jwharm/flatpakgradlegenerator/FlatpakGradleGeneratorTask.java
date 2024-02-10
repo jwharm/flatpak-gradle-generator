@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -32,9 +32,10 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.*;
+import java.net.URI;
+import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * A task that creates a sources list file with all Gradle dependencies,
@@ -42,7 +43,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  */
 public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
-    private static final String DEFAULT_DOWNLOAD_DIRECTORY = "maven-local";
+    private static final String DEFAULT_DOWNLOAD_DIRECTORY = "offline-repository";
     private static final String GRADLE_PLUGIN_PORTAL = "https://plugins.gradle.org/m2/";
 
     /**
@@ -56,7 +57,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     /**
      * Specifies the value for the {@code "dest"} attribute in the json file.
      * <p>
-     * Defaults to {@code "localRepository"}.
+     * Defaults to {@code "offline-repository"}.
      *
      * @return the download directory
      */
@@ -72,92 +73,100 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     private ModuleMetadata moduleMetadata;
 
     /**
-     * Run the flatpakGradleGenerator task
+     * Run the flatpakGradleGenerator task.
      *
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      * @throws IOException              error writing json list to output file
      */
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
-        var project = getProject();
         ids = new HashSet<>();
         resolver = ArtifactResolver.getInstance(getDest());
         POMHandler = PomHandler.getInstance(resolver);
         moduleMetadata = ModuleMetadata.getInstance();
-
-        Set<String> output = new ConcurrentSkipListSet<>();
+        Project project = getProject();
 
         // Buildscript classpath dependencies
         var buildScriptRepositories = listPluginRepositories(project);
         for (var configuration : project.getBuildscript().getConfigurations()) {
             if (configuration.isCanBeResolved()) {
-                generateSourcesList(buildScriptRepositories, configuration, output);
+                generateSourcesList(buildScriptRepositories, configuration);
             }
         }
 
-        // List the declared repositories; include the buildscript classpath repositories too
+        // List the declared repositories; include the buildscript classpath
+        // repositories too
         var repositories = listRepositories(project);
         repositories.addAll(buildScriptRepositories);
 
-        // Loop through configurations and generate json blocks for the resolved dependencies
+        // Loop through configurations and generate json blocks for the
+        // resolved dependencies
         for (var configuration : project.getConfigurations()) {
             if (configuration.isCanBeResolved()) {
-                generateSourcesList(repositories, configuration, output);
+                generateSourcesList(repositories, configuration);
             }
         }
 
-        // Join the json blocks with a StringJoiner and write the result to the output file
-        var fileName = getOutputFile().getAsFile().get();
-        var joiner = new StringJoiner(",\n", "[\n", "\n]\n");
-        for (var json : output)
-            joiner.add(json);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write(joiner.toString());
-        }
+        // Merge the json blocks into a json list, and write the result to the
+        // output file
+        Files.writeString(
+                getOutputFile().getAsFile().get().toPath(),
+                resolver.getJsonOutput()
+        );
     }
 
     /**
-     * Get all Maven repositories that were declared in the build file
-     * @param project the project for which to list the repositories
+     * Get all Maven repositories that were declared in the build file.
+     *
+     * @param  project the project for which to list the repositories
      * @return the repositories that are declared in the project
      */
     private List<String> listRepositories(Project project) {
         return new ArrayList<>(project.getRepositories().stream()
-                .filter(repo -> repo instanceof MavenArtifactRepository)
-                .map(repo -> ((MavenArtifactRepository) repo).getUrl().toString())
+                .filter(MavenArtifactRepository.class::isInstance)
+                .map(MavenArtifactRepository.class::cast)
+                .map(MavenArtifactRepository::getUrl)
+                .map(URI::toString)
                 .map(repo -> repo.endsWith("/") ? repo : repo + "/")
                 .toList());
     }
 
     /**
-     * Get all Maven repositories that were declared in the settings file (pluginManagement block),
-     * and the Gradle Plugin Portal
-     * @param project the project for which to list the plugin repositories
-     * @return the plugin repositories that are declared in the settings file (pluginManagement block),
-     *         and the Gradle Plugin Portal.
+     * Get all Maven repositories that were declared in the settings file
+     * (pluginManagement block), and the Gradle Plugin Portal.
+     *
+     * @param  project the project for which to list the plugin repositories
+     * @return the urls of the plugin repositories that are declared in the
+     *         settings file (pluginManagement block), and the Gradle Plugin
+     *         Portal.
      */
     private List<String> listPluginRepositories(Project project) {
         var settings = ((GradleInternal) project.getGradle()).getSettings();
-        var repositories = new ArrayList<>(settings.getPluginManagement().getRepositories().stream()
-                .filter(repo -> repo instanceof MavenArtifactRepository)
-                .map(repo -> ((MavenArtifactRepository) repo).getUrl().toString())
+        var repositories = settings.getPluginManagement().getRepositories();
+        var urls = new ArrayList<>(repositories.stream()
+                .filter(MavenArtifactRepository.class::isInstance)
+                .map(MavenArtifactRepository.class::cast)
+                .map(MavenArtifactRepository::getUrl)
+                .map(URI::toString)
                 .map(repo -> repo.endsWith("/") ? repo : repo + "/")
                 .toList());
 
-        // The Gradle plugin repository is always available
-        repositories.add(GRADLE_PLUGIN_PORTAL);
+        // The Gradle plugin repository is always included
+        urls.add(GRADLE_PLUGIN_PORTAL);
 
-        return repositories;
+        return urls;
     }
 
     /**
-     * Generate json blocks for all dependencies in the provided configuration, and add them to the output
-     * @param repositories the list of declared repositories
+     * Generate json blocks for all dependencies in the provided configuration.
+     *
+     * @param repositories  the list of declared repositories
      * @param configuration a configuration that may hold dependencies
-     * @param output the set of generated JSON blocks
+     *
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-    private void generateSourcesList(List<String> repositories, Configuration configuration, Set<String> output)
+    private void generateSourcesList(List<String> repositories,
+                                     Configuration configuration)
             throws IOException, NoSuchAlgorithmException {
 
         for (var dependency : listDependencies(configuration)) {
@@ -184,10 +193,10 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 if (repository.startsWith("file:/"))
                     continue;
 
-                // Download .module artifact
-                var module = resolver.tryResolve(dep, repository, dep.filename("module"), output);
+                // Check for a Gradle module artifact
+                var module = resolver.tryResolve(dep, repository, dep.filename("module"));
 
-                // Add file artifacts from information in the .module file
+                // Add file artifacts from information in the Gradle module
                 if (module.isPresent()) {
                     try {
                         List<ModuleMetadata.FileDTO> files = null;
@@ -195,40 +204,64 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                             files = moduleMetadata.process(new String(module.get()), variant);
                         } catch (ModuleMetadata.RedirectedException redirected) {
                             // Download .module artifact from alternate URL
-                            module = resolver.tryResolve(dep, repository, redirected.url(), output);
+                            module = resolver.tryResolve(dep, repository, redirected.url());
                             if (module.isPresent())
                                 files = moduleMetadata.process(new String(module.get()), variant);
                         }
+
                         if (files != null) {
                             for (var file : files) {
-                                resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
-                                        dep, repository, file.url, true, file.name, output);
+                                resolver.tryResolveCached(
+                                        configuration,
+                                        dependency.getSelected().getModuleVersion(),
+                                        dep,
+                                        repository,
+                                        file.url,
+                                        true,
+                                        file.name
+                                );
                             }
                         }
                     } catch (NoSuchElementException noJar) {
-                        // No files declared for this variant in the .module file
-                        // Get .jar artifact from local Gradle cache
-                        resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
-                                dep, repository, dep.filename("jar"), false, null, output);
+                        // No files declared for this variant in the Gradle module
+                        // Get jar artifact from local Gradle cache
+                        resolver.tryResolveCached(
+                                configuration,
+                                dependency.getSelected().getModuleVersion(),
+                                dep,
+                                repository,
+                                dep.filename("jar"),
+                                false,
+                                null
+                        );
                     }
                 }
 
-                // Get .jar artifact from local Gradle cache
+                // Get jar artifact from local Gradle cache
                 else {
-                    resolver.tryResolveCached(configuration, dependency.getSelected().getModuleVersion(),
-                            dep, repository, dep.filename("jar"), false, null, output);
+                    resolver.tryResolveCached(
+                            configuration,
+                            dependency.getSelected().getModuleVersion(),
+                            dep,
+                            repository,
+                            dep.filename("jar"),
+                            false,
+                            null
+                    );
                 }
 
-                // Download .pom artifact
-                var pom = resolver.tryResolve(dep, repository, dep.filename("pom"), output);
+                // Download POM artifact
+                var pom = resolver.tryResolve(dep, repository, dep.filename("pom"));
 
                 // Add parent POMs
-                pom.ifPresent(bytes -> POMHandler.addParentPOMs(bytes, repository, output));
+                pom.ifPresent(bytes ->
+                        POMHandler.addParentPOMs(bytes, repository));
 
                 // Add marker artifact
                 // Only for plugin jar files downloaded from the Gradle Plugin Portal
-                if (repository.equals(GRADLE_PLUGIN_PORTAL) && dep.group().startsWith("gradle.plugin."))
-                    addPluginMarker(dep, output);
+                if (repository.equals(GRADLE_PLUGIN_PORTAL)
+                        && dep.group().startsWith("gradle.plugin."))
+                    addPluginMarker(dep);
 
                 // Success! No need to resolve this dependency against other repositories
                 if (module.isPresent() || pom.isPresent())
@@ -238,8 +271,10 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     }
 
     /**
-     * Get the downloadDirectory property, fill in the default if necessary, and append a slash if necessary.
-      * @return the download directory, ending with a slash
+     * Get the downloadDirectory property, fill in the default if necessary,
+     * and append a slash if necessary.
+     *
+     * @return the download directory, ending with a slash
      */
     private String getDest() {
         String dest = getDownloadDirectory().getOrElse(DEFAULT_DOWNLOAD_DIRECTORY);
@@ -247,8 +282,9 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     }
 
     /**
-     * Find all resolved dependencies (both direct and transitive)
-     * @param configuration the configuration to list the dependencies for
+     * Find all resolved dependencies (both direct and transitive).
+     *
+     * @param  configuration the configuration to list the dependencies for
      * @return all resolved dependencies (both direct and transitive)
      */
     private List<ResolvedDependencyResult> listDependencies(Configuration configuration) {
@@ -257,17 +293,18 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 .getResolutionResult()
                 .getAllDependencies()
                 .stream()
-                .filter(dependency -> dependency instanceof ResolvedDependencyResult)
-                .map(result -> ((ResolvedDependencyResult) result))
+                .filter(ResolvedDependencyResult.class::isInstance)
+                .map(ResolvedDependencyResult.class::cast)
                 .toList();
     }
 
     /**
      * For Gradle plugins, we add the plugin marker artifact to the JSON file.
+     *
      * @param dep details about the dependency
-     * @param output the set of generated JSON blocks
      */
-    private void addPluginMarker(DependencyDetails dep, Set<String> output) throws NoSuchAlgorithmException {
+    private void addPluginMarker(DependencyDetails dep) throws NoSuchAlgorithmException {
+
         // This is the marker artifact we are looking for
         var marker = new DependencyDetails(
                 dep.group().substring("gradle.plugin.".length()),
@@ -276,6 +313,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 dep.snapshotDetail(),
                 dep.isSnapshot()
         );
-        resolver.tryResolve(marker, GRADLE_PLUGIN_PORTAL, dep.filename("pom"), output);
+
+        // Download the artifact
+        resolver.tryResolve(marker, GRADLE_PLUGIN_PORTAL, dep.filename("pom"));
     }
 }

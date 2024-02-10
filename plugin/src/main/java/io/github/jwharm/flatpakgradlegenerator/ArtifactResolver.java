@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -21,6 +21,7 @@ package io.github.jwharm.flatpakgradlegenerator;
 
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
+import org.gradle.api.artifacts.ResolvedArtifact;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,12 +29,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 /**
  * Helper class for resolving artifacts
@@ -41,9 +43,11 @@ import java.util.Set;
 final class ArtifactResolver {
 
     private final String dest;
+    private final Set<String> output;
 
     private ArtifactResolver(String dest) {
         this.dest = dest;
+        this.output = new ConcurrentSkipListSet<>();
     }
 
     static ArtifactResolver getInstance(String dest) {
@@ -51,18 +55,23 @@ final class ArtifactResolver {
     }
 
     /**
-     * Build an url and try to download the contents. If that succeeds, an SHA-512 hash is calclated and
-     * the filename, URL, path and hash are added to the JSON list
-     * @param dep a DependencyDetail instance with the Maven coordinates of the artifact
-     * @param repository the repository to try to download from
-     * @param filename the filename of the artifact
-     * @param output the set of generated JSON blocks
+     * Build an url and try to download the contents. If that succeeds, an SHA-512 hash is
+     * calculated and the filename, URL, path and hash are added to the JSON list.
+     *
+     * @param  dep        a DependencyDetail instance with the Maven coordinates of the artifact
+     * @param  repository the repository to try to download from
+     * @param  filename   the filename of the artifact
+     *
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
+     *
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-     Optional<byte[]> tryResolve(DependencyDetails dep, String repository, String filename, Set<String> output)
+     Optional<byte[]> tryResolve(DependencyDetails dep,
+                                 String repository,
+                                 String filename)
             throws NoSuchAlgorithmException {
+
         // Build the url and try to download the file
         String url = repository + dep.path() + "/" + filename;
         var contents = getFileContentsFrom(url);
@@ -74,18 +83,19 @@ final class ArtifactResolver {
             // If the filename contains a path, cut it out and append it to the dest field
             String destFilename = filename;
             if (filename.contains("/")) {
-                dest += (filename.startsWith("/") ? "" : "/") + filename.substring(0, filename.lastIndexOf("/"));
+                dest += (filename.startsWith("/") ? "" : "/")
+                        + filename.substring(0, filename.lastIndexOf("/"));
                 destFilename = filename.substring(filename.lastIndexOf('/') + 1);
             }
 
             // Generate and append the json
-            generateJsonBlock(url, sha512, dest, destFilename, output);
+            generateJsonBlock(url, sha512, dest, destFilename);
 
             // For snapshot versions, generate a second json with "-SNAPSHOT" instead of the actual filename
             if (dep.isSnapshot()) {
                 String ext = destFilename.substring(destFilename.lastIndexOf(".") + 1);
                 destFilename = "%s-%s.%s".formatted(dep.name(), dep.version(), ext);
-                generateJsonBlock(url, sha512, dest, destFilename, output);
+                generateJsonBlock(url, sha512, dest, destFilename);
             }
         }
         // Return the file contents
@@ -96,35 +106,53 @@ final class ArtifactResolver {
      * Build an url and check if it is valid, without downloading the entire file. If it is valid,
      * find the artifact in the local Gradle file, and use that file to calculate the SHA-512 hash
      * and add it to the JSON output.
-     * @param configuration the Gradle configuration that contains the artifact
-     * @param id the id of the dependency
-     * @param dep a DependencyDetail instance with the Maven coordinates of the artifact
-     * @param repository the repository to try to download from
-     * @param filename the filename of the artifact
-     * @param output the set of generated JSON blocks
-     * @throws IOException error while reading the jar file
+     *
+     * @param  configuration the Gradle configuration that contains the artifact
+     * @param  id            the id of the dependency
+     * @param  dep           a DependencyDetail instance with the Maven coordinates of the artifact
+     * @param  repository    the repository to try to download from
+     * @param  filename      the filename of the artifact
+     *
+     * @throws IOException              error while reading the jar file
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-    void tryResolveCached(Configuration configuration, ModuleVersionIdentifier id, DependencyDetails dep,
-                          String repository, String filename, boolean checkName, String altName, Set<String> output) throws IOException, NoSuchAlgorithmException {
+    void tryResolveCached(Configuration configuration,
+                          ModuleVersionIdentifier id,
+                          DependencyDetails dep,
+                          String repository,
+                          String filename,
+                          boolean checkName,
+                          String altName)
+            throws IOException, NoSuchAlgorithmException {
 
         // Build the url and check if it exists
-        String url = repository + dep.path() + "/" + filename;
+        String url = repository
+                + dep.path()
+                + "/"
+                + filename;
         var isValid = isValid(url);
 
         if ((! isValid) && filename.contains("SNAPSHOT")) {
             // Try again, but this time, replace SNAPSHOT with snapshot details
-            url = repository + dep.path() + "/" + filename.replace("SNAPSHOT", dep.snapshotDetail());
+            url = repository
+                    + dep.path()
+                    + "/"
+                    + filename.replace("SNAPSHOT", dep.snapshotDetail());
             isValid = isValid(url);
         }
 
         if (isValid) {
             // Find the jar in the local Gradle cache
-            for (var artifact : configuration.getResolvedConfiguration().getResolvedArtifacts()) {
+            Set<ResolvedArtifact> artifacts = configuration
+                    .getResolvedConfiguration()
+                    .getResolvedArtifacts();
+
+            for (var artifact : artifacts) {
                 if (artifact.getModuleVersion().getId().equals(id)) {
                     File file = artifact.getFile();
                     if (checkName)
-                        if (! (file.getName().equals(filename) || file.getName().equals(altName)))
+                        if (! (file.getName().equals(filename) ||
+                                file.getName().equals(altName)))
                             continue;
 
                     // Read the file from the local Gradle cache and calculate the SHA-512 hash
@@ -132,16 +160,22 @@ final class ArtifactResolver {
                     String sha512 = calculateSHA512(bytes);
 
                     // Generate and append the json
-                    generateJsonBlock(url, sha512, dep.path(), checkName ? filename : file.getName(), output);
+                    generateJsonBlock(
+                            url,
+                            sha512,
+                            dep.path(),
+                            checkName ? filename : file.getName()
+                    );
                 }
             }
         }
     }
 
+    // Test if the URL is valid (HTTP 200 OK response)
     private boolean isValid(String url) {
         try {
-            URL fileUrl = new URI(url).toURL();
-            HttpURLConnection httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
+            var fileUrl = new URI(url).toURL();
+            var httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
 
             // Set the request to follow redirects (303 for example)
             httpURLConnection.setInstanceFollowRedirects(true);
@@ -159,16 +193,18 @@ final class ArtifactResolver {
         }
     }
 
-
     /**
-     * Create a json string
-     * @param url the url
-     * @param sha512 the hash
-     * @param path the path in the target directory
+     * Create a json string.
+     *
+     * @param url          the url
+     * @param sha512       the hash
+     * @param path         the path in the target directory
      * @param destFilename the filename
-     * @param output the set of generated JSON blocks
      */
-    void generateJsonBlock(String url, String sha512, String path, String destFilename, Set<String> output) {
+    void generateJsonBlock(String url,
+                           String sha512,
+                           String path,
+                           String destFilename) {
         output.add("""
                   {
                     "type": "file",
@@ -182,6 +218,16 @@ final class ArtifactResolver {
     }
 
     /**
+     * Merge the json strings into one json list
+     *
+     * @return the generated json list
+     */
+    String getJsonOutput() {
+        return output.stream().collect(
+                Collectors.joining(",\n", "[\n", "\n]\n"));
+    }
+
+    /**
      * Download the contents from the provided url into a byte array
      * @param url the url of the file to download
      * @return an {@link Optional} with the contents of the file,
@@ -191,7 +237,7 @@ final class ArtifactResolver {
         var outStream = new ByteArrayOutputStream();
         try {
             try (var inStream = new BufferedInputStream(new URI(url).toURL().openStream())) {
-                byte[] dataBuffer = new byte[8192]; // Adjust the buffer size as needed
+                byte[] dataBuffer = new byte[8192];
                 int bytesRead;
                 while ((bytesRead = inStream.read(dataBuffer, 0, 8192)) != -1) {
                     outStream.write(dataBuffer, 0, bytesRead);
@@ -205,7 +251,8 @@ final class ArtifactResolver {
 
     /**
      * Generate an SHA-512 hash for a byte array using MessageDigest.
-     * @param contents the input byte array
+     *
+     * @param  contents the input byte array
      * @return the SHA-512 hash
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */

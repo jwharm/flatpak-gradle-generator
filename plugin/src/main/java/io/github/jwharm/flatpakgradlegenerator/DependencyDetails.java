@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -20,7 +20,7 @@
 package io.github.jwharm.flatpakgradlegenerator;
 
 /**
- * Simple record type to work with dependencies
+ * Simple record type to work with dependencies.
  *
  * @param group          the Maven groupId
  * @param name           the Maven artifact name
@@ -37,9 +37,10 @@ record DependencyDetails(
 ) {
 
     /**
-     * Parse a dependency record from this id
+     * Parse a dependency record from this id.
      *
-     * @param id a Maven dependency id as returned by Gradle {@code ResolvedComponentResult.getId().getDisplayName()}
+     * @param  id a Maven dependency id as returned by Gradle
+     *         {@code ResolvedComponentResult.getId().getDisplayName()}
      * @return a new dependency record for this id
      */
     static DependencyDetails of(String id) {
@@ -54,7 +55,8 @@ record DependencyDetails(
     }
 
     /**
-     * Generate the path to use in the url (combines group and name, using slashes as separators)
+     * Generate the path to use in the url (combines group and name, using
+     * slashes as separators).
      *
      * @return the path to use in the url
      */
@@ -63,13 +65,17 @@ record DependencyDetails(
     }
 
     /**
-     * Generate the filename to use in the url. Format is name-version.[ext].
-     * For snapshot files, the filename is formatted as name-version-yyyymmdd.hhmmss-n.[ext]
+     * Generate the filename to use in the url. Format is {@code name-version.[ext]}.
+     * For snapshot files, the filename is formatted as {@code name-version-yyyymmdd.hhmmss-n.[ext]}
      *
      * @param ext the extension to append to the filename
      * @return the filename to use in the url
      */
     String filename(String ext) {
-        return "%s-%s.%s".formatted(name, version.replace("SNAPSHOT", snapshotDetail), ext);
+        return "%s-%s.%s".formatted(
+                name,
+                version.replace("SNAPSHOT", snapshotDetail),
+                ext
+        );
     }
 }

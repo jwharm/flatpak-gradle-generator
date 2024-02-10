@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023 Jan-Willem Harmannij
+ * Copyright (C) 2023-2024 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -27,6 +27,7 @@ import org.gradle.api.Plugin;
  * so they can be downloaded for an offline build.
  */
 public class FlatpakGradleGeneratorPlugin implements Plugin<Project> {
+
     public void apply(Project project) {
         project.getTasks().register("flatpakGradleGenerator", FlatpakGradleGeneratorTask.class);
     }
