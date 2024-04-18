@@ -1,0 +1,37 @@
+[
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/bytedeco/javacpp-presets/1.5.9/javacpp-presets-1.5.9.pom",
+    "sha512": "e3dfe878602b18294437f123823ddc2665a9c05ab3a3bd72b068c9f15fe3647fd8ea9ec6395d172a68f3d870d75d2c099291d2dc790554a570cf3a4035856af2",
+    "dest": "offline-repository/org/bytedeco/javacpp-presets/1.5.9",
+    "dest-filename": "javacpp-presets-1.5.9.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/bytedeco/javacpp/1.5.9/javacpp-1.5.9.jar",
+    "sha512": "cdcbe75f0b38b3fc699ac6ae164444e8252a7fb83b225c3a7ce1631707164359e36e733dfd42c4eedc769cb5a5a5d482d0ad07a13eed5550ae680dcc3d8e4f89",
+    "dest": "offline-repository/org/bytedeco/javacpp/1.5.9",
+    "dest-filename": "javacpp-1.5.9.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/bytedeco/javacpp/1.5.9/javacpp-1.5.9.pom",
+    "sha512": "63321eb6eee1648eeeac09648d689393d9fd7a00b2ac10b9b03099edb8053ad8ab322818aab2f1d5dbdc52dbaaa1d2e459650ffe66d9c6dcd3055d32c8950834",
+    "dest": "offline-repository/org/bytedeco/javacpp/1.5.9",
+    "dest-filename": "javacpp-1.5.9.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/bytedeco/leptonica/1.83.0-1.5.9/leptonica-1.83.0-1.5.9-linux-x86_64.jar",
+    "sha512": "d6ade0013d4f7b677d2c1b90e3c588e5dc55942d1e39fcc436c49d7d8a90ec52df5bce3eaa8bb91cce1048573445ff94e62820761b68ab11b449afb5c7200a1d",
+    "dest": "offline-repository/org/bytedeco/leptonica/1.83.0-1.5.9",
+    "dest-filename": "leptonica-1.83.0-1.5.9-linux-x86_64.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/bytedeco/leptonica/1.83.0-1.5.9/leptonica-1.83.0-1.5.9.pom",
+    "sha512": "0dc60182165c0837d6a9a0310ad0dfbae4190158d8e7ee853e82d00e18f1ef57f89c3a60aa63ec0c4de2faff752e237b66987c5fb7cab11f8c3698165b21af8a",
+    "dest": "offline-repository/org/bytedeco/leptonica/1.83.0-1.5.9",
+    "dest-filename": "leptonica-1.83.0-1.5.9.pom"
+  }
+]

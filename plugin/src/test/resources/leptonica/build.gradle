@@ -1,0 +1,19 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group:      'org.bytedeco',
+                   name:       'leptonica',
+                   version:    '1.83.0-1.5.9',
+                   classifier: 'linux-x86_64'
+}
+
+tasks.flatpakGradleGenerator {
+    outputFile = file('%s')
+}

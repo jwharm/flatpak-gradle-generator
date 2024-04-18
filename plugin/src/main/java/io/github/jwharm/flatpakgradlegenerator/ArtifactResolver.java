@@ -125,36 +125,36 @@ final class ArtifactResolver {
                           String altName)
             throws IOException, NoSuchAlgorithmException {
 
-        // Build the url and check if it exists
-        String url = repository
-                + dep.path()
-                + "/"
-                + filename;
-        var isValid = isValid(url);
+        // Find the jar in the local Gradle cache
+        Set<ResolvedArtifact> artifacts = configuration
+                .getResolvedConfiguration()
+                .getResolvedArtifacts();
 
-        if ((! isValid) && filename.contains("SNAPSHOT")) {
-            // Try again, but this time, replace SNAPSHOT with snapshot details
-            url = repository
-                    + dep.path()
-                    + "/"
-                    + filename.replace("SNAPSHOT", dep.snapshotDetail());
-            isValid = isValid(url);
-        }
+        for (var artifact : artifacts) {
+            if (artifact.getModuleVersion().getId().equals(id)) {
+                File file = artifact.getFile();
+                if (checkName)
+                    if (! (file.getName().equals(filename) ||
+                            file.getName().equals(altName)))
+                        continue;
 
-        if (isValid) {
-            // Find the jar in the local Gradle cache
-            Set<ResolvedArtifact> artifacts = configuration
-                    .getResolvedConfiguration()
-                    .getResolvedArtifacts();
+                // Build the url and check if it exists
+                String url = repository
+                        + dep.path()
+                        + "/"
+                        + file.getName();
+                var isValid = isValid(url);
 
-            for (var artifact : artifacts) {
-                if (artifact.getModuleVersion().getId().equals(id)) {
-                    File file = artifact.getFile();
-                    if (checkName)
-                        if (! (file.getName().equals(filename) ||
-                                file.getName().equals(altName)))
-                            continue;
+                if ((! isValid) && filename.contains("SNAPSHOT")) {
+                    // Try again, but this time, replace SNAPSHOT with snapshot details
+                    url = repository
+                            + dep.path()
+                            + "/"
+                            + filename.replace("SNAPSHOT", dep.snapshotDetail());
+                    isValid = isValid(url);
+                }
 
+                if (isValid) {
                     // Read the file from the local Gradle cache and calculate the SHA-512 hash
                     byte[] bytes = Files.readAllBytes(file.toPath());
                     String sha512 = calculateSHA512(bytes);

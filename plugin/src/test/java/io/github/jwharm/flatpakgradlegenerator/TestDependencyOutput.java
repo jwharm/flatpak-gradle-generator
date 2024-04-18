@@ -77,6 +77,11 @@ class TestDependencyOutput {
         testDependencyOutput("kotlin-gradle-plugin-api");
     }
 
+    @Test
+    void testLeptonica() throws IOException {
+        testDependencyOutput("leptonica");
+    }
+
     /**
      * Run the flatpakGradleGenerator task on a temporary Gradle build, and
      * compare the results with the expected output.
