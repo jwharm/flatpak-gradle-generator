@@ -32,9 +32,9 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 /**
@@ -43,11 +43,11 @@ import java.util.stream.Collectors;
 final class ArtifactResolver {
 
     private final String dest;
-    private final Set<String> output;
+    private final HashMap<String, String> output;
 
     private ArtifactResolver(String dest) {
         this.dest = dest;
-        this.output = new ConcurrentSkipListSet<>();
+        this.output = new HashMap<>();
     }
 
     static ArtifactResolver getInstance(String dest) {
@@ -133,10 +133,16 @@ final class ArtifactResolver {
         for (var artifact : artifacts) {
             if (artifact.getModuleVersion().getId().equals(id)) {
                 File file = artifact.getFile();
+
+                // Check against filenames in the .module file
                 if (checkName)
                     if (! (file.getName().equals(filename) ||
                             file.getName().equals(altName)))
                         continue;
+
+                // Skip files that are already included in the output
+                if (output.containsKey(dep.path() + "/" + (checkName ? filename : file.getName())))
+                    continue;
 
                 // Build the url and check if it exists
                 String url = repository
@@ -205,7 +211,7 @@ final class ArtifactResolver {
                            String sha512,
                            String path,
                            String destFilename) {
-        output.add("""
+        output.put(path + "/" + destFilename, """
                   {
                     "type": "file",
                     "url": "%s",
@@ -223,7 +229,7 @@ final class ArtifactResolver {
      * @return the generated json list
      */
     String getJsonOutput() {
-        return output.stream().collect(
+        return output.keySet().stream().sorted().map(output::get).collect(
                 Collectors.joining(",\n", "[\n", "\n]\n"));
     }
 
