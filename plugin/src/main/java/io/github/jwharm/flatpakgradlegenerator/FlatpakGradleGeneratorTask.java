@@ -65,9 +65,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     @org.gradle.api.tasks.Optional
     public abstract Property<String> getDownloadDirectory();
 
-    // Set of generated dependency specs, to prevent generating duplicate entries
-    private HashSet<String> ids;
-
     private ArtifactResolver resolver;
     private PomHandler POMHandler;
     private ModuleMetadata moduleMetadata;
@@ -80,7 +77,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
      */
     @TaskAction
     public void apply() throws NoSuchAlgorithmException, IOException {
-        ids = new HashSet<>();
         resolver = ArtifactResolver.getInstance(getDest());
         POMHandler = PomHandler.getInstance(resolver);
         moduleMetadata = ModuleMetadata.getInstance();
@@ -171,12 +167,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
         for (var dependency : listDependencies(configuration)) {
 
-            // Don't process the same dependency multiple times
             String id = dependency.getSelected().getId().getDisplayName();
-            if (ids.contains(id))
-                continue;
-            ids.add(id);
-
             String variant = dependency.getResolvedVariant().getDisplayName();
 
             // Skip dependencies on local Gradle projects
