@@ -12,7 +12,7 @@ Example `gradle.build`:
 ```groovy
 plugins {
   id 'application'
-  id 'io.github.jwharm.flatpak-gradle-generator' version '1.0.0'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '1.1.0'
 }
 
 repositories {
