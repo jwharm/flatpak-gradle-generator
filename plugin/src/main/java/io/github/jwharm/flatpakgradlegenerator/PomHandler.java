@@ -95,6 +95,8 @@ final class PomHandler {
 
                     if (xpath.inProperties())
                         properties.put(name, characters.toString());
+                    else if (xpath.inProjectProperty())
+                        properties.put("project." + name, characters.toString());
 
                     if (xpath.inParentElement() || xpath.inDependencyElement()) {
                         switch (name) {
@@ -169,6 +171,11 @@ final class PomHandler {
 
         boolean inProperties() {
             return current().startsWith("/project/properties");
+        }
+
+        boolean inProjectProperty() {
+            // exactly one element below <project>: groupId, artifactId, version, name, ...
+            return list.size() == 2 && "project".equals(list.get(0));
         }
 
         boolean inParentElement() {
