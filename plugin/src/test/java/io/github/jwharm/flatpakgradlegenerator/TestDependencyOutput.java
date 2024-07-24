@@ -82,6 +82,11 @@ class TestDependencyOutput {
         testDependencyOutput("leptonica");
     }
 
+    @Test
+    void testLog4j() throws IOException {
+        testDependencyOutput("log4j");
+    }
+
     /**
      * Run the flatpakGradleGenerator task on a temporary Gradle build, and
      * compare the results with the expected output.
