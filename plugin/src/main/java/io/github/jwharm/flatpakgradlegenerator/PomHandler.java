@@ -23,6 +23,7 @@ import javax.xml.stream.XMLInputFactory;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -31,20 +32,19 @@ import java.util.regex.Pattern;
 final class PomHandler {
 
     private static final Pattern VAR_PATTERN = Pattern.compile("\\$\\{(.+?)}");
-
     private final ArtifactResolver resolver;
     private final XMLInputFactory xmlInputFactory;
-
+    private final boolean recursive;
     private HashMap<String, String> properties;
 
-    // Use getInstance()
-    private PomHandler(ArtifactResolver resolver) {
+    private PomHandler(ArtifactResolver resolver, boolean recursive) {
         this.resolver = resolver;
         this.xmlInputFactory = XMLInputFactory.newInstance();
+        this.recursive = recursive;
     }
 
     static PomHandler getInstance(ArtifactResolver resolver) {
-        return new PomHandler(resolver);
+        return new PomHandler(resolver, false);
     }
 
     /**
@@ -94,7 +94,7 @@ final class PomHandler {
                     String name = nextEvent.asEndElement().getName().getLocalPart();
 
                     if (xpath.inProperties())
-                        properties.put(name, characters.toString());
+                        properties.put(name, parse(characters.toString()));
                     else if (xpath.inProjectProperty())
                         properties.put("project." + name, characters.toString());
 
@@ -112,8 +112,13 @@ final class PomHandler {
                                 String id = "%s:%s:%s".formatted(groupId, artifactId, versionId);
                                 var dep = DependencyDetails.of(id);
 
+                                var isBom = name.equals("dependency")
+                                        && artifactId.toString().endsWith("-bom");
+
                                 // Download and add the parent pom to the list
-                                var parent = resolver.tryResolve(dep, repository, dep.filename("pom"));
+                                Optional<byte[]> parent = Optional.empty();
+                                if (name.equals("parent") || isBom || !recursive)
+                                    parent = resolver.tryResolve(dep, repository, dep.filename("pom"));
 
                                 // Reset string builders
                                 groupId    = new StringBuilder();
@@ -121,8 +126,9 @@ final class PomHandler {
                                 versionId  = new StringBuilder();
 
                                 // Recursively add the parent pom of the parent pom
-                                if (name.equals("parent"))
-                                    parent.ifPresent(bytes -> addParentPOMs(bytes, repository));
+                                if (name.equals("parent") || isBom)
+                                    parent.ifPresent(bytes -> new PomHandler(resolver, true)
+                                            .addParentPOMs(bytes, repository));
                             }
                             default -> {} // ignored
                         }
@@ -145,10 +151,14 @@ final class PomHandler {
      * @return the text with property references replaced by their value
      */
     private String parse(Object raw) {
-        var matcher = VAR_PATTERN.matcher(raw.toString());
-        return matcher.find()
-                ? parse(matcher.replaceFirst(properties.get(matcher.group(1))))
-                : raw.toString();
+        try {
+            var matcher = VAR_PATTERN.matcher(raw.toString());
+            return matcher.find()
+                    ? parse(matcher.replaceFirst(properties.get(matcher.group(1))))
+                    : raw.toString();
+        } catch (Exception e) {
+            return raw.toString();
+        }
     }
 
     /**
