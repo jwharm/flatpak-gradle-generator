@@ -29,13 +29,6 @@
   },
   {
     "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-annotations/3.7.0/maven-plugin-annotations-3.7.0.pom",
-    "sha512": "1e804df8d128937fe0eb0c07fd199a74df8be1e182b25bdbf2bf58f5b81658ba241a5fc760018581a4cd27aacbccd88ff760c8b138598495643a2adb7a9948d0",
-    "dest": "offline-repository/org/apache/maven/plugin-tools/maven-plugin-annotations/3.7.0",
-    "dest-filename": "maven-plugin-annotations-3.7.0.pom"
-  },
-  {
-    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.9.3/junit-bom-5.9.3.pom",
     "sha512": "a8f5b64af5387c0eab939f6af8c2d3a7dfe9930ccaf0a33db97a307fa2af2607dfecb520527f9579521d6296d7dc0029310ea410df753e6b3ad7a63ac00f12c9",
     "dest": "offline-repository/org/junit/junit-bom/5.9.3",

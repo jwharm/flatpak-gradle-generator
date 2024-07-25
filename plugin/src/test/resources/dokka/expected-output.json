@@ -64,6 +64,69 @@
   },
   {
     "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.pom",
+    "sha512": "5b03831feb2afe7d41f6e2ee2b6026cee3171b5309ba1ac999118ac5b4fcf200686a39afbeaa7f1eb2bd75a3dac3fe6e6542467cffdbbd9423211be2cd8fc8dd",
+    "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.12.7",
+    "dest-filename": "jackson-databind-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-avro/2.12.7/jackson-dataformat-avro-2.12.7.pom",
+    "sha512": "b330cc6cd622e4d7379d9b8794169f31b6d0502ff909b42137a1a6b3661854c70f39a7d94cdc6bf8d77f94cf0ffdb3c58126e3a6d00e4c169e37c02457f59585",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-avro/2.12.7",
+    "dest-filename": "jackson-dataformat-avro-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.12.7/jackson-dataformat-cbor-2.12.7.pom",
+    "sha512": "391465b48f691b9934c55cd90442fac892eb2dd6162bc33d01ca186675c3864520363e4a6d00bcc5d74044870e36923f400627ae22abf15839f56db4444362c0",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.12.7",
+    "dest-filename": "jackson-dataformat-cbor-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-csv/2.12.7/jackson-dataformat-csv-2.12.7.pom",
+    "sha512": "4b1894c8f208a01ecd58eddfae7100980900953f25f2a0bd347b33773c6e72431224318eb0ccb121415d5bdc2143604328f249eddeb653886596dd011e4c9cbc",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-csv/2.12.7",
+    "dest-filename": "jackson-dataformat-csv-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-ion/2.12.7/jackson-dataformat-ion-2.12.7.pom",
+    "sha512": "a4167642bebdfb7b485989f0a2a1d79dc66938e80998e364e8be8cd58093046c29b68b07af4d8a2f837c3539b04408784bf6434e8fbf3eb9de57fa24453e01c9",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-ion/2.12.7",
+    "dest-filename": "jackson-dataformat-ion-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-properties/2.12.7/jackson-dataformat-properties-2.12.7.pom",
+    "sha512": "04d21542b86323461ff45ec5cfae8d2272a0986887609076714f4a953c97058f9425c3d9f3ff91d148496fb092e3c27865aece7e5db4056552ec00dcf2529342",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-properties/2.12.7",
+    "dest-filename": "jackson-dataformat-properties-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-protobuf/2.12.7/jackson-dataformat-protobuf-2.12.7.pom",
+    "sha512": "f9b1972c7d3172677cada91017fd9d8739e1763c870fd8a2a53179e9953815e22bb43e5c80fb2fe378011e2e844b027d6945c44fc7b22c1af8f56461684b2424",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-protobuf/2.12.7",
+    "dest-filename": "jackson-dataformat-protobuf-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.12.7/jackson-dataformat-smile-2.12.7.pom",
+    "sha512": "0cf2821dd3b751d6f1b205419b2e88e660660bbb3a5c01a5bdc4cbf95c2fca0b0dff1838935ccecf85e3503c23b1da753e61871389abbdcd46fd54ddd1f20039",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.12.7",
+    "dest-filename": "jackson-dataformat-smile-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.12.7/jackson-dataformat-toml-2.12.7.pom",
+    "sha512": "24a7a3900563d08622a0226c3006c5f79ca9a65e17389bb0198c20458ca3d86d02453fbcfb22e26f6e395c2050fdd9ac6e15c7580093f0d4d324cb0cb43692b7",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.12.7",
+    "dest-filename": "jackson-dataformat-toml-2.12.7.pom"
+  },
+  {
+    "type": "file",
     "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7/jackson-dataformat-xml-2.12.7.jar",
     "sha512": "0c1478fe21d1de6e991a9c52d12b3f0deb6faf477a32b48f3a61cb45da8f106704b7b316bed5ef03eae5ff5e976fd5633e9d9f7446cb4dee116812b3d9c8d3a5",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7",
@@ -82,6 +145,118 @@
     "sha512": "0722965ff1c94c17ad75b87feae4283f103d8b4374a9daaeb0d798c1ca54837cdda1a378da1b1f2feaa1dd7a5d1cd3cc77b1b01037f7f281c88f6059594629da",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7",
     "dest-filename": "jackson-dataformat-xml-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.7/jackson-dataformat-yaml-2.12.7.pom",
+    "sha512": "d7d512bdb638c4f4b236281dd8ba15c7e53fde722be45ff1914875a48df938f6059a35a0d73149c971288e764b8a8dac91d75e270f328a914d7b51070d40130a",
+    "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.7",
+    "dest-filename": "jackson-dataformat-yaml-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-eclipse-collections/2.12.7/jackson-datatype-eclipse-collections-2.12.7.pom",
+    "sha512": "da731af853863d3022be0ff09710906bffe211383e0fee86925c0d2c35b235d1317ba68488799985b9eb45b49400bc2ac8270cdea83d7aa0e12e9f7b4e84564e",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-eclipse-collections/2.12.7",
+    "dest-filename": "jackson-datatype-eclipse-collections-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-guava/2.12.7/jackson-datatype-guava-2.12.7.pom",
+    "sha512": "b5832526ff42434cae431fe90dbcd3e84a46c8af4a7e09f738a8b2c99fd96b529589c24bcfdfc13608244412935d3b8dc15179a85dd205ef8706e52fd2a94801",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-guava/2.12.7",
+    "dest-filename": "jackson-datatype-guava-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate3/2.12.7/jackson-datatype-hibernate3-2.12.7.pom",
+    "sha512": "816d23a66576727fb038ff97f7c0170c2b5315710e91dfb7b500c0f1735e867031275b49bf909742cb1a7d9ddec9d759f208ecfa1c8c334d8c90f630169c71ae",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hibernate3/2.12.7",
+    "dest-filename": "jackson-datatype-hibernate3-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate4/2.12.7/jackson-datatype-hibernate4-2.12.7.pom",
+    "sha512": "bad873dc4a7b9a458adaaeb882553b175b9b455444dc470e003862bb32e27ea54de7d99ea82b2065531b88675fe0a77c0f6fdf0153cc244bec87d9030be2410e",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hibernate4/2.12.7",
+    "dest-filename": "jackson-datatype-hibernate4-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate5/2.12.7/jackson-datatype-hibernate5-2.12.7.pom",
+    "sha512": "d1ff405c8f99ccd8282f543d5970ed98bb6aa04047025d4409afb14f0695be580ff53169228162c3347c108b9358815c5722ccc33b9b4689a3bb7313eb619fe8",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hibernate5/2.12.7",
+    "dest-filename": "jackson-datatype-hibernate5-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hppc/2.12.7/jackson-datatype-hppc-2.12.7.pom",
+    "sha512": "6b218ba78b8c09aa4bc131ff3d73586f677790b43bea40178c956a9a51d6e739d925591fc76d84931cff04db47eb75b8f2d54cec484d226325eb84242f3586f0",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hppc/2.12.7",
+    "dest-filename": "jackson-datatype-hppc-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jakarta-jsonp/2.12.7/jackson-datatype-jakarta-jsonp-2.12.7.pom",
+    "sha512": "da4e64a8131aa11551606d2990e70a55b9da63b382a4ed8030736d9594c5af23013c7043f024647d74e4461ea09dbf0934c41ca824c305ac0bf0f37672285097",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jakarta-jsonp/2.12.7",
+    "dest-filename": "jackson-datatype-jakarta-jsonp-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jaxrs/2.12.7/jackson-datatype-jaxrs-2.12.7.pom",
+    "sha512": "0c6b53989d1154a0326c9507f1edd448618b9bc40665038223675c6cd24c1dee23824e252cf5098e03ca9452c93eb24c7670bc0bf158d165ce70b000c6d3a2af",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jaxrs/2.12.7",
+    "dest-filename": "jackson-datatype-jaxrs-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.12.7/jackson-datatype-jdk8-2.12.7.pom",
+    "sha512": "27a2bd7885041c333d46fa78417839b0d9e11378460f49a48b2fddf2a01a9ae8ec4c033648c7bf7466dea798ba157a9f9e6a0638ce3a20217d28c9069151bfe4",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.12.7",
+    "dest-filename": "jackson-datatype-jdk8-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-joda-money/2.12.7/jackson-datatype-joda-money-2.12.7.pom",
+    "sha512": "5932305c21f30d9229413041dfc28d4c5cd76f4896dfb8b57644e1d893b13b686bcb68782850f3daf8b98ce0973977dde37ed1abd455186658d8dbccb9cfff12",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-joda-money/2.12.7",
+    "dest-filename": "jackson-datatype-joda-money-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.12.7/jackson-datatype-joda-2.12.7.pom",
+    "sha512": "ba8bf46575c6c245b42c8337e9c93e041ba6b1efd8b195934f9bcf064b142f110b776d55a1ee97606c3351cd330cfa7a5953601f4b41d3fb29a7748104999ab4",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.12.7",
+    "dest-filename": "jackson-datatype-joda-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-json-org/2.12.7/jackson-datatype-json-org-2.12.7.pom",
+    "sha512": "fd71334d851b519e77edca2e32ba915f475f2157bb124670058f49b6f937f015ab46d257d3096163e41d73a2ef7a8b31fe70b3b8c09fcd66c57ad035ec8d3e4d",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-json-org/2.12.7",
+    "dest-filename": "jackson-datatype-json-org-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.7/jackson-datatype-jsr310-2.12.7.pom",
+    "sha512": "2c9c570708d5656620ba7020e9a39e14a415f2beeebb0ebe4feb45662f76875007040b29bb48ed8d773bbbe4bd3777bce0fbaf2e1c2f927988ccddcfe4e15c86",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.7",
+    "dest-filename": "jackson-datatype-jsr310-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jsr353/2.12.7/jackson-datatype-jsr353-2.12.7.pom",
+    "sha512": "dc13e06d474a15177443a67e6ad975198706571679a5c62f16d413cd651d40eceebcc76c18e4cda1b66231ee5c90f47e2493f4bae6252e7b764a3c159cc1dd72",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr353/2.12.7",
+    "dest-filename": "jackson-datatype-jsr353-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-pcollections/2.12.7/jackson-datatype-pcollections-2.12.7.pom",
+    "sha512": "fa4c3c8a088149f8db1f5330f984729a5df5c61b8b9c64488ceef8432b3630a7852338c953563eaa60348888bea020b3d5f080e6174effedb7c11637ab0727ee",
+    "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-pcollections/2.12.7",
+    "dest-filename": "jackson-datatype-pcollections-2.12.7.pom"
   },
   {
     "type": "file",
@@ -106,6 +281,104 @@
   },
   {
     "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.12.7/jackson-jaxrs-base-2.12.7.pom",
+    "sha512": "37517feffc189fccb25560780f88601455afd3056a8887e4ebe3b6e66580c26b019ae7fbf6104a0cd53dd9e231ebf76cf6233271f2725fb11b292ebe6dc17f57",
+    "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.12.7",
+    "dest-filename": "jackson-jaxrs-base-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-cbor-provider/2.12.7/jackson-jaxrs-cbor-provider-2.12.7.pom",
+    "sha512": "0babc4140dc2470ef6d6e8134d7db4329569e67ef78913deaec2227d6fd956cd643ca0a36505f2e5290cb2eaa75f30e23be6d8042ff56b71d9dd42a8e0157bfc",
+    "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-cbor-provider/2.12.7",
+    "dest-filename": "jackson-jaxrs-cbor-provider-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.12.7/jackson-jaxrs-json-provider-2.12.7.pom",
+    "sha512": "fc8ce956494cf08c218a1f7f963f40bae37ce4a77183a754cd31578de7856cf294dc7690f44d870e1f12fca59ed04381ba2786d156162a62828b2ae62820b5e0",
+    "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.12.7",
+    "dest-filename": "jackson-jaxrs-json-provider-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-smile-provider/2.12.7/jackson-jaxrs-smile-provider-2.12.7.pom",
+    "sha512": "b968faf91812efd21b2c4772a5b8cd2b79eb2d66d4dcb7a28cd4e40136ae682d290c6f52c7e66218bb6c55af62ca255e1365c1c8fc94aaab96380d76ea2c8746",
+    "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-smile-provider/2.12.7",
+    "dest-filename": "jackson-jaxrs-smile-provider-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-xml-provider/2.12.7/jackson-jaxrs-xml-provider-2.12.7.pom",
+    "sha512": "71de7ba80a832f70e075f458773c8ea0871b2a2eb478472704eabd21831fd4fc3ea98873292377b7316d299366100906608180ab80d8d89cb2daffc1a375893d",
+    "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-xml-provider/2.12.7",
+    "dest-filename": "jackson-jaxrs-xml-provider-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-yaml-provider/2.12.7/jackson-jaxrs-yaml-provider-2.12.7.pom",
+    "sha512": "00c6b107693cc2ee9912dc68ae84cb12537178bcee58c923b25d39134b2a9fa52c8cd6b1be78bc83b8c9a6fd66d4766f714069debef81505fa80583aa54e2988",
+    "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-yaml-provider/2.12.7",
+    "dest-filename": "jackson-jaxrs-yaml-provider-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-all/2.12.7/jackson-jr-all-2.12.7.pom",
+    "sha512": "f629e24495caad0ae5cebba3a4e19b084993326a97d1c1a7ee8ab0068d41bf3401a7e6d72f418dad1ca2f2d92f59c5aac61aad781030b4a169bfb48488ebb6b1",
+    "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-all/2.12.7",
+    "dest-filename": "jackson-jr-all-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-annotation-support/2.12.7/jackson-jr-annotation-support-2.12.7.pom",
+    "sha512": "9c24cd94fbf6ab53f4eced40185f3ee516813e8c8457d0a8ae52b2be29db02c73bdb97a376d557cafe8951286873cf75d0bcd295e7fc70e2122ce14c498f7718",
+    "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-annotation-support/2.12.7",
+    "dest-filename": "jackson-jr-annotation-support-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-objects/2.12.7/jackson-jr-objects-2.12.7.pom",
+    "sha512": "22fce68e37e3ca26077b01b02648fa6e027c215426a5161c3e81e459a964b57794e8a7fc570858bf0fb9d21c80cc0adac4f8c0d42b814801287865d850e4460b",
+    "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-objects/2.12.7",
+    "dest-filename": "jackson-jr-objects-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-retrofit2/2.12.7/jackson-jr-retrofit2-2.12.7.pom",
+    "sha512": "215ee83daada808f8a15a30752737e07f8b7e85d24bd6180bba4d0fb207b620f18538b936cc38718bdbab453bcb0d0497e05921687aa55e4fd8debff77b9d96e",
+    "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-retrofit2/2.12.7",
+    "dest-filename": "jackson-jr-retrofit2-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-stree/2.12.7/jackson-jr-stree-2.12.7.pom",
+    "sha512": "c004a21092721c0f5f4ab3cec3fd403eef3e36d5bcb3593a02b0b02e37a562bb8912b6d611930481ee80dc522cf3fd6d968befae514cf315c30c807eb785379b",
+    "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-stree/2.12.7",
+    "dest-filename": "jackson-jr-stree-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-afterburner/2.12.7/jackson-module-afterburner-2.12.7.pom",
+    "sha512": "573d3f49e3941ab5145ad2363b017c34fb32a6b4ae09a576debc007866c19a60961653d1ad805f94eba8d060478510f323fbd7b46d6347793af6069c5d1032a6",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-afterburner/2.12.7",
+    "dest-filename": "jackson-module-afterburner-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-blackbird/2.12.7/jackson-module-blackbird-2.12.7.pom",
+    "sha512": "469c41b6d62f900c674df1282c0a7bb246f8e07230f6f711ff658835a1ef1a00c9c8b14ea452b387718ffcda2fb8c228eb731a0b2cc7b62065fad514c7a54a6c",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-blackbird/2.12.7",
+    "dest-filename": "jackson-module-blackbird-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-guice/2.12.7/jackson-module-guice-2.12.7.pom",
+    "sha512": "673cd74b76c9fb8bc599fd8177d308cc068a1b2ed80ed75daa7ddebdbad4fa6d242609a4d5904f202a5f426f42764b6f050bb05488399eb49d955c9cc6d835d9",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-guice/2.12.7",
+    "dest-filename": "jackson-module-guice-2.12.7.pom"
+  },
+  {
+    "type": "file",
     "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7/jackson-module-jaxb-annotations-2.12.7.jar",
     "sha512": "78743808e8b4b4298328fb52bb186515d85067cd621fdb664230ac1aa35fe6edd0129ba060323ff4b165d757a4ff9c0fa392501148d7c3f169bf7caad3596d3e",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7",
@@ -127,6 +400,13 @@
   },
   {
     "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-jsonSchema/2.12.7/jackson-module-jsonSchema-2.12.7.pom",
+    "sha512": "9ddc45993c39cc36933d69155f6ebbc9482fac4a9bd9c46711794e0811e1937a2ecced633d969cd89a39991671d340da5f583e9213f38140348c6ac3015fb247",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-jsonSchema/2.12.7",
+    "dest-filename": "jackson-module-jsonSchema-2.12.7.pom"
+  },
+  {
+    "type": "file",
     "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7/jackson-module-kotlin-2.12.7.jar",
     "sha512": "900ef16331af90c5f1f0ebc72f6ae69c0eba520391139aad593e1d52055e004aebeee65b5c07889a58e92d6f306f37bab64a508ff4e44e77e71c9333aba6d9d3",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7",
@@ -145,6 +425,55 @@
     "sha512": "b6a6ab02e70b580d405c56d5b209013c9f57aec90a898b1d309f179e3d27d72b3fd22b862dca3523b2e773a8274fb7c5c25fb48eef2cf6e5cb9337300bb2babd",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7",
     "dest-filename": "jackson-module-kotlin-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-mrbean/2.12.7/jackson-module-mrbean-2.12.7.pom",
+    "sha512": "9ab7c60087caccdf1ef48265c60c62ad0851347f886976741527033f32424ceafd29a9881c6ce03833461ebcf7b46593b86a906287d49d6d5a9f8dc33ffc439c",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-mrbean/2.12.7",
+    "dest-filename": "jackson-module-mrbean-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-osgi/2.12.7/jackson-module-osgi-2.12.7.pom",
+    "sha512": "8298fa7582f5d21cb17d54a313bcc30bfaf00566d1b82a28249fc58b6d804dd27b1572389a1c28e1e8d1c4ed0b93096e08245dfbd1da99244e4791c1ff76c7d3",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-osgi/2.12.7",
+    "dest-filename": "jackson-module-osgi-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.12.7/jackson-module-parameter-names-2.12.7.pom",
+    "sha512": "be6009a18c0ce324aa2305fd1c214eddb0a51b508aaae6dd139e312346c2436e4d0b64e7c8874fdddd6ba65456185aa46ebe309b5cc33a891fd09408aae1ecce",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.12.7",
+    "dest-filename": "jackson-module-parameter-names-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-paranamer/2.12.7/jackson-module-paranamer-2.12.7.pom",
+    "sha512": "2c1609efcf850d31be3c4e5241c2ea1568274b81e189c62b0c1c9aee82af9980a38819ffbb806715549f59aa436d58e8cebc2254ca65c2cbcec66e18863e6634",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-paranamer/2.12.7",
+    "dest-filename": "jackson-module-paranamer-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-scala_2.11/2.12.7/jackson-module-scala_2.11-2.12.7.pom",
+    "sha512": "63a696a354758f6e1683116a05faa2f5c6057b8d789c84ec477a9f2e8d8b804f54fed17dcef3c9729d884796c6a239d139221f59b66ffb47dc7666082a0d219d",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-scala_2.11/2.12.7",
+    "dest-filename": "jackson-module-scala_2.11-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.12.7/jackson-module-scala_2.12-2.12.7.pom",
+    "sha512": "e222e3f7cf71200f2b5a6c4a614c08942fa647dffcaeb77fc68fe141cf170b91c0cc307f4994a14796b125989fa46d8821ab2bbf8dedfdeba3874974074cda38",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.12.7",
+    "dest-filename": "jackson-module-scala_2.12-2.12.7.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-scala_2.13/2.12.7/jackson-module-scala_2.13-2.12.7.pom",
+    "sha512": "0a5ebd70c97ea5b89d11117a57546a3cac9a9d4c872ee30adb32f9cfb6615e05df076e7d9c859451652294c6c8ec2e72c7583c14e57795611cf8c89fea77a123",
+    "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-scala_2.13/2.12.7",
+    "dest-filename": "jackson-module-scala_2.13-2.12.7.pom"
   },
   {
     "type": "file",
@@ -190,13 +519,6 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/sun/activation/jakarta.activation/1.2.1/jakarta.activation-1.2.1.pom",
-    "sha512": "0e4895c1a891afd9d1c4d454ea09105eb18e85171a50e31aac0da4c15ecd0c54b788d4050327e2f0bf119721b6335364d198fef07c47155279ede5c75adc0bf7",
-    "dest": "offline-repository/com/sun/activation/jakarta.activation/1.2.1",
-    "dest-filename": "jakarta.activation-1.2.1.pom"
-  },
-  {
-    "type": "file",
     "url": "https://plugins.gradle.org/m2/jakarta/activation/jakarta.activation-api/1.2.1/jakarta.activation-api-1.2.1.jar",
     "sha512": "c60edc99f119b9e0df0cf527e2512f2b7ab9db0e17c54e83850695f80f652c981eaae90a296db671cf7ed88a044c150224e030df333feb30f346e8a31fb794c6",
     "dest": "offline-repository/jakarta/activation/jakarta.activation-api/1.2.1",
@@ -229,20 +551,6 @@
     "sha512": "7b144c06ac7e7ddf63596406d3b441e3e5a3ba7b408a659bc0ceb5b528936b944108398bc06298054de09228293ab3feed01e4e16be493ecc5fb9780d8c52379",
     "dest": "offline-repository/jakarta/xml/bind/jakarta.xml.bind-api/2.3.2",
     "dest-filename": "jakarta.xml.bind-api-2.3.2.pom"
-  },
-  {
-    "type": "file",
-    "url": "https://plugins.gradle.org/m2/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.pom",
-    "sha512": "6c7d47eb29e1d6aed90a9a587ce690a2e75292f0cb8b9f81ceb88dd27d1766014b2d39b06afea68fdf79f47b98f772b7674ce03da387cf40c9f555093a179122",
-    "dest": "offline-repository/javax/activation/javax.activation-api/1.2.0",
-    "dest-filename": "javax.activation-api-1.2.0.pom"
-  },
-  {
-    "type": "file",
-    "url": "https://plugins.gradle.org/m2/junit/junit/4.13.1/junit-4.13.1.pom",
-    "sha512": "919c6fc7a6fab977129181d2b7d06c77fa1efe4c0152204c2fd913cf4a22da0a91bf0ac36051d318cb436d6f9b34defe83ce42c56ddf035abca47a73643c3ea9",
-    "dest": "offline-repository/junit/junit/4.13.1",
-    "dest-filename": "junit-4.13.1.pom"
   },
   {
     "type": "file",
@@ -516,12 +824,5 @@
     "sha512": "82a9fb8dae0caad4232d583fb05e3f9545589657eb075fb41a02e52a6d78bc45cdf30651a878e2a17d8b2da81e62f40d13eda17c2452c1d5bc16ba539a2392dd",
     "dest": "offline-repository/org/jsoup/jsoup/1.15.3",
     "dest-filename": "jsoup-1.15.3.pom"
-  },
-  {
-    "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm/9.0/asm-9.0.pom",
-    "sha512": "3d7d173d1f536560038934548440325b93b924d555a222043a51508fc23c5f7c5bea144db21b2b2d6eeb1d0ca5bf3d2147c2d9038cae5be3051690fc75d628c0",
-    "dest": "offline-repository/org/ow2/asm/asm/9.0",
-    "dest-filename": "asm-9.0.pom"
   }
 ]
