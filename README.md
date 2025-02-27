@@ -12,7 +12,7 @@ Example `gradle.build`:
 ```groovy
 plugins {
   id 'application'
-  id 'io.github.jwharm.flatpak-gradle-generator' version '1.1.0'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '1.3.0'
 }
 
 repositories {
@@ -67,5 +67,5 @@ block in the build files of the subprojects, to generate separate files for
 each project.
 
 ### Requirements
-The plugin has been tested with Gradle 8.3, 8.4, 8.6 and 8.7. The published jar
-is built with Java 17.
+The plugin has been tested with Gradle 8.3, 8.4, 8.6, 8.7, 8.9 and 8.13. The
+published jar is built with Java 17.
