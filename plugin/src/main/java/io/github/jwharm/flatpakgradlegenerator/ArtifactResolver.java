@@ -43,10 +43,14 @@ import java.util.stream.Collectors;
 final class ArtifactResolver {
 
     private final String dest;
+    private final HashMap<String, Boolean> checkedUrls;
+    private final HashMap<String, Optional<byte[]>> downloadedFiles;
     private final HashMap<String, String> output;
 
     private ArtifactResolver(String dest) {
         this.dest = dest;
+        this.checkedUrls = new HashMap<>();
+        this.downloadedFiles = new HashMap<>();
         this.output = new HashMap<>();
     }
 
@@ -177,8 +181,13 @@ final class ArtifactResolver {
         }
     }
 
-    // Test if the URL is valid (HTTP 200 OK response)
+    // Test if the URL is valid (HTTP 200 OK response) and cache the result
     private boolean isValid(String url) {
+        return checkedUrls.computeIfAbsent(url, this::testIsValid);
+    }
+
+    // Test if the URL is valid (HTTP 200 OK response)
+    private boolean testIsValid(String url) {
         try {
             var fileUrl = new URI(url).toURL();
             var httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
@@ -234,12 +243,25 @@ final class ArtifactResolver {
     }
 
     /**
-     * Download the contents from the provided url into a byte array
+     * Download the contents from the provided url into a byte array and cache
+     * the results.
+     *
      * @param url the url of the file to download
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
      */
     private Optional<byte[]> getFileContentsFrom(String url) {
+        return downloadedFiles.computeIfAbsent(url, this::getFileContents);
+    }
+
+    /**
+     * Download the contents from the provided url into a byte array
+     *
+     * @param url the url of the file to download
+     * @return an {@link Optional} with the contents of the file,
+     *         or {@link Optional#empty()} when the URL does not resolve
+     */
+    private Optional<byte[]> getFileContents(String url) {
         var outStream = new ByteArrayOutputStream();
         try {
             try (var inStream = new BufferedInputStream(new URI(url).toURL().openStream())) {
