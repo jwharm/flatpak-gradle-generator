@@ -26,6 +26,8 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.result.ResolvedDependencyResult;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.internal.GradleInternal;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputFile;
@@ -45,6 +47,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
     private static final String DEFAULT_DOWNLOAD_DIRECTORY = "offline-repository";
     private static final String GRADLE_PLUGIN_PORTAL = "https://plugins.gradle.org/m2/";
+
+    private static final Logger LOGGER = Logging.getLogger(FlatpakGradleGeneratorTask.class);
 
     /**
      * Specifies where to write the resulting json file.
@@ -83,7 +87,11 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         Project project = getProject();
 
         // Buildscript classpath dependencies
-        var buildScriptRepositories = listPluginRepositories(project);
+        var buildScriptRepositories = filterRepositories(listPluginRepositories(project));
+        LOGGER.info(
+                "Resolving buildscript dependencies using repositories: {}",
+                buildScriptRepositories
+        );
         for (var configuration : project.getBuildscript().getConfigurations()) {
             if (configuration.isCanBeResolved()) {
                 generateSourcesList(buildScriptRepositories, configuration);
@@ -94,9 +102,14 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         // repositories too
         var repositories = listRepositories(project);
         repositories.addAll(buildScriptRepositories);
+        repositories = filterRepositories(repositories);
 
         // Loop through configurations and generate json blocks for the
         // resolved dependencies
+        LOGGER.info(
+                "Resolving project dependencies using repositories: {}",
+                repositories
+        );
         for (var configuration : project.getConfigurations()) {
             if (configuration.isCanBeResolved()) {
                 generateSourcesList(repositories, configuration);
@@ -153,6 +166,15 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         return urls;
     }
 
+    private List<String> filterRepositories(List<String> repositories) {
+        // skip duplicates & local repositories
+        return repositories
+                .stream()
+                .distinct()
+                .filter(repository -> !repository.startsWith("file:/"))
+                .toList();
+    }
+
     /**
      * Generate json blocks for all dependencies in the provided configuration.
      *
@@ -165,7 +187,15 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                                      Configuration configuration)
             throws IOException, NoSuchAlgorithmException {
 
-        for (var dependency : listDependencies(configuration)) {
+        var dependencies = listDependencies(configuration);
+
+        LOGGER.info(
+                "Resolving configuration {} with {} dependencies",
+                configuration.getName(),
+                dependencies.size()
+        );
+
+        for (var dependency : dependencies) {
 
             String id = dependency.getSelected().getId().getDisplayName();
             String variant = dependency.getResolvedVariant().getDisplayName();
@@ -177,12 +207,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
             // Build simple helper object with the Maven coordinates of the artifact
             var dep = DependencyDetails.of(id);
 
-            // Loop through the repositories, skip duplicates
-            for (var repository : repositories.stream().distinct().toList()) {
-
-                // Skip local repositories
-                if (repository.startsWith("file:/"))
-                    continue;
+            // Loop through the repositories
+            for (var repository : repositories) {
 
                 // Check for a Gradle module artifact
                 var module = resolver.tryResolve(dep, repository, dep.filename("module"));
