@@ -8,14 +8,14 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.module",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.module",
     "sha512": "c9004f9fab971ed69ad1591b4df463a24c52a7a1bc32d57329b7342279bb695a73469d4ea54d89dff0445c423f02310e7c2261e0109cc0e39836420cf58f6461",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-annotations/2.12.7",
     "dest-filename": "jackson-annotations-2.12.7.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.12.7/jackson-annotations-2.12.7.pom",
     "sha512": "b26cb77923a923e77c32700c6bb4b6c5655f9c2ac5ea8e8074db17aa2ea3a835978d9f1e9c3125fa5b6b259771c3e8a691f38f02dc54c927acdfbc382ad3d257",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-annotations/2.12.7",
     "dest-filename": "jackson-annotations-2.12.7.pom"
@@ -29,14 +29,14 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.module",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.module",
     "sha512": "7f36e86b9384135649b99a98dddca922215fa20ea63bcc451d52e7955f30d87716d3f263a62a1ecf64ab4e16dce0a78f888bc744217e62dd0587d781c3fd081e",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-core/2.12.7",
     "dest-filename": "jackson-core-2.12.7.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.12.7/jackson-core-2.12.7.pom",
     "sha512": "78e0858196b9ee46fefb2d603185f59558d28a80e01a41da55154acba93cde34f2be503301f4e057d6bb1d83aac1b0e5d4c4e7212aac4f2f1826af3164976002",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-core/2.12.7",
     "dest-filename": "jackson-core-2.12.7.pom"
@@ -50,77 +50,77 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-databind/2.12.7.1/jackson-databind-2.12.7.1.module",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7.1/jackson-databind-2.12.7.1.module",
     "sha512": "1d1a0d4002b1902c4a9536f34c0e92feae811caceec3f55a6b8cacaf4bd542b7f8b50d64918c4c7246e696592e8f890bf40afa6b0c65cea3a0406eb39df34bae",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.12.7.1",
     "dest-filename": "jackson-databind-2.12.7.1.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-databind/2.12.7.1/jackson-databind-2.12.7.1.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7.1/jackson-databind-2.12.7.1.pom",
     "sha512": "8b97ff15dc89710b7b9258bfe085ed66335c02f2a59d4eb33bcd27839164d8399641ba7dbb3b98f6753c3fbd085853f71079024a011b95aa329fd501bdbd257f",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.12.7.1",
     "dest-filename": "jackson-databind-2.12.7.1.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.pom",
     "sha512": "5b03831feb2afe7d41f6e2ee2b6026cee3171b5309ba1ac999118ac5b4fcf200686a39afbeaa7f1eb2bd75a3dac3fe6e6542467cffdbbd9423211be2cd8fc8dd",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.12.7",
     "dest-filename": "jackson-databind-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-avro/2.12.7/jackson-dataformat-avro-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-avro/2.12.7/jackson-dataformat-avro-2.12.7.pom",
     "sha512": "b330cc6cd622e4d7379d9b8794169f31b6d0502ff909b42137a1a6b3661854c70f39a7d94cdc6bf8d77f94cf0ffdb3c58126e3a6d00e4c169e37c02457f59585",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-avro/2.12.7",
     "dest-filename": "jackson-dataformat-avro-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.12.7/jackson-dataformat-cbor-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.12.7/jackson-dataformat-cbor-2.12.7.pom",
     "sha512": "391465b48f691b9934c55cd90442fac892eb2dd6162bc33d01ca186675c3864520363e4a6d00bcc5d74044870e36923f400627ae22abf15839f56db4444362c0",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-cbor/2.12.7",
     "dest-filename": "jackson-dataformat-cbor-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-csv/2.12.7/jackson-dataformat-csv-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-csv/2.12.7/jackson-dataformat-csv-2.12.7.pom",
     "sha512": "4b1894c8f208a01ecd58eddfae7100980900953f25f2a0bd347b33773c6e72431224318eb0ccb121415d5bdc2143604328f249eddeb653886596dd011e4c9cbc",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-csv/2.12.7",
     "dest-filename": "jackson-dataformat-csv-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-ion/2.12.7/jackson-dataformat-ion-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-ion/2.12.7/jackson-dataformat-ion-2.12.7.pom",
     "sha512": "a4167642bebdfb7b485989f0a2a1d79dc66938e80998e364e8be8cd58093046c29b68b07af4d8a2f837c3539b04408784bf6434e8fbf3eb9de57fa24453e01c9",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-ion/2.12.7",
     "dest-filename": "jackson-dataformat-ion-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-properties/2.12.7/jackson-dataformat-properties-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-properties/2.12.7/jackson-dataformat-properties-2.12.7.pom",
     "sha512": "04d21542b86323461ff45ec5cfae8d2272a0986887609076714f4a953c97058f9425c3d9f3ff91d148496fb092e3c27865aece7e5db4056552ec00dcf2529342",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-properties/2.12.7",
     "dest-filename": "jackson-dataformat-properties-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-protobuf/2.12.7/jackson-dataformat-protobuf-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-protobuf/2.12.7/jackson-dataformat-protobuf-2.12.7.pom",
     "sha512": "f9b1972c7d3172677cada91017fd9d8739e1763c870fd8a2a53179e9953815e22bb43e5c80fb2fe378011e2e844b027d6945c44fc7b22c1af8f56461684b2424",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-protobuf/2.12.7",
     "dest-filename": "jackson-dataformat-protobuf-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.12.7/jackson-dataformat-smile-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.12.7/jackson-dataformat-smile-2.12.7.pom",
     "sha512": "0cf2821dd3b751d6f1b205419b2e88e660660bbb3a5c01a5bdc4cbf95c2fca0b0dff1838935ccecf85e3503c23b1da753e61871389abbdcd46fd54ddd1f20039",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-smile/2.12.7",
     "dest-filename": "jackson-dataformat-smile-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.12.7/jackson-dataformat-toml-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.12.7/jackson-dataformat-toml-2.12.7.pom",
     "sha512": "24a7a3900563d08622a0226c3006c5f79ca9a65e17389bb0198c20458ca3d86d02453fbcfb22e26f6e395c2050fdd9ac6e15c7580093f0d4d324cb0cb43692b7",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.12.7",
     "dest-filename": "jackson-dataformat-toml-2.12.7.pom"
@@ -134,245 +134,245 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7/jackson-dataformat-xml-2.12.7.module",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7/jackson-dataformat-xml-2.12.7.module",
     "sha512": "a789278e9a7bf7049ba5a3289abe31e46e38e3951b19b8f83dd7eff803ef8b208320125a61339f6098e4295cb2c65aa6f4f7bb657985b6b59a59ff31dd4d612e",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7",
     "dest-filename": "jackson-dataformat-xml-2.12.7.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7/jackson-dataformat-xml-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7/jackson-dataformat-xml-2.12.7.pom",
     "sha512": "0722965ff1c94c17ad75b87feae4283f103d8b4374a9daaeb0d798c1ca54837cdda1a378da1b1f2feaa1dd7a5d1cd3cc77b1b01037f7f281c88f6059594629da",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.7",
     "dest-filename": "jackson-dataformat-xml-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.7/jackson-dataformat-yaml-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.7/jackson-dataformat-yaml-2.12.7.pom",
     "sha512": "d7d512bdb638c4f4b236281dd8ba15c7e53fde722be45ff1914875a48df938f6059a35a0d73149c971288e764b8a8dac91d75e270f328a914d7b51070d40130a",
     "dest": "offline-repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.7",
     "dest-filename": "jackson-dataformat-yaml-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-eclipse-collections/2.12.7/jackson-datatype-eclipse-collections-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-eclipse-collections/2.12.7/jackson-datatype-eclipse-collections-2.12.7.pom",
     "sha512": "da731af853863d3022be0ff09710906bffe211383e0fee86925c0d2c35b235d1317ba68488799985b9eb45b49400bc2ac8270cdea83d7aa0e12e9f7b4e84564e",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-eclipse-collections/2.12.7",
     "dest-filename": "jackson-datatype-eclipse-collections-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-guava/2.12.7/jackson-datatype-guava-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-guava/2.12.7/jackson-datatype-guava-2.12.7.pom",
     "sha512": "b5832526ff42434cae431fe90dbcd3e84a46c8af4a7e09f738a8b2c99fd96b529589c24bcfdfc13608244412935d3b8dc15179a85dd205ef8706e52fd2a94801",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-guava/2.12.7",
     "dest-filename": "jackson-datatype-guava-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate3/2.12.7/jackson-datatype-hibernate3-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate3/2.12.7/jackson-datatype-hibernate3-2.12.7.pom",
     "sha512": "816d23a66576727fb038ff97f7c0170c2b5315710e91dfb7b500c0f1735e867031275b49bf909742cb1a7d9ddec9d759f208ecfa1c8c334d8c90f630169c71ae",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hibernate3/2.12.7",
     "dest-filename": "jackson-datatype-hibernate3-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate4/2.12.7/jackson-datatype-hibernate4-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate4/2.12.7/jackson-datatype-hibernate4-2.12.7.pom",
     "sha512": "bad873dc4a7b9a458adaaeb882553b175b9b455444dc470e003862bb32e27ea54de7d99ea82b2065531b88675fe0a77c0f6fdf0153cc244bec87d9030be2410e",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hibernate4/2.12.7",
     "dest-filename": "jackson-datatype-hibernate4-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate5/2.12.7/jackson-datatype-hibernate5-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-hibernate5/2.12.7/jackson-datatype-hibernate5-2.12.7.pom",
     "sha512": "d1ff405c8f99ccd8282f543d5970ed98bb6aa04047025d4409afb14f0695be580ff53169228162c3347c108b9358815c5722ccc33b9b4689a3bb7313eb619fe8",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hibernate5/2.12.7",
     "dest-filename": "jackson-datatype-hibernate5-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-hppc/2.12.7/jackson-datatype-hppc-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-hppc/2.12.7/jackson-datatype-hppc-2.12.7.pom",
     "sha512": "6b218ba78b8c09aa4bc131ff3d73586f677790b43bea40178c956a9a51d6e739d925591fc76d84931cff04db47eb75b8f2d54cec484d226325eb84242f3586f0",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-hppc/2.12.7",
     "dest-filename": "jackson-datatype-hppc-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jakarta-jsonp/2.12.7/jackson-datatype-jakarta-jsonp-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jakarta-jsonp/2.12.7/jackson-datatype-jakarta-jsonp-2.12.7.pom",
     "sha512": "da4e64a8131aa11551606d2990e70a55b9da63b382a4ed8030736d9594c5af23013c7043f024647d74e4461ea09dbf0934c41ca824c305ac0bf0f37672285097",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jakarta-jsonp/2.12.7",
     "dest-filename": "jackson-datatype-jakarta-jsonp-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jaxrs/2.12.7/jackson-datatype-jaxrs-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jaxrs/2.12.7/jackson-datatype-jaxrs-2.12.7.pom",
     "sha512": "0c6b53989d1154a0326c9507f1edd448618b9bc40665038223675c6cd24c1dee23824e252cf5098e03ca9452c93eb24c7670bc0bf158d165ce70b000c6d3a2af",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jaxrs/2.12.7",
     "dest-filename": "jackson-datatype-jaxrs-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.12.7/jackson-datatype-jdk8-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.12.7/jackson-datatype-jdk8-2.12.7.pom",
     "sha512": "27a2bd7885041c333d46fa78417839b0d9e11378460f49a48b2fddf2a01a9ae8ec4c033648c7bf7466dea798ba157a9f9e6a0638ce3a20217d28c9069151bfe4",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.12.7",
     "dest-filename": "jackson-datatype-jdk8-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-joda-money/2.12.7/jackson-datatype-joda-money-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-joda-money/2.12.7/jackson-datatype-joda-money-2.12.7.pom",
     "sha512": "5932305c21f30d9229413041dfc28d4c5cd76f4896dfb8b57644e1d893b13b686bcb68782850f3daf8b98ce0973977dde37ed1abd455186658d8dbccb9cfff12",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-joda-money/2.12.7",
     "dest-filename": "jackson-datatype-joda-money-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.12.7/jackson-datatype-joda-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.12.7/jackson-datatype-joda-2.12.7.pom",
     "sha512": "ba8bf46575c6c245b42c8337e9c93e041ba6b1efd8b195934f9bcf064b142f110b776d55a1ee97606c3351cd330cfa7a5953601f4b41d3fb29a7748104999ab4",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.12.7",
     "dest-filename": "jackson-datatype-joda-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-json-org/2.12.7/jackson-datatype-json-org-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-json-org/2.12.7/jackson-datatype-json-org-2.12.7.pom",
     "sha512": "fd71334d851b519e77edca2e32ba915f475f2157bb124670058f49b6f937f015ab46d257d3096163e41d73a2ef7a8b31fe70b3b8c09fcd66c57ad035ec8d3e4d",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-json-org/2.12.7",
     "dest-filename": "jackson-datatype-json-org-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.7/jackson-datatype-jsr310-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.7/jackson-datatype-jsr310-2.12.7.pom",
     "sha512": "2c9c570708d5656620ba7020e9a39e14a415f2beeebb0ebe4feb45662f76875007040b29bb48ed8d773bbbe4bd3777bce0fbaf2e1c2f927988ccddcfe4e15c86",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.7",
     "dest-filename": "jackson-datatype-jsr310-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-jsr353/2.12.7/jackson-datatype-jsr353-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr353/2.12.7/jackson-datatype-jsr353-2.12.7.pom",
     "sha512": "dc13e06d474a15177443a67e6ad975198706571679a5c62f16d413cd651d40eceebcc76c18e4cda1b66231ee5c90f47e2493f4bae6252e7b764a3c159cc1dd72",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr353/2.12.7",
     "dest-filename": "jackson-datatype-jsr353-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/datatype/jackson-datatype-pcollections/2.12.7/jackson-datatype-pcollections-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-pcollections/2.12.7/jackson-datatype-pcollections-2.12.7.pom",
     "sha512": "fa4c3c8a088149f8db1f5330f984729a5df5c61b8b9c64488ceef8432b3630a7852338c953563eaa60348888bea020b3d5f080e6174effedb7c11637ab0727ee",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-pcollections/2.12.7",
     "dest-filename": "jackson-datatype-pcollections-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jackson-base/2.12.7/jackson-base-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-base/2.12.7/jackson-base-2.12.7.pom",
     "sha512": "aa1bb78af2f10e41c26d388b8516cc2742cbff8f47f8d3fb54b3edd999bc2a8533d35ca20b8e534a775b8bc7a595a80bdac3723dd43ce8e2839f388a955f963a",
     "dest": "offline-repository/com/fasterxml/jackson/jackson-base/2.12.7",
     "dest-filename": "jackson-base-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jackson-bom/2.12.7/jackson-bom-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-bom/2.12.7/jackson-bom-2.12.7.pom",
     "sha512": "131bc8cf3d57fd096ab0181460ec96827cd425d38a6b62b50141767216eb167e3489e2c94e0071b08984fc19864b8ca2fa68d78236889ab58a1fc599909514df",
     "dest": "offline-repository/com/fasterxml/jackson/jackson-bom/2.12.7",
     "dest-filename": "jackson-bom-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jackson-parent/2.12/jackson-parent-2.12.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-parent/2.12/jackson-parent-2.12.pom",
     "sha512": "855810c68ea4662fa1294595ebab2cb514ce63539444d3b876c547c36b6259ad9677ba08227a0ab54271b488a2acf37728f36c2c8846f7b909fba71381e337b0",
     "dest": "offline-repository/com/fasterxml/jackson/jackson-parent/2.12",
     "dest-filename": "jackson-parent-2.12.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.12.7/jackson-jaxrs-base-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.12.7/jackson-jaxrs-base-2.12.7.pom",
     "sha512": "37517feffc189fccb25560780f88601455afd3056a8887e4ebe3b6e66580c26b019ae7fbf6104a0cd53dd9e231ebf76cf6233271f2725fb11b292ebe6dc17f57",
     "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.12.7",
     "dest-filename": "jackson-jaxrs-base-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-cbor-provider/2.12.7/jackson-jaxrs-cbor-provider-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-cbor-provider/2.12.7/jackson-jaxrs-cbor-provider-2.12.7.pom",
     "sha512": "0babc4140dc2470ef6d6e8134d7db4329569e67ef78913deaec2227d6fd956cd643ca0a36505f2e5290cb2eaa75f30e23be6d8042ff56b71d9dd42a8e0157bfc",
     "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-cbor-provider/2.12.7",
     "dest-filename": "jackson-jaxrs-cbor-provider-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.12.7/jackson-jaxrs-json-provider-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.12.7/jackson-jaxrs-json-provider-2.12.7.pom",
     "sha512": "fc8ce956494cf08c218a1f7f963f40bae37ce4a77183a754cd31578de7856cf294dc7690f44d870e1f12fca59ed04381ba2786d156162a62828b2ae62820b5e0",
     "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.12.7",
     "dest-filename": "jackson-jaxrs-json-provider-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-smile-provider/2.12.7/jackson-jaxrs-smile-provider-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-smile-provider/2.12.7/jackson-jaxrs-smile-provider-2.12.7.pom",
     "sha512": "b968faf91812efd21b2c4772a5b8cd2b79eb2d66d4dcb7a28cd4e40136ae682d290c6f52c7e66218bb6c55af62ca255e1365c1c8fc94aaab96380d76ea2c8746",
     "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-smile-provider/2.12.7",
     "dest-filename": "jackson-jaxrs-smile-provider-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-xml-provider/2.12.7/jackson-jaxrs-xml-provider-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-xml-provider/2.12.7/jackson-jaxrs-xml-provider-2.12.7.pom",
     "sha512": "71de7ba80a832f70e075f458773c8ea0871b2a2eb478472704eabd21831fd4fc3ea98873292377b7316d299366100906608180ab80d8d89cb2daffc1a375893d",
     "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-xml-provider/2.12.7",
     "dest-filename": "jackson-jaxrs-xml-provider-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-yaml-provider/2.12.7/jackson-jaxrs-yaml-provider-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jaxrs/jackson-jaxrs-yaml-provider/2.12.7/jackson-jaxrs-yaml-provider-2.12.7.pom",
     "sha512": "00c6b107693cc2ee9912dc68ae84cb12537178bcee58c923b25d39134b2a9fa52c8cd6b1be78bc83b8c9a6fd66d4766f714069debef81505fa80583aa54e2988",
     "dest": "offline-repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-yaml-provider/2.12.7",
     "dest-filename": "jackson-jaxrs-yaml-provider-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-all/2.12.7/jackson-jr-all-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jr/jackson-jr-all/2.12.7/jackson-jr-all-2.12.7.pom",
     "sha512": "f629e24495caad0ae5cebba3a4e19b084993326a97d1c1a7ee8ab0068d41bf3401a7e6d72f418dad1ca2f2d92f59c5aac61aad781030b4a169bfb48488ebb6b1",
     "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-all/2.12.7",
     "dest-filename": "jackson-jr-all-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-annotation-support/2.12.7/jackson-jr-annotation-support-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jr/jackson-jr-annotation-support/2.12.7/jackson-jr-annotation-support-2.12.7.pom",
     "sha512": "9c24cd94fbf6ab53f4eced40185f3ee516813e8c8457d0a8ae52b2be29db02c73bdb97a376d557cafe8951286873cf75d0bcd295e7fc70e2122ce14c498f7718",
     "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-annotation-support/2.12.7",
     "dest-filename": "jackson-jr-annotation-support-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-objects/2.12.7/jackson-jr-objects-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jr/jackson-jr-objects/2.12.7/jackson-jr-objects-2.12.7.pom",
     "sha512": "22fce68e37e3ca26077b01b02648fa6e027c215426a5161c3e81e459a964b57794e8a7fc570858bf0fb9d21c80cc0adac4f8c0d42b814801287865d850e4460b",
     "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-objects/2.12.7",
     "dest-filename": "jackson-jr-objects-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-retrofit2/2.12.7/jackson-jr-retrofit2-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jr/jackson-jr-retrofit2/2.12.7/jackson-jr-retrofit2-2.12.7.pom",
     "sha512": "215ee83daada808f8a15a30752737e07f8b7e85d24bd6180bba4d0fb207b620f18538b936cc38718bdbab453bcb0d0497e05921687aa55e4fd8debff77b9d96e",
     "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-retrofit2/2.12.7",
     "dest-filename": "jackson-jr-retrofit2-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/jr/jackson-jr-stree/2.12.7/jackson-jr-stree-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jr/jackson-jr-stree/2.12.7/jackson-jr-stree-2.12.7.pom",
     "sha512": "c004a21092721c0f5f4ab3cec3fd403eef3e36d5bcb3593a02b0b02e37a562bb8912b6d611930481ee80dc522cf3fd6d968befae514cf315c30c807eb785379b",
     "dest": "offline-repository/com/fasterxml/jackson/jr/jackson-jr-stree/2.12.7",
     "dest-filename": "jackson-jr-stree-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-afterburner/2.12.7/jackson-module-afterburner-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-afterburner/2.12.7/jackson-module-afterburner-2.12.7.pom",
     "sha512": "573d3f49e3941ab5145ad2363b017c34fb32a6b4ae09a576debc007866c19a60961653d1ad805f94eba8d060478510f323fbd7b46d6347793af6069c5d1032a6",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-afterburner/2.12.7",
     "dest-filename": "jackson-module-afterburner-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-blackbird/2.12.7/jackson-module-blackbird-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-blackbird/2.12.7/jackson-module-blackbird-2.12.7.pom",
     "sha512": "469c41b6d62f900c674df1282c0a7bb246f8e07230f6f711ff658835a1ef1a00c9c8b14ea452b387718ffcda2fb8c228eb731a0b2cc7b62065fad514c7a54a6c",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-blackbird/2.12.7",
     "dest-filename": "jackson-module-blackbird-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-guice/2.12.7/jackson-module-guice-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-guice/2.12.7/jackson-module-guice-2.12.7.pom",
     "sha512": "673cd74b76c9fb8bc599fd8177d308cc068a1b2ed80ed75daa7ddebdbad4fa6d242609a4d5904f202a5f426f42764b6f050bb05488399eb49d955c9cc6d835d9",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-guice/2.12.7",
     "dest-filename": "jackson-module-guice-2.12.7.pom"
@@ -386,21 +386,21 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7/jackson-module-jaxb-annotations-2.12.7.module",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7/jackson-module-jaxb-annotations-2.12.7.module",
     "sha512": "be340378feb721b45961a620f2e59aae6fd22530eb617e8f269a8e447d0588b878e25dac064a6c19bf3acb7138f53d5dec19ce4df0b86abe8cb0391fc03be860",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7",
     "dest-filename": "jackson-module-jaxb-annotations-2.12.7.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7/jackson-module-jaxb-annotations-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7/jackson-module-jaxb-annotations-2.12.7.pom",
     "sha512": "6bdec146d00c15b760d1764abb29c268889874c863024fc8c70e56288b95f47c24823e10801494e08369a55449d261653fc7cddf5064064d7966b2576e6e0ae5",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.7",
     "dest-filename": "jackson-module-jaxb-annotations-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-jsonSchema/2.12.7/jackson-module-jsonSchema-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-jsonSchema/2.12.7/jackson-module-jsonSchema-2.12.7.pom",
     "sha512": "9ddc45993c39cc36933d69155f6ebbc9482fac4a9bd9c46711794e0811e1937a2ecced633d969cd89a39991671d340da5f583e9213f38140348c6ac3015fb247",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-jsonSchema/2.12.7",
     "dest-filename": "jackson-module-jsonSchema-2.12.7.pom"
@@ -414,84 +414,84 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7/jackson-module-kotlin-2.12.7.module",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7/jackson-module-kotlin-2.12.7.module",
     "sha512": "fd9f28bec6d852baaaae31c454afd828db4184b2c49bbeed58cbb1e25f3ec275dd468d85afd072e13676a9abcf3b2fc0ecd2bd5592fa83f7606cfdb5d1580b06",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7",
     "dest-filename": "jackson-module-kotlin-2.12.7.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7/jackson-module-kotlin-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7/jackson-module-kotlin-2.12.7.pom",
     "sha512": "b6a6ab02e70b580d405c56d5b209013c9f57aec90a898b1d309f179e3d27d72b3fd22b862dca3523b2e773a8274fb7c5c25fb48eef2cf6e5cb9337300bb2babd",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-kotlin/2.12.7",
     "dest-filename": "jackson-module-kotlin-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-mrbean/2.12.7/jackson-module-mrbean-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-mrbean/2.12.7/jackson-module-mrbean-2.12.7.pom",
     "sha512": "9ab7c60087caccdf1ef48265c60c62ad0851347f886976741527033f32424ceafd29a9881c6ce03833461ebcf7b46593b86a906287d49d6d5a9f8dc33ffc439c",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-mrbean/2.12.7",
     "dest-filename": "jackson-module-mrbean-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-osgi/2.12.7/jackson-module-osgi-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-osgi/2.12.7/jackson-module-osgi-2.12.7.pom",
     "sha512": "8298fa7582f5d21cb17d54a313bcc30bfaf00566d1b82a28249fc58b6d804dd27b1572389a1c28e1e8d1c4ed0b93096e08245dfbd1da99244e4791c1ff76c7d3",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-osgi/2.12.7",
     "dest-filename": "jackson-module-osgi-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.12.7/jackson-module-parameter-names-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.12.7/jackson-module-parameter-names-2.12.7.pom",
     "sha512": "be6009a18c0ce324aa2305fd1c214eddb0a51b508aaae6dd139e312346c2436e4d0b64e7c8874fdddd6ba65456185aa46ebe309b5cc33a891fd09408aae1ecce",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.12.7",
     "dest-filename": "jackson-module-parameter-names-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-paranamer/2.12.7/jackson-module-paranamer-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-paranamer/2.12.7/jackson-module-paranamer-2.12.7.pom",
     "sha512": "2c1609efcf850d31be3c4e5241c2ea1568274b81e189c62b0c1c9aee82af9980a38819ffbb806715549f59aa436d58e8cebc2254ca65c2cbcec66e18863e6634",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-paranamer/2.12.7",
     "dest-filename": "jackson-module-paranamer-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-scala_2.11/2.12.7/jackson-module-scala_2.11-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.11/2.12.7/jackson-module-scala_2.11-2.12.7.pom",
     "sha512": "63a696a354758f6e1683116a05faa2f5c6057b8d789c84ec477a9f2e8d8b804f54fed17dcef3c9729d884796c6a239d139221f59b66ffb47dc7666082a0d219d",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-scala_2.11/2.12.7",
     "dest-filename": "jackson-module-scala_2.11-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.12.7/jackson-module-scala_2.12-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.12.7/jackson-module-scala_2.12-2.12.7.pom",
     "sha512": "e222e3f7cf71200f2b5a6c4a614c08942fa647dffcaeb77fc68fe141cf170b91c0cc307f4994a14796b125989fa46d8821ab2bbf8dedfdeba3874974074cda38",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.12.7",
     "dest-filename": "jackson-module-scala_2.12-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-module-scala_2.13/2.12.7/jackson-module-scala_2.13-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.13/2.12.7/jackson-module-scala_2.13-2.12.7.pom",
     "sha512": "0a5ebd70c97ea5b89d11117a57546a3cac9a9d4c872ee30adb32f9cfb6615e05df076e7d9c859451652294c6c8ec2e72c7583c14e57795611cf8c89fea77a123",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-module-scala_2.13/2.12.7",
     "dest-filename": "jackson-module-scala_2.13-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/jackson/module/jackson-modules-base/2.12.7/jackson-modules-base-2.12.7.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-modules-base/2.12.7/jackson-modules-base-2.12.7.pom",
     "sha512": "a206ac675c59cf765d953fc4ab611667e3846f282904cb7e712b5bd73162de35b78439b8d0c0e651feccd4db1d8fe21591bbba80397a7b25ba4bc812b2814854",
     "dest": "offline-repository/com/fasterxml/jackson/module/jackson-modules-base/2.12.7",
     "dest-filename": "jackson-modules-base-2.12.7.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/oss-parent/38/oss-parent-38.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/oss-parent/38/oss-parent-38.pom",
     "sha512": "aa6deb3b068d3fc1a3fc3345a6f7e9d2e0479f6a1e8172966b19a89f64b221f0d52b24baf1f1eaff5399fb8b10595f4db2401483ac420312afda9a72b3efde1a",
     "dest": "offline-repository/com/fasterxml/oss-parent/38",
     "dest-filename": "oss-parent-38.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/oss-parent/41/oss-parent-41.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/oss-parent/41/oss-parent-41.pom",
     "sha512": "2037fc9d49791c5cc597c35728ffb47e0ac7e0a28330c634c978f89e2a6f5aafe627ee7ef95d449b8c71d4ad96ef37263cf6de4b3559bc7253b8baffc808e8c5",
     "dest": "offline-repository/com/fasterxml/oss-parent/41",
     "dest-filename": "oss-parent-41.pom"
@@ -505,14 +505,14 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/fasterxml/woodstox/woodstox-core/6.2.4/woodstox-core-6.2.4.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/woodstox/woodstox-core/6.2.4/woodstox-core-6.2.4.pom",
     "sha512": "efad3046417d8dea3eb85b6ea528d5b7918b21f5339f47c165809885381db7fd5970fac4b45aac57468e6eb26afe7c11c73c5523cd4b8e206cec544af45a4ab6",
     "dest": "offline-repository/com/fasterxml/woodstox/woodstox-core/6.2.4",
     "dest-filename": "woodstox-core-6.2.4.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/com/sun/activation/all/1.2.1/all-1.2.1.pom",
+    "url": "https://repo.maven.apache.org/maven2/com/sun/activation/all/1.2.1/all-1.2.1.pom",
     "sha512": "87de9589f96f717f3b2d665aad8eb531ed677aa0b34528c049c9edb964f20b275dda112d24eb7c630ccc1ccf6cead40147f567391a2e99165a0d33b068473beb",
     "dest": "offline-repository/com/sun/activation/all/1.2.1",
     "dest-filename": "all-1.2.1.pom"
@@ -526,14 +526,14 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/jakarta/activation/jakarta.activation-api/1.2.1/jakarta.activation-api-1.2.1.pom",
+    "url": "https://repo.maven.apache.org/maven2/jakarta/activation/jakarta.activation-api/1.2.1/jakarta.activation-api-1.2.1.pom",
     "sha512": "a8af00c78391a59929b6aed1743e50650cbab1f2c9f801757fe6fa3780cc0926489092cac834121260c1c3c702f4ffb4ecacd786ad79d7d38e828e6c39bd399e",
     "dest": "offline-repository/jakarta/activation/jakarta.activation-api/1.2.1",
     "dest-filename": "jakarta.activation-api-1.2.1.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/jakarta/xml/bind/jakarta.xml.bind-api-parent/2.3.2/jakarta.xml.bind-api-parent-2.3.2.pom",
+    "url": "https://repo.maven.apache.org/maven2/jakarta/xml/bind/jakarta.xml.bind-api-parent/2.3.2/jakarta.xml.bind-api-parent-2.3.2.pom",
     "sha512": "e0a4baa45935dde64bfd9305cf01ae12bb018844546824df5e4f735924eda55c55e2343616ac92de80deb1c40bf2debe8ee5257a96d11ac4879156ba8d1b6f2c",
     "dest": "offline-repository/jakarta/xml/bind/jakarta.xml.bind-api-parent/2.3.2",
     "dest-filename": "jakarta.xml.bind-api-parent-2.3.2.pom"
@@ -547,10 +547,17 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/jakarta/xml/bind/jakarta.xml.bind-api/2.3.2/jakarta.xml.bind-api-2.3.2.pom",
+    "url": "https://repo.maven.apache.org/maven2/jakarta/xml/bind/jakarta.xml.bind-api/2.3.2/jakarta.xml.bind-api-2.3.2.pom",
     "sha512": "7b144c06ac7e7ddf63596406d3b441e3e5a3ba7b408a659bc0ceb5b528936b944108398bc06298054de09228293ab3feed01e4e16be493ecc5fb9780d8c52379",
     "dest": "offline-repository/jakarta/xml/bind/jakarta.xml.bind-api/2.3.2",
     "dest-filename": "jakarta.xml.bind-api-2.3.2.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/apache/apache/17/apache-17.pom",
+    "sha512": "1f46cdfd0b29f7faabe6b0c3ec096408d52cf321db81100e69b737443f2b9e71b68a3bfa8f64e318c16859e2de8daafbf40bb0c375c10354a892217cfeee5bec",
+    "dest": "offline-repository/org/apache/apache/17",
+    "dest-filename": "apache-17.pom"
   },
   {
     "type": "file",
@@ -561,24 +568,94 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.pom",
     "sha512": "cc28523a10e5e40efa5ca2994b5c4b104caaf1617efaabe465a3f38b5eccd612828c5ee528c6871d5f5ca91a571900cd8d1f75db1960642355cc964fa0a4cab8",
     "dest": "offline-repository/org/codehaus/woodstox/stax2-api/4.2.1",
     "dest-filename": "stax2-api-4.2.1.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/eclipse/ee4j/project/1.0.2/project-1.0.2.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/eclipse/ee4j/project/1.0.2/project-1.0.2.pom",
     "sha512": "0725e91db9dee43a75ba70ec073da98dbe158b157f6038b9a5fc906e4307add423b213829bea25944f42c88a37417788398c5136267ce8005a530505c5b5fa28",
     "dest": "offline-repository/org/eclipse/ee4j/project/1.0.2",
     "dest-filename": "project-1.0.2.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/eclipse/ee4j/project/1.0.5/project-1.0.5.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/eclipse/ee4j/project/1.0.5/project-1.0.5.pom",
     "sha512": "5fd90f300231200c1158602372fa9b6ae2cf2746200c7c98e7dcb8639ece995d44c54817cc44c5ad40c6b18e311bee771933550acbb55954fa25eaa9b3140dea",
     "dest": "offline-repository/org/eclipse/ee4j/project/1.0.5",
     "dest-filename": "project-1.0.5.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/freemarker/freemarker/2.3.31/freemarker-2.3.31.jar",
+    "sha512": "b1df51867cd32450a90d27ea1b91322cf04c8637e1a2f5ac90ddf364cfc0661c1eacc3d6f19c455a941e7f1e99c95c061313a0e480ec0cecc855ae0f7d0d0995",
+    "dest": "offline-repository/org/freemarker/freemarker/2.3.31",
+    "dest-filename": "freemarker-2.3.31.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/freemarker/freemarker/2.3.31/freemarker-2.3.31.pom",
+    "sha512": "affbc8e85b69ce6651c79b9665a18847c79a2b4ed605d66f2e73c1032d99a4080f4aadce678c50b64d4c19ec75bdfab0a742574e89670b283b0e0f3e6ea4f546",
+    "dest": "offline-repository/org/freemarker/freemarker/2.3.31",
+    "dest-filename": "freemarker-2.3.31.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+    "sha512": "5622d0ffe410e7272e2bb9fae1006caedeb86d0c62d2d9f3929a3b3cdcdef1963218fcf0cede82e95ef9f4da3ed4a173fa055ee6e4038886376181e0423e02ff",
+    "dest": "offline-repository/org/jetbrains/annotations/13.0",
+    "dest-filename": "annotations-13.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.pom",
+    "sha512": "63ef480f698215d4cd4501b06e86df1a741ac2b86216fd3ff6eee146da746caa390df27351e25598971edb368aeae41055ff1ed77e4bf5d7edb6abc832d150ce",
+    "dest": "offline-repository/org/jetbrains/annotations/13.0",
+    "dest-filename": "annotations-13.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-analysis/1.8.10/dokka-analysis-1.8.10.jar",
+    "sha512": "48641ac5bf715a2fd1a5fe6ddc064ccd89328dea952e8e481b1efd8a96bce9556319401f3d9fb2ca3f6549fcbe7ff2090d7f236084a24ef5e7d44df3fd52b677",
+    "dest": "offline-repository/org/jetbrains/dokka/dokka-analysis/1.8.10",
+    "dest-filename": "dokka-analysis-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-analysis/1.8.10/dokka-analysis-1.8.10.module",
+    "sha512": "bdcaa0d27b43c31dcff9249708cd45714cc53ac7b39effdb1860c171aa2b2af639a18ad830ded13e2a504d602c3237aee8e27c8f1e4371e680128a6295885b38",
+    "dest": "offline-repository/org/jetbrains/dokka/dokka-analysis/1.8.10",
+    "dest-filename": "dokka-analysis-1.8.10.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-analysis/1.8.10/dokka-analysis-1.8.10.pom",
+    "sha512": "c9de553aba37fc96f34e6000ea1a924d2eae566b27fc84cb39ad8a27d6228e21c979dacdaa1552a02eac3ef14b6cc8f6b241e3084f761facf1f10b5e70d3b6f3",
+    "dest": "offline-repository/org/jetbrains/dokka/dokka-analysis/1.8.10",
+    "dest-filename": "dokka-analysis-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-base/1.8.10/dokka-base-1.8.10.jar",
+    "sha512": "aa7a9b91d47ded3d2de663272f56b6819034f01464aed026d69357b718f9347aa19d5947086a5d1478f8b7031819ce521f0aaeef7f47904e0950dfb5a353a072",
+    "dest": "offline-repository/org/jetbrains/dokka/dokka-base/1.8.10",
+    "dest-filename": "dokka-base-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-base/1.8.10/dokka-base-1.8.10.module",
+    "sha512": "fa7f40864192453e01c199e8b6e43d5ca6123404242a62ec7876643cccf21a8ddc22bd778441b7d9f2b9605324867ed6038b0e5d6dfcc541b278d5562d0cb677",
+    "dest": "offline-repository/org/jetbrains/dokka/dokka-base/1.8.10",
+    "dest-filename": "dokka-base-1.8.10.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-base/1.8.10/dokka-base-1.8.10.pom",
+    "sha512": "86c678fbfac47ef26505fa0b1d931c829c6073a97d2a7b86912bda91342b286d04480c4baef2c9a5fd2ae1f628a8df30d6caa174bb7e8cf14cdf9d0006d9fea2",
+    "dest": "offline-repository/org/jetbrains/dokka/dokka-base/1.8.10",
+    "dest-filename": "dokka-base-1.8.10.pom"
   },
   {
     "type": "file",
@@ -589,14 +666,14 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/dokka/dokka-core/1.8.10/dokka-core-1.8.10.module",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-core/1.8.10/dokka-core-1.8.10.module",
     "sha512": "81b36543cf2b680bd5aecec8d91db3ea7a8a13253593a93b7c0a2c1399f5c52a4eb2481cd70b1163f06336d4566a05b69634a87654cbcc660498d19a444d6106",
     "dest": "offline-repository/org/jetbrains/dokka/dokka-core/1.8.10",
     "dest-filename": "dokka-core-1.8.10.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/dokka/dokka-core/1.8.10/dokka-core-1.8.10.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/dokka-core/1.8.10/dokka-core-1.8.10.pom",
     "sha512": "cd675d4a72212f186efd30a4a932a25d0eeb1c192daef141b4aebb3bc017bf1cfbebefffeef32ed57c9adace11604e108e46607aa8d2676df85dba91d8068c00",
     "dest": "offline-repository/org/jetbrains/dokka/dokka-core/1.8.10",
     "dest-filename": "dokka-core-1.8.10.pom"
@@ -624,6 +701,34 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/kotlin-analysis-compiler/1.8.10/kotlin-analysis-compiler-1.8.10.jar",
+    "sha512": "27814c751e0028b1785be289e2a98bddbb35f8a9013adca98120689238f17fa93e331c4f12855c115fc466cbeea5026fe04edda9d7f4a3876fab16b9dffba981",
+    "dest": "offline-repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.8.10",
+    "dest-filename": "kotlin-analysis-compiler-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/kotlin-analysis-compiler/1.8.10/kotlin-analysis-compiler-1.8.10.pom",
+    "sha512": "906c80d0ce7943092235c96945792d80d3e19e2f09a158ecc6fc539132261a1aad26c010ce4f9d556d686ef595368893e706ace9e101c3192523ab65025a1dc9",
+    "dest": "offline-repository/org/jetbrains/dokka/kotlin-analysis-compiler/1.8.10",
+    "dest-filename": "kotlin-analysis-compiler-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/kotlin-analysis-intellij/1.8.10/kotlin-analysis-intellij-1.8.10.jar",
+    "sha512": "bb8c72e27dab4810994f87086c6693b07a998944948144e5ec22abf4a14c7b67c07f9336a36ff8ca5d5a1bd63341ba024a23f900cc7f28ca96585d09b8b2a410",
+    "dest": "offline-repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.8.10",
+    "dest-filename": "kotlin-analysis-intellij-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/dokka/kotlin-analysis-intellij/1.8.10/kotlin-analysis-intellij-1.8.10.pom",
+    "sha512": "cb62f4a543dde01d04d9baca341ede275ba2c8d640f91df6b1b2f45be516de267f3f114504199ec4cc443d9089181ce1c5188df68916e65a56f1a5b9fa523529",
+    "dest": "offline-repository/org/jetbrains/dokka/kotlin-analysis-intellij/1.8.10",
+    "dest-filename": "kotlin-analysis-intellij-1.8.10.pom"
+  },
+  {
+    "type": "file",
     "url": "https://plugins.gradle.org/m2/org/jetbrains/dokka/org.jetbrains.dokka.gradle.plugin/1.8.10/org.jetbrains.dokka.gradle.plugin-1.8.10.pom",
     "sha512": "2bb19f8bb4f4416b3df32fe12cf1c2aedc5902d45c25b3efbaa0e89b86d8ceed040bc2c20c6466c714fb76ebac3c24944d0135e1336bdd1686f188d784d4fda2",
     "dest": "offline-repository/org/jetbrains/dokka/org.jetbrains.dokka.gradle.plugin/1.8.10",
@@ -631,14 +736,84 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.6.3/kotlinx-coroutines-android-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/1.8.10/kotlin-reflect-1.8.10.jar",
+    "sha512": "43efd3dca21f2de51b3a358c4b297571ac7aa709e9d9036f68e35c1d204afe9e185716b45df412424029ad82de40f87fe3c51895791b469f4be82110cece5a14",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-reflect/1.8.10",
+    "dest-filename": "kotlin-reflect-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/1.8.10/kotlin-reflect-1.8.10.pom",
+    "sha512": "6d82e00c693ccb59a81d03b7ffeb330583eaaf4cf60f4196f7e9a1ff7b0cfcbc43d5fd21211f38e058c09e62e9eaa3d2f3ca287ff9308e461912f06b070736f6",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-reflect/1.8.10",
+    "dest-filename": "kotlin-reflect-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.10/kotlin-stdlib-common-1.8.10.jar",
+    "sha512": "b20ed31e07f5c39f2954648741ac5681be597c815b39ecefd798fbc2ca0d8ee36391569baf9a22805f8772d907d78bcbfce7b550d9cd256f6dd0576798ccbf06",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.10",
+    "dest-filename": "kotlin-stdlib-common-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.10/kotlin-stdlib-common-1.8.10.pom",
+    "sha512": "880d9c8d36ca041638fce6c35d0c368581c48042b94b6563bf28780d3009c89096eec2d957e88f819536af33b58c45cbf125826cbd7d9ad6bd40b7a9164fb97a",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.10",
+    "dest-filename": "kotlin-stdlib-common-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.10/kotlin-stdlib-jdk7-1.8.10.jar",
+    "sha512": "a22e46e4270da29dcd45fc6a252a071ba16b913baff12e8813987e8d54bd4fd54021259f7130e0db6b86d894616da7a192fea8ac0f9e2093d614ca55965bb7d3",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.10",
+    "dest-filename": "kotlin-stdlib-jdk7-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.10/kotlin-stdlib-jdk7-1.8.10.pom",
+    "sha512": "f262638681c026d31234869d071c7d5171ee7851d2493052ac62da564e7eb1ccc5b63784f7ed40a876f1fbef6fdfbb67137e01a83bd20ac365289585fab8feea",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.10",
+    "dest-filename": "kotlin-stdlib-jdk7-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10/kotlin-stdlib-jdk8-1.8.10.jar",
+    "sha512": "237c0c80bc4a9bb11683fd0048d118f6af58c083bac467e7e9578ae97b611ff2d7658974a17102466002c3672b06866dd65f18982223b70fa1700c5f60dc8f15",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10",
+    "dest-filename": "kotlin-stdlib-jdk8-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10/kotlin-stdlib-jdk8-1.8.10.pom",
+    "sha512": "e71e17cf87425bfb7280f46d0d019c5503c4a743f21c228ce5c25d26177f450717d4a3324fd86b56da6ca74913193006a862653b2bcd4bef1b45f931949f8dc6",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10",
+    "dest-filename": "kotlin-stdlib-jdk8-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.10/kotlin-stdlib-1.8.10.jar",
+    "sha512": "cecf2b06c46b244e94371cea879515f7e10e7cfff53e521ea846e0aaf81a8e8b59f9fa91b5e11985072d350c41283772db4586f30da6c895587e0aed6a23118b",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.10",
+    "dest-filename": "kotlin-stdlib-1.8.10.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.10/kotlin-stdlib-1.8.10.pom",
+    "sha512": "a556de13b5d151084b9fcad9ca6290c225a77b4ed0c34f8577e165ab48258232287b042b934aeabcf00fd847a224451ba128433365a9a3645f7b3b570731ffce",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.10",
+    "dest-filename": "kotlin-stdlib-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.6.3/kotlinx-coroutines-android-1.6.3.pom",
     "sha512": "08fcdce52fb79a31f94f13125b80fdc06fc85ddbe5d341c73b7023bed6a5e0eb3b3f9974c0b87f362428fad1f9180b1ed2953379200a2d2f642da411a6da1fd5",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.6.3",
     "dest-filename": "kotlinx-coroutines-android-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.6.3/kotlinx-coroutines-bom-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.6.3/kotlinx-coroutines-bom-1.6.3.pom",
     "sha512": "8e51abe6fba566396b0cd5f460c7faecc447e8790366029f8ec94802f67d139e7c7b8f61096e6c406db9ace28b1f417a7fddb61c039d9b6008b8a6d6a4a0e2d0",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.6.3",
     "dest-filename": "kotlinx-coroutines-bom-1.6.3.pom"
@@ -652,129 +827,150 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3/kotlinx-coroutines-core-jvm-1.6.3.module",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3/kotlinx-coroutines-core-jvm-1.6.3.module",
     "sha512": "6a9b7c6a46574bdbb2fbb777d8361ff65c687122a154be86adde5f376d84affe97eaf7e07535be4d326afbb1434ac9d664fbe91fa9f0d5bf1d99511ca12cd9d0",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3",
     "dest-filename": "kotlinx-coroutines-core-jvm-1.6.3.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3/kotlinx-coroutines-core-jvm-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3/kotlinx-coroutines-core-jvm-1.6.3.pom",
     "sha512": "ddffe10d26bd26020eb312b521b60e989a14de1f861d86171bf03800abc86cc1a749833df8cdf6b6e01d274b26439cfb6a6094b64a2bb0823d33022940da732a",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.3",
     "dest-filename": "kotlinx-coroutines-core-jvm-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/kotlinx-coroutines-core-1.6.3.module",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/kotlinx-coroutines-core-1.6.3.module",
     "sha512": "9d7e2d4aa8c0e815ebef8ef6332b725b586449aa30500cb2811377ffd33979abd152a9419af010436753ae694c753a8bd71a2b28b4291aab9acbf6968546461c",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3",
     "dest-filename": "kotlinx-coroutines-core-1.6.3.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/kotlinx-coroutines-core-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/kotlinx-coroutines-core-1.6.3.pom",
     "sha512": "51dd2267673e85b23dde62fd394f76f4a61eff3d8304294906bde302a93fdc9729c71aa17a47415088d21216392ed98002cdca42fdbe375057c930a26450b062",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3",
     "dest-filename": "kotlinx-coroutines-core-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-debug/1.6.3/kotlinx-coroutines-debug-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-debug/1.6.3/kotlinx-coroutines-debug-1.6.3.pom",
     "sha512": "49e3ee39dbd46a6dfe227a25a313062385656ea3fe91cf03f0d92f14968dc2ad3e5b04940e2f353ee27ac7bc8399c68e5680c874844dddf5050f4dceb98061c1",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-debug/1.6.3",
     "dest-filename": "kotlinx-coroutines-debug-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.3/kotlinx-coroutines-guava-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.3/kotlinx-coroutines-guava-1.6.3.pom",
     "sha512": "5bd0bc07ae16a01fae2b67e36c7c86b98207dbdc2bff81b2de18ca45e75831ecb1d7851a5cb7301de58b0d1173e69bdfeed00e3d5aeb4521fdd90a2178d6c9b6",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.6.3",
     "dest-filename": "kotlinx-coroutines-guava-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-javafx/1.6.3/kotlinx-coroutines-javafx-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-javafx/1.6.3/kotlinx-coroutines-javafx-1.6.3.pom",
     "sha512": "e6ad3ef408255f007d0cee9e4dfabf7d5d4bed0fc5b193fbada082d7950aef3aac3114aa428620b5f2d53053dabca4afe1036f35b7fd58b285ea482b19c46e19",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-javafx/1.6.3",
     "dest-filename": "kotlinx-coroutines-javafx-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-jdk8/1.6.3/kotlinx-coroutines-jdk8-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-jdk8/1.6.3/kotlinx-coroutines-jdk8-1.6.3.pom",
     "sha512": "c5013e241f30f101e0e7bcf9df394868c5e97aa312e74c484ab7c88088adb0a334341fa5640f999b3e7b4a524bb14be435d47c01e39f04a03c2f3825453a578d",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-jdk8/1.6.3",
     "dest-filename": "kotlinx-coroutines-jdk8-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-jdk9/1.6.3/kotlinx-coroutines-jdk9-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-jdk9/1.6.3/kotlinx-coroutines-jdk9-1.6.3.pom",
     "sha512": "4e5091963be80b370c658cbc8788c658081a3cda005e944e458d050fc0c866124f420f35845a8d529978a29424b9d21ac447e3cb8febe4803a48482cc92e2ed8",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-jdk9/1.6.3",
     "dest-filename": "kotlinx-coroutines-jdk9-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-play-services/1.6.3/kotlinx-coroutines-play-services-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-play-services/1.6.3/kotlinx-coroutines-play-services-1.6.3.pom",
     "sha512": "ca744af34a1469c7366b2b5922c6be29ade94796364a5be7578051af874ae55244ac7bf97a4f3a841f2e0efdecce60f741db39effd630ff4a4fcd845b2490d80",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-play-services/1.6.3",
     "dest-filename": "kotlinx-coroutines-play-services-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-reactive/1.6.3/kotlinx-coroutines-reactive-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-reactive/1.6.3/kotlinx-coroutines-reactive-1.6.3.pom",
     "sha512": "b2f2ff3ee3b8924d17b749a5f41c6ff0d44bab581683e1a1cc240133df9efd5fbad78db67ef3129a078281958d74f735bc0eb93898b27a805f8f40fae23930ec",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-reactive/1.6.3",
     "dest-filename": "kotlinx-coroutines-reactive-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-reactor/1.6.3/kotlinx-coroutines-reactor-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-reactor/1.6.3/kotlinx-coroutines-reactor-1.6.3.pom",
     "sha512": "70e58281ee082042c5804ac40ef68460d5a0a94fb5c6f450dd58480963c4207da50a5387277f13e46225653bd2d11e0767ebee8c91c8541827589452d64a02f4",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-reactor/1.6.3",
     "dest-filename": "kotlinx-coroutines-reactor-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-rx2/1.6.3/kotlinx-coroutines-rx2-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-rx2/1.6.3/kotlinx-coroutines-rx2-1.6.3.pom",
     "sha512": "8dde694bd75059be7e3a55f80add3d5bf3b838061d3acb16a006074110f8ef01acb06c9268256123883f0f6d6b0b64a147b27b7ddc49884fee469b72e1dbb934",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-rx2/1.6.3",
     "dest-filename": "kotlinx-coroutines-rx2-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-rx3/1.6.3/kotlinx-coroutines-rx3-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-rx3/1.6.3/kotlinx-coroutines-rx3-1.6.3.pom",
     "sha512": "f7aa53d4b32fbace6f6e8f8d33965e9767b001feed399db22f4ca7bc46b51b8ea59609aeacd6d32240b2dd1c363cd3eb12ec8a30188a16888799dedf64c59f23",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-rx3/1.6.3",
     "dest-filename": "kotlinx-coroutines-rx3-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-slf4j/1.6.3/kotlinx-coroutines-slf4j-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-slf4j/1.6.3/kotlinx-coroutines-slf4j-1.6.3.pom",
     "sha512": "f5946b1a4d869d302e9164d67f297d7c1c986d81725a566f6d6fe597ebd07105a7dda5b8ccd21210058b9f1914c3e8177b58534e1906f5c99d1f7932213e409d",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-slf4j/1.6.3",
     "dest-filename": "kotlinx-coroutines-slf4j-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-swing/1.6.3/kotlinx-coroutines-swing-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-swing/1.6.3/kotlinx-coroutines-swing-1.6.3.pom",
     "sha512": "9c562aeaf3e35808aa2f678f12b6b2d216c631d9619824d304284008c7bcdea0b4cc418d65f347459ecbf9b57f6cbb8bb006d53f6289396708a94970ee68c1ba",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-swing/1.6.3",
     "dest-filename": "kotlinx-coroutines-swing-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.6.3/kotlinx-coroutines-test-jvm-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.6.3/kotlinx-coroutines-test-jvm-1.6.3.pom",
     "sha512": "baae71e50aa9c9848bbdfa6707bc216f5801810879d863ec632ec93e3ed5d2ed1c193e9fea6d16026804982ee3c27908b8a959cc2985ce37a0895ed2ab976363",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.6.3",
     "dest-filename": "kotlinx-coroutines-test-jvm-1.6.3.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.6.3/kotlinx-coroutines-test-1.6.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.6.3/kotlinx-coroutines-test-1.6.3.pom",
     "sha512": "6a6a563d5ea0636c8f59327908c53e94059cea3a50bb052e0bfce6c95d3e777f9d68c5feceb56433535e1c6da47856f5d1d75c0b1b1a8e3945db08d441eb3ed7",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.6.3",
     "dest-filename": "kotlinx-coroutines-test-1.6.3.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.5/kotlinx-html-jvm-0.7.5.jar",
+    "sha512": "8e5015d3a3a94e99e906959d870b38aa1241b0f44854ed8b629b29d7c7cd152fa7f1c4ca1c326f49648dd3965be2262be6cb83ab4b959373af6f30787ae9518e",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.5",
+    "dest-filename": "kotlinx-html-jvm-0.7.5.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.5/kotlinx-html-jvm-0.7.5.module",
+    "sha512": "fba4be0da1feda71bf490d970d40c032231d65845d893266ad7c3a2715e61f9293468ff7cf5cd23a11007685c4625f5b30abdb6a5efea131a4c65ae1e6c0e239",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.5",
+    "dest-filename": "kotlinx-html-jvm-0.7.5.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.5/kotlinx-html-jvm-0.7.5.pom",
+    "sha512": "9685b51cd7f496028cc65070c310b3b07c031a0d0b607e26141462c64186e4af5cfc978090baa81c68e3c99fbc8dc4419c2a52a54e1508eb5c309dd56221fe32",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.5",
+    "dest-filename": "kotlinx-html-jvm-0.7.5.pom"
   },
   {
     "type": "file",
@@ -785,28 +981,28 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/markdown-jvm/0.3.1/markdown-jvm-0.3.1.module",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/markdown-jvm/0.3.1/markdown-jvm-0.3.1.module",
     "sha512": "7d3e2fdbc614d6872fa048a493f49aab6f8c153bf952a57fa14ea51d9170f3421e2c446766b142e28d6df75b29e3817b485b1489cd74a73651ab51492d26fd5b",
     "dest": "offline-repository/org/jetbrains/markdown-jvm/0.3.1",
     "dest-filename": "markdown-jvm-0.3.1.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/markdown-jvm/0.3.1/markdown-jvm-0.3.1.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/markdown-jvm/0.3.1/markdown-jvm-0.3.1.pom",
     "sha512": "57b7c0b073a9acea60327c7f78aae26d3b2c30b8ec201110d0eec9eece3561334f5c48254b03621592198acb83923b59ef1d6c818301a24245c4caf90a270ae0",
     "dest": "offline-repository/org/jetbrains/markdown-jvm/0.3.1",
     "dest-filename": "markdown-jvm-0.3.1.pom"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/markdown/0.3.1/markdown-0.3.1.module",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/markdown/0.3.1/markdown-0.3.1.module",
     "sha512": "48e9d447775618b548e8869f2409823dc8d371c4ba528a1214da11b827945ee8e91e15d453e88fb064ac09cb50ce08475decf7e44d7b1b3ccf5a770a943a6146",
     "dest": "offline-repository/org/jetbrains/markdown/0.3.1",
     "dest-filename": "markdown-0.3.1.module"
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jetbrains/markdown/0.3.1/markdown-0.3.1.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/markdown/0.3.1/markdown-0.3.1.pom",
     "sha512": "2e7f153637e6a5318e02350b71e5bd920869f3068eb38b84052765cc676557f4d481748931c0576a75e4942b21ead98d781fabd755408bfb94a37c76b6ab3feb",
     "dest": "offline-repository/org/jetbrains/markdown/0.3.1",
     "dest-filename": "markdown-0.3.1.pom"
@@ -820,7 +1016,7 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jsoup/jsoup/1.15.3/jsoup-1.15.3.pom",
+    "url": "https://repo.maven.apache.org/maven2/org/jsoup/jsoup/1.15.3/jsoup-1.15.3.pom",
     "sha512": "82a9fb8dae0caad4232d583fb05e3f9545589657eb075fb41a02e52a6d78bc45cdf30651a878e2a17d8b2da81e62f40d13eda17c2452c1d5bc16ba539a2392dd",
     "dest": "offline-repository/org/jsoup/jsoup/1.15.3",
     "dest-filename": "jsoup-1.15.3.pom"

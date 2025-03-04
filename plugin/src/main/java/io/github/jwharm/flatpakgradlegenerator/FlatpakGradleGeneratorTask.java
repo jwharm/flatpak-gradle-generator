@@ -92,11 +92,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 "Resolving buildscript dependencies using repositories: {}",
                 buildScriptRepositories
         );
-        for (var configuration : project.getBuildscript().getConfigurations()) {
-            if (configuration.isCanBeResolved()) {
-                generateSourcesList(buildScriptRepositories, configuration);
-            }
-        }
+        generateSourcesListForConfigurations(buildScriptRepositories, project.getBuildscript().getConfigurations());
+        LOGGER.info("Buildscript dependencies resolved successfully");
 
         // List the declared repositories; include the buildscript classpath
         // repositories too
@@ -110,18 +107,31 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 "Resolving project dependencies using repositories: {}",
                 repositories
         );
-        for (var configuration : project.getConfigurations()) {
-            if (configuration.isCanBeResolved()) {
-                generateSourcesList(repositories, configuration);
-            }
-        }
+        generateSourcesListForConfigurations(repositories, project.getConfigurations());
+        LOGGER.info("Project dependencies resolved successfully");
 
+        LOGGER.info("Writing result to " + getOutputFile().getAsFile());
         // Merge the json blocks into a json list, and write the result to the
         // output file
         Files.writeString(
                 getOutputFile().getAsFile().get().toPath(),
                 resolver.getJsonOutput()
         );
+    }
+
+    private void generateSourcesListForConfigurations(
+            List<String> repositories,
+            Collection<Configuration> configurations
+    ) throws IOException, NoSuchAlgorithmException {
+        var resolvedConfigurations = configurations.stream()
+                .filter(Configuration::isCanBeResolved)
+                .toList();
+
+        LOGGER.info("Following configurations will be processed: {}", resolvedConfigurations);
+
+        for (Configuration configuration : resolvedConfigurations) {
+            generateSourcesList(repositories, configuration);
+        }
     }
 
     /**
@@ -190,9 +200,19 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         var dependencies = listDependencies(configuration);
 
         LOGGER.info(
-                "Resolving configuration {} with {} dependencies",
+                "Configuration processing of {}: starting with {} dependencies",
                 configuration.getName(),
                 dependencies.size()
+        );
+
+        var resolvedArtifactsForConfiguration = configuration
+                .getResolvedConfiguration()
+                .getResolvedArtifacts();
+
+        LOGGER.info(
+                "Configuration processing of {}: artifacts resolved, total {}",
+                configuration.getName(),
+                resolvedArtifactsForConfiguration.size()
         );
 
         for (var dependency : dependencies) {
@@ -229,7 +249,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                         if (files != null) {
                             for (var file : files) {
                                 resolver.tryResolveCached(
-                                        configuration,
+                                        resolvedArtifactsForConfiguration,
                                         dependency.getSelected().getModuleVersion(),
                                         dep,
                                         repository,
@@ -243,7 +263,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                         // No files declared for this variant in the Gradle module
                         // Get jar artifact from local Gradle cache
                         resolver.tryResolveCached(
-                                configuration,
+                                resolvedArtifactsForConfiguration,
                                 dependency.getSelected().getModuleVersion(),
                                 dep,
                                 repository,
@@ -257,7 +277,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 // Get jar artifact from local Gradle cache
                 else {
                     resolver.tryResolveCached(
-                            configuration,
+                            resolvedArtifactsForConfiguration,
                             dependency.getSelected().getModuleVersion(),
                             dep,
                             repository,
@@ -284,6 +304,12 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 if (module.isPresent() || pom.isPresent())
                     break;
             }
+
+            LOGGER.info(
+                    "Dependency {} in {} processed",
+                    id,
+                    configuration.getName()
+            );
         }
     }
 
@@ -320,7 +346,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
      *
      * @param dep details about the dependency
      */
-    private void addPluginMarker(DependencyDetails dep) throws NoSuchAlgorithmException {
+    private void addPluginMarker(DependencyDetails dep) throws IOException, NoSuchAlgorithmException {
 
         // This is the marker artifact we are looking for
         var marker = new DependencyDetails(
