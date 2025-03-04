@@ -19,12 +19,13 @@
 
 package io.github.jwharm.flatpakgradlegenerator;
 
-import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvedArtifact;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -71,17 +72,16 @@ final class ArtifactResolver {
      *
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-     Optional<byte[]> tryResolve(DependencyDetails dep,
-                                 String repository,
-                                 String filename)
-            throws NoSuchAlgorithmException {
+    Optional<byte[]> tryResolve(DependencyDetails dep,
+                                String repository,
+                                String filename) throws IOException, NoSuchAlgorithmException {
 
         // Build the url and try to download the file
         String url = repository + dep.path() + "/" + filename;
         var contents = getFileContentsFrom(url);
 
         if (contents.isPresent()) {
-            String sha512 = calculateSHA512(contents.get());
+            String sha512 = calculateSHA512(new ByteArrayInputStream(contents.get()));
             String dest = dep.path();
 
             // If the filename contains a path, cut it out and append it to the dest field
@@ -111,7 +111,7 @@ final class ArtifactResolver {
      * find the artifact in the local Gradle file, and use that file to calculate the SHA-512 hash
      * and add it to the JSON output.
      *
-     * @param  configuration the Gradle configuration that contains the artifact
+     * @param  artifacts     resolved artifacts for the gradle configuration containing the dependency
      * @param  id            the id of the dependency
      * @param  dep           a DependencyDetail instance with the Maven coordinates of the artifact
      * @param  repository    the repository to try to download from
@@ -120,7 +120,7 @@ final class ArtifactResolver {
      * @throws IOException              error while reading the jar file
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-    void tryResolveCached(Configuration configuration,
+    void tryResolveCached(Set<ResolvedArtifact> artifacts,
                           ModuleVersionIdentifier id,
                           DependencyDetails dep,
                           String repository,
@@ -129,18 +129,13 @@ final class ArtifactResolver {
                           String altName)
             throws IOException, NoSuchAlgorithmException {
 
-        // Find the jar in the local Gradle cache
-        Set<ResolvedArtifact> artifacts = configuration
-                .getResolvedConfiguration()
-                .getResolvedArtifacts();
-
         for (var artifact : artifacts) {
             if (artifact.getModuleVersion().getId().equals(id)) {
                 File file = artifact.getFile();
 
                 // Check against filenames in the .module file
                 if (checkName)
-                    if (! (file.getName().equals(filename) ||
+                    if (!(file.getName().equals(filename) ||
                             file.getName().equals(altName)))
                         continue;
 
@@ -155,7 +150,7 @@ final class ArtifactResolver {
                         + file.getName();
                 var isValid = isValid(url);
 
-                if ((! isValid) && filename.contains("SNAPSHOT")) {
+                if ((!isValid) && filename.contains("SNAPSHOT")) {
                     // Try again, but this time, replace SNAPSHOT with snapshot details
                     url = repository
                             + dep.path()
@@ -165,9 +160,12 @@ final class ArtifactResolver {
                 }
 
                 if (isValid) {
+                    String sha512;
+
                     // Read the file from the local Gradle cache and calculate the SHA-512 hash
-                    byte[] bytes = Files.readAllBytes(file.toPath());
-                    String sha512 = calculateSHA512(bytes);
+                    try (var fileInputStream = Files.newInputStream(file.toPath())) {
+                        sha512 = calculateSHA512(fileInputStream);
+                    }
 
                     // Generate and append the json
                     generateJsonBlock(
@@ -280,16 +278,25 @@ final class ArtifactResolver {
     /**
      * Generate an SHA-512 hash for a byte array using MessageDigest.
      *
-     * @param  contents the input byte array
+     * @param  contentsInputStream the input stream for contents to compute hash of
      * @return the SHA-512 hash
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
+     * @throws IOException error when reading input
      */
-    private String calculateSHA512(byte[] contents) throws NoSuchAlgorithmException {
+    private String calculateSHA512(InputStream contentsInputStream) throws NoSuchAlgorithmException, IOException {
+        byte[] buffer = new byte[4096];
+
         // Create a MessageDigest object for SHA-512
         MessageDigest md = MessageDigest.getInstance("SHA-512");
 
-        // Update the MessageDigest with the bytes from the input String
-        md.update(contents);
+        int numRead;
+        do {
+            numRead = contentsInputStream.read(buffer);
+            if (numRead > 0) {
+                md.update(buffer, 0, numRead);
+            }
+        } while (numRead != -1);
+
         byte[] hashBytes = md.digest();
 
         // Convert the byte array to a hexadecimal string
