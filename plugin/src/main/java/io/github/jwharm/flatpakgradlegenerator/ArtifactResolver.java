@@ -33,9 +33,10 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 /**
@@ -44,15 +45,17 @@ import java.util.stream.Collectors;
 final class ArtifactResolver {
 
     private final String dest;
-    private final HashMap<String, Boolean> checkedUrls;
-    private final HashMap<String, Optional<byte[]>> downloadedFiles;
-    private final HashMap<String, String> output;
+    private final ConcurrentHashMap<String, Boolean> checkedUrls;
+    private final ConcurrentHashMap<String, Optional<byte[]>> downloadedFiles;
+    private final ConcurrentHashMap<String, String> output;
+    private final Semaphore checksumComputationSemaphore;
 
     private ArtifactResolver(String dest) {
         this.dest = dest;
-        this.checkedUrls = new HashMap<>();
-        this.downloadedFiles = new HashMap<>();
-        this.output = new HashMap<>();
+        this.checkedUrls = new ConcurrentHashMap<>();
+        this.downloadedFiles = new ConcurrentHashMap<>();
+        this.output = new ConcurrentHashMap<>();
+        this.checksumComputationSemaphore = new Semaphore(Runtime.getRuntime().availableProcessors(), false);
     }
 
     static ArtifactResolver getInstance(String dest) {
@@ -74,7 +77,7 @@ final class ArtifactResolver {
      */
     Optional<byte[]> tryResolve(DependencyDetails dep,
                                 String repository,
-                                String filename) throws IOException, NoSuchAlgorithmException {
+                                String filename) throws IOException, InterruptedException, NoSuchAlgorithmException {
 
         // Build the url and try to download the file
         String url = repository + dep.path() + "/" + filename;
@@ -127,7 +130,7 @@ final class ArtifactResolver {
                           String filename,
                           boolean checkName,
                           String altName)
-            throws IOException, NoSuchAlgorithmException {
+            throws IOException, NoSuchAlgorithmException, InterruptedException {
 
         for (var artifact : artifacts) {
             if (artifact.getModuleVersion().getId().equals(id)) {
@@ -281,31 +284,38 @@ final class ArtifactResolver {
      * @param  contentsInputStream the input stream for contents to compute hash of
      * @return the SHA-512 hash
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
+     * @throws InterruptedException interrupted during execution
      * @throws IOException error when reading input
      */
-    private String calculateSHA512(InputStream contentsInputStream) throws NoSuchAlgorithmException, IOException {
+    private String calculateSHA512(InputStream contentsInputStream) throws NoSuchAlgorithmException, InterruptedException, IOException {
         byte[] buffer = new byte[4096];
 
-        // Create a MessageDigest object for SHA-512
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        checksumComputationSemaphore.acquire();
 
-        int numRead;
-        do {
-            numRead = contentsInputStream.read(buffer);
-            if (numRead > 0) {
-                md.update(buffer, 0, numRead);
+        try {
+            // Create a MessageDigest object for SHA-512
+            MessageDigest md  = MessageDigest.getInstance("SHA-512");
+
+            int numRead;
+            do {
+                numRead = contentsInputStream.read(buffer);
+                if (numRead > 0) {
+                    md.update(buffer, 0, numRead);
+                }
+            } while (numRead != -1);
+
+            byte[] hashBytes = md.digest();
+
+            // Convert the byte array to a hexadecimal string
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
             }
-        } while (numRead != -1);
 
-        byte[] hashBytes = md.digest();
-
-        // Convert the byte array to a hexadecimal string
-        StringBuilder sb = new StringBuilder();
-        for (byte b : hashBytes) {
-            sb.append(String.format("%02x", b));
+            // Return the SHA-512 hash as a string
+            return sb.toString();
+        }finally {
+            checksumComputationSemaphore.release();
         }
-
-        // Return the SHA-512 hash as a string
-        return sb.toString();
     }
 }
