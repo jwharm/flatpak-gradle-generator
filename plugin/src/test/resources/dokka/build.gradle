@@ -3,6 +3,10 @@ plugins {
     id 'org.jetbrains.dokka' version '1.8.10'
 }
 
+repositories {
+    mavenCentral()
+}
+
 tasks.flatpakGradleGenerator {
     outputFile = file('%s')
 }
