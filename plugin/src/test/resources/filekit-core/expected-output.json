@@ -1,0 +1,338 @@
+[
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/github/hypfvieh/dbus-java-core/5.1.0/dbus-java-core-5.1.0.jar",
+    "sha512": "690510362a968452ce137bdc63cca9a56d2102efa82146b60ed7d63b34997be460c7a893ef06d80cbf9e0c04336a0cfa81d6324bbe0365e8fbcf1b1e13fc3a8f",
+    "dest": "offline-repository/com/github/hypfvieh/dbus-java-core/5.1.0",
+    "dest-filename": "dbus-java-core-5.1.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/github/hypfvieh/dbus-java-core/5.1.0/dbus-java-core-5.1.0.pom",
+    "sha512": "d1a1b930fd835201426ccbe08afc2d0cc2a78096648a75658cd28f1f09f93b8be9122b3dd415394d6eed8d9cd71e345ac7ac08585da23fd9202995fe5b0086e3",
+    "dest": "offline-repository/com/github/hypfvieh/dbus-java-core/5.1.0",
+    "dest-filename": "dbus-java-core-5.1.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/github/hypfvieh/dbus-java-parent/5.1.0/dbus-java-parent-5.1.0.pom",
+    "sha512": "57194c09c31fbf64afc11feac88284cb6b0ce81d005d51d2720513b1ec5ed5f01ee73405a03617b1a8bae18eb6e3c0049c177dbcea67b1b3646e785ca7616dd5",
+    "dest": "offline-repository/com/github/hypfvieh/dbus-java-parent/5.1.0",
+    "dest-filename": "dbus-java-parent-5.1.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/github/hypfvieh/dbus-java-transport-native-unixsocket/5.1.0/dbus-java-transport-native-unixsocket-5.1.0.jar",
+    "sha512": "2f8d8467734118592cc403be48fd5a825da32b38809b4d3f9e4391d4875d9219618e5629d37a07c5e066124bdd96f5e2840bafaa5d308f2ae3c3254e70fc93bb",
+    "dest": "offline-repository/com/github/hypfvieh/dbus-java-transport-native-unixsocket/5.1.0",
+    "dest-filename": "dbus-java-transport-native-unixsocket-5.1.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/github/hypfvieh/dbus-java-transport-native-unixsocket/5.1.0/dbus-java-transport-native-unixsocket-5.1.0.pom",
+    "sha512": "c8a2661e04f3c2aebc1d06683084815c625299b83f172279de3a8d1e3b1d6665c67487e7f666b194e0c64f464deb2c74071a2b3067e39a4753ec16210c839f16",
+    "dest": "offline-repository/com/github/hypfvieh/dbus-java-transport-native-unixsocket/5.1.0",
+    "dest-filename": "dbus-java-transport-native-unixsocket-5.1.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/vinceglb/filekit-core-jvm/0.8.3/filekit-core-jvm-0.8.3.jar",
+    "sha512": "cb822ace842679eabfd06a23ba5c656bb8ab9c087e5992cb3a6dae6dd18ece46959a0742d92df64da9c74ce1a174a9deab673cee6a019a91c0f21242787099b6",
+    "dest": "offline-repository/io/github/vinceglb/filekit-core-jvm/0.8.3",
+    "dest-filename": "filekit-core-jvm-0.8.3.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/vinceglb/filekit-core-jvm/0.8.3/filekit-core-jvm-0.8.3.module",
+    "sha512": "f1496c66035f243613d40b4d6af23f8f12316ba69e6454ddf84be3c31e0789d0d8378cdd01a67d0631b4aeb4b04a1692517dd39c2435558a3cbe316ac1d1bc9d",
+    "dest": "offline-repository/io/github/vinceglb/filekit-core-jvm/0.8.3",
+    "dest-filename": "filekit-core-jvm-0.8.3.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/io/github/vinceglb/filekit-core-jvm/0.8.3/filekit-core-jvm-0.8.3.pom",
+    "sha512": "f86bb204d3f1e6d7d3cc55f2f65458415c9df6479f3db78102f00faf2e37480f3fda5f2da2f45bc9d60cd5150bf105985acfdb1c15df458b6c292a4db96d513a",
+    "dest": "offline-repository/io/github/vinceglb/filekit-core-jvm/0.8.3",
+    "dest-filename": "filekit-core-jvm-0.8.3.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/5.15.0/jna-platform-5.15.0.jar",
+    "sha512": "a42e48349a92422e6f8fecb7f4eed0af8a5378983b37bb28a1e7888d6c311fcac5539ba1b9daabbcc31a9a3d63f40dccd3f0b95195e5e73921ccc3a765d33889",
+    "dest": "offline-repository/net/java/dev/jna/jna-platform/5.15.0",
+    "dest-filename": "jna-platform-5.15.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/5.15.0/jna-platform-5.15.0.pom",
+    "sha512": "becbc4825695c6d1b1d58e301b67ad75867e3c94651c5fd87663773627c74a5fad62133bb04b45bb60f4d0dfec07739e2d9d6eaa304d8aea2b2a9996dd1cdf04",
+    "dest": "offline-repository/net/java/dev/jna/jna-platform/5.15.0",
+    "dest-filename": "jna-platform-5.15.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.15.0/jna-5.15.0.jar",
+    "sha512": "35fafece0c8afa95e094e7c627800d0ce024cbfd5b67110757eb30d45dcfc3107eab75af9fec498b629f9b790b2af8927a093a7283d348f7b210f4533cf77ca2",
+    "dest": "offline-repository/net/java/dev/jna/jna/5.15.0",
+    "dest-filename": "jna-5.15.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.15.0/jna-5.15.0.pom",
+    "sha512": "e309e46486eef44843f78b683098ea5cc86451872ca72a700d7c141ec55b11be8f1c429772ae1b7bdfe32a0a9621890b43202a8dbd9c67c8bb34a310e4dc1b29",
+    "dest": "offline-repository/net/java/dev/jna/jna/5.15.0",
+    "dest-filename": "jna-5.15.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+    "sha512": "5622d0ffe410e7272e2bb9fae1006caedeb86d0c62d2d9f3929a3b3cdcdef1963218fcf0cede82e95ef9f4da3ed4a173fa055ee6e4038886376181e0423e02ff",
+    "dest": "offline-repository/org/jetbrains/annotations/13.0",
+    "dest-filename": "annotations-13.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.pom",
+    "sha512": "63ef480f698215d4cd4501b06e86df1a741ac2b86216fd3ff6eee146da746caa390df27351e25598971edb368aeae41055ff1ed77e4bf5d7edb6abc832d150ce",
+    "dest": "offline-repository/org/jetbrains/annotations/13.0",
+    "dest-filename": "annotations-13.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar",
+    "sha512": "cb82eb0aaae88e3283b299929173296e30c7b078105e0fc5ecfbcd4eb230026f9a7cc46680832d036e6c1ff036ad99d4c50dc296d4919d223879081ac1616944",
+    "dest": "offline-repository/org/jetbrains/annotations/23.0.0",
+    "dest-filename": "annotations-23.0.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/23.0.0/annotations-23.0.0.pom",
+    "sha512": "ae58d75b40e44cb0d8e3bb701c7afefa8cbf96066ae52fc3d57c69b7a7e819fd9b3b01971376da6ea94ee010b9ee59ba05a331b93a65e94c047b095131efd6c0",
+    "dest": "offline-repository/org/jetbrains/annotations/23.0.0",
+    "dest-filename": "annotations-23.0.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/2.0.20/kotlin-stdlib-common-2.0.20.pom",
+    "sha512": "5599e0a24a8247b9c6860d8bce9989c4a90422e2c1ca265edcd1e12b9888edd0277eb7fd3fe38b899a971db918b18a936cc69cac8a7687021fbbd5a55ed82017",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-common/2.0.20",
+    "dest-filename": "kotlin-stdlib-common-2.0.20.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.0/kotlin-stdlib-jdk7-1.8.0.pom",
+    "sha512": "f18fd89c03d5abccf2eb2a8306044dc505e29a2bb97e2d8afdd102d7d8c42908494182daa6133e8dceb221c8bcb9a52f62c7a7232c6657abb9c91c77b2a65af7",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.0",
+    "dest-filename": "kotlin-stdlib-jdk7-1.8.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.0/kotlin-stdlib-jdk8-1.8.0.pom",
+    "sha512": "2c5b573c0e5fcd9137b614586f7e4b5becaff8edcd15431e785bce5014bd23e3c70f22be5fd95ab15ab99326fddc2b27fcdc9726312a59c4d47d34e88940d3f9",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.0",
+    "dest-filename": "kotlin-stdlib-jdk8-1.8.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.20/kotlin-stdlib-2.0.20.jar",
+    "sha512": "5cd5cd7db1c83963f74338d19765c866a4908fdcebb2dbb58da2e4a9ce2dbbf036b6b043e8a2efaa43dad9b409f693f44ea6876a421551e1c6208ba58f1b2250",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/2.0.20",
+    "dest-filename": "kotlin-stdlib-2.0.20.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.20/kotlin-stdlib-2.0.20.module",
+    "sha512": "7f2d0c8e47f133e0a235a7f7ef69d3fa3d7964a9a74dbb7b0136a5b2ff286f8f7746d2342fa78c37d83bc8971842e88fe3fa9ef827f0dbca830a7b0307e064d3",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/2.0.20",
+    "dest-filename": "kotlin-stdlib-2.0.20.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.20/kotlin-stdlib-2.0.20.pom",
+    "sha512": "1c291e583f0ad871e4155106b1d278f8e70e1f7276f3aa9def64eab825a3a657406e0876e669f3d373fc45e0c61be929f740162d7ec1bc590c661af8ffc95b1c",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/2.0.20",
+    "dest-filename": "kotlin-stdlib-2.0.20.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.9.0/kotlinx-coroutines-android-1.9.0.pom",
+    "sha512": "f072c0f0b90ff949580b5d0c195f5051cb7e5245ee8fa4fad2c49e4f8a8344521ff2ba3d113342aa0bc7a40587f28dffe4d0375c17f9d659d5189c4b4c94e6c4",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.9.0",
+    "dest-filename": "kotlinx-coroutines-android-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.9.0/kotlinx-coroutines-bom-1.9.0.pom",
+    "sha512": "6d7f6ee873c622ac45c12266c1b2dc7086cb7273a77215ef9c51ce3b8cc1ac3415229b193792d1900d0ed9fba3f464eaa380741e813ed4ed364a6bc21de17671",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.9.0",
+    "dest-filename": "kotlinx-coroutines-bom-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.9.0/kotlinx-coroutines-core-jvm-1.9.0.jar",
+    "sha512": "78c77268ec81ee580c9481ae35b667912e186e11576acc669ad4e8c17041506db5ba8adae439b50685a7cedf58755f0df7f2aa82ad1350e499431b13e6752a1a",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.9.0",
+    "dest-filename": "kotlinx-coroutines-core-jvm-1.9.0.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.9.0/kotlinx-coroutines-core-jvm-1.9.0.module",
+    "sha512": "2a2ddb002d60f0a4bc757b8deacd2a89b1a86c6601bd52911af701728cc0b796e3ae743b4f2b847036eeb8ce58141a0f438ee600ba198cd55e95031af7081e4e",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.9.0",
+    "dest-filename": "kotlinx-coroutines-core-jvm-1.9.0.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.9.0/kotlinx-coroutines-core-jvm-1.9.0.pom",
+    "sha512": "d04fca8b3b465e781f48b7903ff8d880ca305a66c038e02da51ca87a0ee5c96275f911c673d779a364e82a325e427f4c11f5f83ed3c815cd75f6291fb96c0625",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.9.0",
+    "dest-filename": "kotlinx-coroutines-core-jvm-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/kotlinx-coroutines-core-1.9.0.module",
+    "sha512": "e41d384e7e11561a243f838c49bbdf031354ebf51690cfb23aba2e734c8220729ac1b339938853c4b658f0440272fbe09465e17be46e231e21898a9d4fbdc84c",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0",
+    "dest-filename": "kotlinx-coroutines-core-1.9.0.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/kotlinx-coroutines-core-1.9.0.pom",
+    "sha512": "a0031bc41d95c457e2be4ba52dd7af151e5b7519cf01591ea258b7654054666f98f1f82911e4d8282e4d574db3dfffab917031d4e5493acf6df006469f24dbb5",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0",
+    "dest-filename": "kotlinx-coroutines-core-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-debug/1.9.0/kotlinx-coroutines-debug-1.9.0.pom",
+    "sha512": "dee256f7eabe987e69ed8065143f84467df166fb8ed9b7c9a1f86461752826e5561bd90aa6065106374eaf6e8d4f77d8567828b119a5cc7df919acf57d0d8261",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-debug/1.9.0",
+    "dest-filename": "kotlinx-coroutines-debug-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.9.0/kotlinx-coroutines-guava-1.9.0.pom",
+    "sha512": "7d2eb5891bc73fc89dccaf75aa19f75662c79c4c00e79d15aa9908df7c845e2748ad00561766ec4344ee5d8fa2fae6bf58fbee00042fca0ade4974d683e43afa",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-guava/1.9.0",
+    "dest-filename": "kotlinx-coroutines-guava-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-javafx/1.9.0/kotlinx-coroutines-javafx-1.9.0.pom",
+    "sha512": "841f9e626bca051af2b1c6929b79580dc22b1d8ba3387316b5ae058f28d3d3e481089b517743f0d41add210e11acad7b8b43d4dc1f05e4a9102f0b3b37cfb0cc",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-javafx/1.9.0",
+    "dest-filename": "kotlinx-coroutines-javafx-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-jdk8/1.9.0/kotlinx-coroutines-jdk8-1.9.0.pom",
+    "sha512": "9c857e4f76314b851de229255107e553b30f8f7e166baadb97c81d436bef07021d7e22f821842122417dd33030fea30a7b5bff31de7cdac354dfefdd27b05e2e",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-jdk8/1.9.0",
+    "dest-filename": "kotlinx-coroutines-jdk8-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-jdk9/1.9.0/kotlinx-coroutines-jdk9-1.9.0.pom",
+    "sha512": "55d85bd1b545e14f15bd15ec33ac6124527c5d5bb4b155de3989b49562998147f0a9d284271b22013c48c26e4da197841646d5bd3297416477182c9c1861dbda",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-jdk9/1.9.0",
+    "dest-filename": "kotlinx-coroutines-jdk9-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-play-services/1.9.0/kotlinx-coroutines-play-services-1.9.0.pom",
+    "sha512": "62209ffa7b931c247ac908cc26f23848206ee04d9641c67a44041cf6721bc36abc6fb49a9ebdcfa537063d88e1820e9d693c0ee96d916b6e8f329a95487c4bed",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-play-services/1.9.0",
+    "dest-filename": "kotlinx-coroutines-play-services-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-reactive/1.9.0/kotlinx-coroutines-reactive-1.9.0.pom",
+    "sha512": "626c539907c593900b7ef87e65aace18715023c88069a55e23ae2cfa057172c8b0d46ba5fdd37556cfad5b40237bcbce84ec1bac3578ab3acebcaee6d4c2830f",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-reactive/1.9.0",
+    "dest-filename": "kotlinx-coroutines-reactive-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-reactor/1.9.0/kotlinx-coroutines-reactor-1.9.0.pom",
+    "sha512": "3c1e81de7177dda2b7f6b456b90c7243d5b9dfa8b337b8c489d0ac859bcc45d1a585db2f3b0938c59c5bed55e890c8b8a69b467b3250792a1076811f38b1ceb8",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-reactor/1.9.0",
+    "dest-filename": "kotlinx-coroutines-reactor-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-rx2/1.9.0/kotlinx-coroutines-rx2-1.9.0.pom",
+    "sha512": "f73b1a9c4176e4413f028154b1dfbd773eea996df96b49b05eb107db0a3bd2633663283db423aa186a64b048b1a55374fe44279873e435137b4827768b50e78c",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-rx2/1.9.0",
+    "dest-filename": "kotlinx-coroutines-rx2-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-rx3/1.9.0/kotlinx-coroutines-rx3-1.9.0.pom",
+    "sha512": "10593151609dbf97648b401f18e44bedd14503bcccbe648d5798c9f19ee31950d815ceffe0db04766636dd63e96a5da4a2b0b79162b6446a9459075dde28b2ed",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-rx3/1.9.0",
+    "dest-filename": "kotlinx-coroutines-rx3-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-slf4j/1.9.0/kotlinx-coroutines-slf4j-1.9.0.pom",
+    "sha512": "6d789ed372c11771615f12b88a63aefaf4c5b812908b0a3f30a4a2ba6d0e4dd3490012c7db4c269b3df53bcab0fca75b25abed3719625d677320dd61a16fdaa9",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-slf4j/1.9.0",
+    "dest-filename": "kotlinx-coroutines-slf4j-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-swing/1.9.0/kotlinx-coroutines-swing-1.9.0.pom",
+    "sha512": "a286882296c08d110bf0fdbc6016416e9d91752e74d2840f4418417869380b1a6e1b46c7aa6db847ff19feadffc90104b486e5bb3dc32636ebd7940031acc0e8",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-swing/1.9.0",
+    "dest-filename": "kotlinx-coroutines-swing-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.9.0/kotlinx-coroutines-test-jvm-1.9.0.pom",
+    "sha512": "d5217ec7dde2d2b8553e4b455ce0bd3bcbae64100cd0d8f93f1754e90d770db56b9d81ff5b2abc3e973fab6ebce195e364714c4d8adc47cb2ff7b70e89f51152",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-test-jvm/1.9.0",
+    "dest-filename": "kotlinx-coroutines-test-jvm-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.9.0/kotlinx-coroutines-test-1.9.0.pom",
+    "sha512": "05fe09d332ba7df1238d79f839b2f9c28f24c4ec546a3a84f930ba524c3905c66c87be97f4b5ef33f6f0f83fe7f522b5d75dc4755cd8e9b70e95ec0a32d72f14",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.9.0",
+    "dest-filename": "kotlinx-coroutines-test-1.9.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.10.3/junit-bom-5.10.3.pom",
+    "sha512": "51edc3d5a07b98c4ea60fd411db63e948f831e285d40e52b08387abf61d0b39ce90eb28209ef8825f55a3d2e29e501b168bdd0d322f50816bcf78e80862e219e",
+    "dest": "offline-repository/org/junit/junit-bom/5.10.3",
+    "dest-filename": "junit-bom-5.10.3.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar",
+    "sha512": "b4eeb5757118e264ec7f107d879270784357380d6f53471b7874dd7e0166fdf5686a95eb66bab867abbe9536da032ab052e207165211391c293cbf6178431fb6",
+    "dest": "offline-repository/org/slf4j/slf4j-api/2.0.13",
+    "dest-filename": "slf4j-api-2.0.13.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.pom",
+    "sha512": "16bd0ad91a8094fb042f7c4248fcb9737f5827573d97e2c8ce84bd82a234a9247ccd9c1444cf25f5df4c379e8bcd12e732777ad2b1e2a1375bc45b8ff700b767",
+    "dest": "offline-repository/org/slf4j/slf4j-api/2.0.13",
+    "dest-filename": "slf4j-api-2.0.13.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-bom/2.0.13/slf4j-bom-2.0.13.pom",
+    "sha512": "27c428893ad4843257d12f2acbdd2bbbfff7d95ac8a3c85759d4133d67785140da7420a6cdb1041c7a052c76fccb523e7fd41edca210646903fcdca42733e1ad",
+    "dest": "offline-repository/org/slf4j/slf4j-bom/2.0.13",
+    "dest-filename": "slf4j-bom-2.0.13.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-parent/2.0.13/slf4j-parent-2.0.13.pom",
+    "sha512": "1b5e25ea8b00c5c53715603ee8b59989ba34d5c3c936b99e18990b8236e5cd4fb47c8f6560e83574bfc7ddb2abb62f7b8f65f40b463ceafbaa45c0f983ed0f00",
+    "dest": "offline-repository/org/slf4j/slf4j-parent/2.0.13",
+    "dest-filename": "slf4j-parent-2.0.13.pom"
+  }
+]

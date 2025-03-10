@@ -87,6 +87,11 @@ class TestDependencyOutput {
         testDependencyOutput("log4j");
     }
 
+    @Test
+    void testFilekitCore() throws IOException {
+        testDependencyOutput("filekit-core");
+    }
+
     /**
      * Run the flatpakGradleGenerator task on a temporary Gradle build, and
      * compare the results with the expected output.

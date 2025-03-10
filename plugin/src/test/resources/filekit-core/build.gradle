@@ -1,0 +1,18 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group:      'io.github.vinceglb',
+                   name:       'filekit-core-jvm',
+                   version:    '0.8.3'
+}
+
+tasks.flatpakGradleGenerator {
+    outputFile = file('%s')
+}

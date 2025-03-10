@@ -118,7 +118,9 @@ final class ArtifactResolver {
      * @param  id            the id of the dependency
      * @param  dep           a DependencyDetail instance with the Maven coordinates of the artifact
      * @param  repository    the repository to try to download from
-     * @param  filename      the filename of the artifact
+     * @param  fileUrl       the remote filename of the artifact
+     * @param  checkName     whether to verify if the cached file name matches fileUrl or fileName
+     * @param  fileName      the local filename of the artifact (as specified in module file)
      *
      * @throws IOException              error while reading the jar file
      * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
@@ -127,9 +129,9 @@ final class ArtifactResolver {
                           ModuleVersionIdentifier id,
                           DependencyDetails dep,
                           String repository,
-                          String filename,
+                          String fileUrl,
                           boolean checkName,
-                          String altName)
+                          String fileName)
             throws IOException, NoSuchAlgorithmException, InterruptedException {
 
         for (var artifact : artifacts) {
@@ -138,12 +140,12 @@ final class ArtifactResolver {
 
                 // Check against filenames in the .module file
                 if (checkName)
-                    if (!(file.getName().equals(filename) ||
-                            file.getName().equals(altName)))
+                    if (!(file.getName().equals(fileUrl) ||
+                            file.getName().equals(fileName)))
                         continue;
 
                 // Skip files that are already included in the output
-                if (output.containsKey(dep.path() + "/" + (checkName ? filename : file.getName())))
+                if (output.containsKey(dep.path() + "/" + (checkName ? fileUrl : file.getName())))
                     continue;
 
                 // Build the url and check if it exists
@@ -153,12 +155,21 @@ final class ArtifactResolver {
                         + file.getName();
                 var isValid = isValid(url);
 
-                if ((!isValid) && filename.contains("SNAPSHOT")) {
+                // Try the filename from the .module
+                if (!isValid) {
+                    url = repository
+                            + dep.path()
+                            + "/"
+                            + fileUrl;
+                    isValid = isValid(url);
+                }
+
+                if ((!isValid) && fileUrl.contains("SNAPSHOT")) {
                     // Try again, but this time, replace SNAPSHOT with snapshot details
                     url = repository
                             + dep.path()
                             + "/"
-                            + filename.replace("SNAPSHOT", dep.snapshotDetail());
+                            + fileUrl.replace("SNAPSHOT", dep.snapshotDetail());
                     isValid = isValid(url);
                 }
 
@@ -175,7 +186,7 @@ final class ArtifactResolver {
                             url,
                             sha512,
                             dep.path(),
-                            checkName ? filename : file.getName()
+                            checkName ? fileUrl : file.getName()
                     );
                 }
             }
