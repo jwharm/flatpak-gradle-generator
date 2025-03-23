@@ -1,5 +1,5 @@
 /* flatpak-gradle-generator - a Gradle plugin to generate a list of dependencies
- * Copyright (C) 2023-2024 Jan-Willem Harmannij
+ * Copyright (C) 2023-2025 Jan-Willem Harmannij
  *
  * SPDX-License-Identifier: LGPL-2.1-or-later
  *
@@ -81,6 +81,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
      * The names of Gradle's {@link org.gradle.api.artifacts.Configuration} for which dependencies should be collected.
      * <p>
      * Defaults to all project's configurations.
+     *
+     * @return the included configurations
      */
     @Input
     @Optional
@@ -90,6 +92,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
      * The names of Gradle's {@link org.gradle.api.artifacts.Configuration} to exclude from dependency collection.
      * <p>
      * Overrides {@link #getIncludeConfigurations()}.
+     *
+     * @return the excluded configurations
      */
     @Input
     @Optional
@@ -101,6 +105,9 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
     private ExecutorService dependencyProcessingExecutorService;
 
+    /**
+     * Create a new instance of the task.
+     */
     public FlatpakGradleGeneratorTask() {
         getIncludeConfigurations().convention((Iterable<? extends String>) null);
     }
