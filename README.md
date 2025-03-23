@@ -57,6 +57,21 @@ Add the JSON filename to the `sources` list in your Flatpak manifest, and
 flatpak-builder will automatically download all dependencies into the offline 
 Maven repository folder.
 
+### Include and exclude configurations
+Specific configurations can be included and excluded with the
+`includeConfiguration` and `excludeConfiguration` options (the latter
+overrides the former). For example, to exclude test dependencies:
+
+```groovy
+tasks.flatpakGradleGenerator {
+    outputFile = file('flatpak-sources.json')
+    excludeConfigurations = [
+            'testCompileClasspath',
+            'testRuntimeClasspath'
+    ]
+}
+```
+
 ### Modular builds
 Because a task from one Gradle project [is not allowed](https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html#sub:resolving-unsafe-configuration-resolution-errors)
 to directly resolve a configuration in another project, the plugin is limited
@@ -67,5 +82,5 @@ block in the build files of the subprojects, to generate separate files for
 each project.
 
 ### Requirements
-The plugin has been tested with Gradle 8.3, 8.4, 8.6, 8.7, 8.9 and 8.13. The
-published jar is built with Java 17.
+The plugin has been tested with Gradle 8.13. The published jar is built with
+Java 17.
