@@ -151,7 +151,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         generateSourcesListForConfigurations(repositories, getProjectConfigurationsToProcess());
         LOGGER.info("Project dependencies resolved successfully");
 
-        LOGGER.info("Writing result to " + getOutputFile().getAsFile());
+        LOGGER.info("Writing result to {}", getOutputFile().getAsFile());
         // Merge the json blocks into a json list, and write the result to the
         // output file
         Files.writeString(
