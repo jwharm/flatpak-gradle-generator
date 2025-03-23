@@ -62,6 +62,22 @@ class TestDependencyOutput {
         testDependencyOutput("commons-io");
     }
 
+    /**
+     * Test {@link FlatpakGradleGeneratorTask#getIncludeConfigurations()}
+     */
+    @Test
+    void testCommonsIODependenciesWithIncludeOption() throws IOException {
+        testDependencyOutput("commons-io-with-include-option");
+    }
+
+    /**
+     * Test {@link FlatpakGradleGeneratorTask#getExcludeConfigurations()}
+     */
+    @Test
+    void testCommonsIODependenciesWithExcludeOption() throws IOException {
+        testDependencyOutput("commons-io-with-exclude-option");
+    }
+
     @Test
     void testCommonsCodecDependencies() throws IOException {
         testDependencyOutput("commons-codec");
@@ -122,7 +138,7 @@ class TestDependencyOutput {
         GradleRunner.create()
             .forwardOutput()
             .withPluginClasspath()
-            .withArguments("flatpakGradleGenerator")
+            .withArguments("flatpakGradleGenerator", "--info")
             .withProjectDir(tempDir)
             .build();
 

@@ -1,0 +1,24 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'commons-io:commons-io:2.14.0'
+
+    // should be ignored, because configuration is not in includeProjectConfigurations
+    testImplementation('org.jetbrains.kotlin:kotlin-test')
+}
+
+tasks.flatpakGradleGenerator {
+    outputFile = file('%s')
+
+    excludeConfigurations = [
+            'testCompileClasspath',
+            'testRuntimeClasspath'
+    ]
+}

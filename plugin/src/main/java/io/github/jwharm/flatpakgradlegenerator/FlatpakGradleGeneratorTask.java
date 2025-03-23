@@ -20,6 +20,7 @@
 package io.github.jwharm.flatpakgradlegenerator;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Named;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ResolvedArtifact;
@@ -30,6 +31,7 @@ import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.provider.Property;
+import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
@@ -75,11 +77,33 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     @Optional
     public abstract Property<String> getDownloadDirectory();
 
+    /**
+     * The names of Gradle's {@link org.gradle.api.artifacts.Configuration} for which dependencies should be collected.
+     * <p>
+     * Defaults to all project's configurations.
+     */
+    @Input
+    @Optional
+    public abstract SetProperty<String> getIncludeConfigurations();
+
+    /**
+     * The names of Gradle's {@link org.gradle.api.artifacts.Configuration} to exclude from dependency collection.
+     * <p>
+     * Overrides {@link #getIncludeConfigurations()}.
+     */
+    @Input
+    @Optional
+    public abstract SetProperty<String> getExcludeConfigurations();
+
     private ArtifactResolver resolver;
     private PomHandler POMHandler;
     private ModuleMetadata moduleMetadata;
 
     private ExecutorService dependencyProcessingExecutorService;
+
+    public FlatpakGradleGeneratorTask() {
+        getIncludeConfigurations().convention((Iterable<? extends String>) null);
+    }
 
     /**
      * Run the flatpakGradleGenerator task.
@@ -117,7 +141,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 "Resolving project dependencies using repositories: {}",
                 repositories
         );
-        generateSourcesListForConfigurations(repositories, project.getConfigurations());
+        generateSourcesListForConfigurations(repositories, getProjectConfigurationsToProcess());
         LOGGER.info("Project dependencies resolved successfully");
 
         LOGGER.info("Writing result to " + getOutputFile().getAsFile());
@@ -131,6 +155,22 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         dependencyProcessingExecutorService.shutdown();
     }
 
+    private List<Configuration> getProjectConfigurationsToProcess() {
+        var projectConfigurations = new ArrayList<>(getProject().getConfigurations());
+
+        if(getIncludeConfigurations().isPresent()) {
+            var configurationsToInclude = getIncludeConfigurations().get();
+            projectConfigurations.removeIf( configuration -> !configurationsToInclude.contains(configuration.getName()));
+        }
+
+        if(getExcludeConfigurations().isPresent()) {
+            var configurationsToExclude = getExcludeConfigurations().get();
+            projectConfigurations.removeIf( configuration -> configurationsToExclude.contains(configuration.getName()));
+        }
+
+        return projectConfigurations;
+    }
+
     private void generateSourcesListForConfigurations(
             List<String> repositories,
             Collection<Configuration> configurations
@@ -139,7 +179,10 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                 .filter(Configuration::isCanBeResolved)
                 .toList();
 
-        LOGGER.info("Following configurations will be processed: {}", resolvedConfigurations);
+        LOGGER.info(
+                "Following configurations will be processed: {}",
+                resolvedConfigurations.stream().map(Named::getName).toList()
+        );
 
         for (Configuration configuration : resolvedConfigurations) {
             generateSourcesList(repositories, configuration);
