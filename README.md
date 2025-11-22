@@ -82,5 +82,5 @@ block in the build files of the subprojects, to generate separate files for
 each project.
 
 ### Requirements
-The plugin has been tested with Gradle 8.13. The published jar is built with
-Java 17.
+The plugin has been tested with Gradle 8.13 and 9.2. The published jar is built
+with Java 17.
