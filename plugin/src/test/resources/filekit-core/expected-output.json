@@ -190,6 +190,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/../../kotlinx-coroutines-core-jvm/1.9.0/kotlinx-coroutines-core-jvm-1.9.0.module",
+    "sha512": "2a2ddb002d60f0a4bc757b8deacd2a89b1a86c6601bd52911af701728cc0b796e3ae743b4f2b847036eeb8ce58141a0f438ee600ba198cd55e95031af7081e4e",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/../../kotlinx-coroutines-core-jvm/1.9.0",
+    "dest-filename": "kotlinx-coroutines-core-jvm-1.9.0.module"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0/kotlinx-coroutines-core-1.9.0.module",
     "sha512": "e41d384e7e11561a243f838c49bbdf031354ebf51690cfb23aba2e734c8220729ac1b339938853c4b658f0440272fbe09465e17be46e231e21898a9d4fbdc84c",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.9.0",

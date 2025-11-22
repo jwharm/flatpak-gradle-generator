@@ -841,6 +841,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/../../kotlinx-coroutines-core-jvm/1.6.3/kotlinx-coroutines-core-jvm-1.6.3.module",
+    "sha512": "6a9b7c6a46574bdbb2fbb777d8361ff65c687122a154be86adde5f376d84affe97eaf7e07535be4d326afbb1434ac9d664fbe91fa9f0d5bf1d99511ca12cd9d0",
+    "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/../../kotlinx-coroutines-core-jvm/1.6.3",
+    "dest-filename": "kotlinx-coroutines-core-jvm-1.6.3.module"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3/kotlinx-coroutines-core-1.6.3.module",
     "sha512": "9d7e2d4aa8c0e815ebef8ef6332b725b586449aa30500cb2811377ffd33979abd152a9419af010436753ae694c753a8bd71a2b28b4291aab9acbf6968546461c",
     "dest": "offline-repository/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.6.3",
@@ -992,6 +999,13 @@
     "sha512": "57b7c0b073a9acea60327c7f78aae26d3b2c30b8ec201110d0eec9eece3561334f5c48254b03621592198acb83923b59ef1d6c818301a24245c4caf90a270ae0",
     "dest": "offline-repository/org/jetbrains/markdown-jvm/0.3.1",
     "dest-filename": "markdown-jvm-0.3.1.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/markdown/0.3.1/../../markdown-jvm/0.3.1/markdown-jvm-0.3.1.module",
+    "sha512": "7d3e2fdbc614d6872fa048a493f49aab6f8c153bf952a57fa14ea51d9170f3421e2c446766b142e28d6df75b29e3817b485b1489cd74a73651ab51492d26fd5b",
+    "dest": "offline-repository/org/jetbrains/markdown/0.3.1/../../markdown-jvm/0.3.1",
+    "dest-filename": "markdown-jvm-0.3.1.module"
   },
   {
     "type": "file",
