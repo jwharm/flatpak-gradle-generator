@@ -138,7 +138,7 @@ class TestDependencyOutput {
         GradleRunner.create()
             .forwardOutput()
             .withPluginClasspath()
-            .withArguments("flatpakGradleGenerator", "--info")
+            .withArguments("flatpakGradleGenerator", "--info", "--no-configuration-cache")
             .withProjectDir(tempDir)
             .build();
 

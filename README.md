@@ -31,8 +31,8 @@ tasks.flatpakGradleGenerator {
 }
 ```
 
-Run `gradle flatpakGradleGenerator` and it will write a json file with 
-information about the dependencies:
+Run `./gradlew flatpakGradleGenerator --no-configuration-cache` and it will
+write a json file with information about the dependencies:
 
 ```
 [
@@ -72,6 +72,13 @@ tasks.flatpakGradleGenerator {
 }
 ```
 
+### Configuration cache
+The `flatpakGradleGenerator` task is incompatible with the Gradle Configuration
+Cache, so it needs to be run with the `--no-configuration-cache` command-line
+argument. 
+
+You can still use the Configuration Cache for other tasks in your project.
+
 ### Modular builds
 Because a task from one Gradle project [is not allowed](https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html#sub:resolving-unsafe-configuration-resolution-errors)
 to directly resolve a configuration in another project, the plugin is limited
@@ -81,6 +88,11 @@ In a modular Gradle build, you can add a `tasks.flatpakGradleGenerator {}`
 block in the build files of the subprojects, to generate separate files for 
 each project.
 
-### Requirements
+### Architecture-specific sources
+The plugin doesn't output Flatpak sources with an `only-arches` line to specify
+dependencies for specific architectures. See issue [#9](https://github.com/jwharm/flatpak-gradle-generator/issues/9)
+for more details. Patches are welcome.
+
+### Compatibility
 The plugin has been tested with Gradle 8.13 and 9.2. The published jar is built
 with Java 17.
