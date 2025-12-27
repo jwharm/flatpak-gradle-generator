@@ -99,9 +99,19 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     @Optional
     public abstract SetProperty<String> getExcludeConfigurations();
 
+    /**
+     * The supported architectures.
+     *
+     * @return the "only-arches" value that will be added to the generated json entries.
+     */
+    @Input
+    @Optional
+    public abstract Property<String> getOnlyArches();
+
     private ArtifactResolver resolver;
     private PomHandler POMHandler;
     private ModuleMetadata moduleMetadata;
+    private String onlyArches;
 
     private ExecutorService dependencyProcessingExecutorService;
 
@@ -124,6 +134,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         resolver = ArtifactResolver.getInstance(getDest());
         POMHandler = PomHandler.getInstance(resolver);
         moduleMetadata = ModuleMetadata.getInstance();
+        onlyArches = getOnlyArches().getOrElse("");
         dependencyProcessingExecutorService = Executors.newFixedThreadPool(120);
         Project project = getProject();
 
@@ -330,7 +341,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         for (var repository : repositories) {
 
             // Check for a Gradle module artifact
-            var module = resolver.tryResolve(dep, repository, dep.filename("module"));
+            var module = resolver.tryResolve(dep, repository, dep.filename("module"), onlyArches);
 
             // Add file artifacts from information in the Gradle module
             if (module.isPresent()) {
@@ -340,7 +351,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                         files = moduleMetadata.process(new String(module.get()), variant);
                     } catch (ModuleMetadata.RedirectedException redirected) {
                         // Download .module artifact from alternate URL
-                        module = resolver.tryResolve(dep, repository, redirected.url());
+                        module = resolver.tryResolve(dep, repository, redirected.url(), onlyArches);
                         if (module.isPresent())
                             files = moduleMetadata.process(new String(module.get()), variant);
                     }
@@ -354,7 +365,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                                     repository,
                                     file.url,
                                     true,
-                                    file.name
+                                    file.name,
+                                    onlyArches
                             );
                         }
                     }
@@ -368,7 +380,8 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                             repository,
                             dep.filename("jar"),
                             false,
-                            null
+                            null,
+                            onlyArches
                     );
                 }
             }
@@ -382,16 +395,17 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                         repository,
                         dep.filename("jar"),
                         false,
-                        null
+                        null,
+                        onlyArches
                 );
             }
 
             // Download POM artifact
-            var pom = resolver.tryResolve(dep, repository, dep.filename("pom"));
+            var pom = resolver.tryResolve(dep, repository, dep.filename("pom"), onlyArches);
 
             // Add parent POMs
             pom.ifPresent(bytes ->
-                    POMHandler.addParentPOMs(bytes, repository));
+                    POMHandler.addParentPOMs(bytes, repository, onlyArches));
 
             // Add marker artifact
             // Only for plugin jar files downloaded from the Gradle Plugin Portal
@@ -456,6 +470,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         );
 
         // Download the artifact
-        resolver.tryResolve(marker, GRADLE_PLUGIN_PORTAL, dep.filename("pom"));
+        resolver.tryResolve(marker, GRADLE_PLUGIN_PORTAL, dep.filename("pom"), onlyArches);
     }
 }

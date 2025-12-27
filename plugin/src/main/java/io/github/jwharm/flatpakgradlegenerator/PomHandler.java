@@ -54,8 +54,9 @@ final class PomHandler {
      *
      * @param contents   the contents of the POM file
      * @param repository the repository from which this POM was downloaded
+     * @param onlyArches the supported architectures (optional)
      */
-    void addParentPOMs(byte[] contents, String repository) {
+    void addParentPOMs(byte[] contents, String repository, String onlyArches) {
         try {
             // Construct XML parser
             var reader = xmlInputFactory.createXMLEventReader(
@@ -118,7 +119,7 @@ final class PomHandler {
                                 // Download and add the parent pom to the list
                                 Optional<byte[]> parent = Optional.empty();
                                 if (name.equals("parent") || isBom || !recursive)
-                                    parent = resolver.tryResolve(dep, repository, dep.filename("pom"));
+                                    parent = resolver.tryResolve(dep, repository, dep.filename("pom"), onlyArches);
 
                                 // Reset string builders
                                 groupId    = new StringBuilder();
@@ -128,7 +129,7 @@ final class PomHandler {
                                 // Recursively add the parent pom of the parent pom
                                 if (name.equals("parent") || isBom)
                                     parent.ifPresent(bytes -> new PomHandler(resolver, true)
-                                            .addParentPOMs(bytes, repository));
+                                            .addParentPOMs(bytes, repository, onlyArches));
                             }
                             default -> {} // ignored
                         }

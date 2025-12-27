@@ -1,0 +1,19 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    modules = ['javafx.controls', 'javafx.swing']
+}
+
+tasks.flatpakGradleGenerator {
+    outputFile = file('%s')
+    downloadDirectory = 'offline-repository'
+    onlyArches = 'x86_64'
+}
