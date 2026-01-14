@@ -12,7 +12,7 @@ Example `gradle.build`:
 ```groovy
 plugins {
   id 'application'
-  id 'io.github.jwharm.flatpak-gradle-generator' version '1.4.0'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '1.6.0'
 }
 
 repositories {
@@ -108,5 +108,5 @@ Check out the [`javafx` testcase](plugin/src/test/resources/javafx) for an
 example on how to use the `"onlyArches"` parameter.
 
 ### Compatibility
-The plugin has been tested with Gradle 8.13 and 9.2. The published jar is built
-with Java 17.
+The plugin has been tested with Gradle 8.13 and 9.2.1. The published jar is
+built with Java 17.
