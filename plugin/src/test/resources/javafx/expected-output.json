@@ -1,0 +1,170 @@
+[
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+    "sha512": "bb09db62919a50fa5b55906013be6ca4fc7acb2e87455fac5eaf9ede2e41ce8bbafc0e5a385a561264ea4cd71bbbd3ef5a45e02d63277a201d06a0ae1636f804",
+    "dest": "offline-repository/com/google/code/findbugs/jsr305/3.0.2",
+    "dest-filename": "jsr305-3.0.2.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom",
+    "sha512": "08e1cc341a153f64b670d87831eedfe79a150b8fb7e3a4afbaef54deaa28d2767ae86d12b4f0c5404184360ab8e48a3655e610f3bf2fe6c97a06e9fc3df49b37",
+    "dest": "offline-repository/com/google/code/findbugs/jsr305/3.0.2",
+    "dest-filename": "jsr305-3.0.2.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/google/gradle/osdetector-gradle-plugin/1.7.3/osdetector-gradle-plugin-1.7.3.jar",
+    "sha512": "a4e365555872d64cf9a0742aa22f8d74e0103984130596db80cbead813b7f33dd8d1fdb1f1c5fa71a876f09cc66b15abd67d88f5b1370b310658df48eb943fdf",
+    "dest": "offline-repository/com/google/gradle/osdetector-gradle-plugin/1.7.3",
+    "dest-filename": "osdetector-gradle-plugin-1.7.3.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/com/google/gradle/osdetector-gradle-plugin/1.7.3/osdetector-gradle-plugin-1.7.3.pom",
+    "sha512": "bd6f18efeb22c0fa26ec23654b7ab1387f90f9218243270392a8398ec5e854dc673f55e16cc68acbf0ba48bad286c7aef66523770320e1b1ca7a7c33324f4458",
+    "dest": "offline-repository/com/google/gradle/osdetector-gradle-plugin/1.7.3",
+    "dest-filename": "osdetector-gradle-plugin-1.7.3.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/kr/motd/maven/os-maven-plugin/1.7.1/os-maven-plugin-1.7.1.jar",
+    "sha512": "e67fd34fb8ed011cd3983b8694820c42464b50b62129c086d7cca87b83963ea19291e0ebd1ae6ee9c409bf7a81dffa3b01fc39ba483ac03630bf5551fd83ca5c",
+    "dest": "offline-repository/kr/motd/maven/os-maven-plugin/1.7.1",
+    "dest-filename": "os-maven-plugin-1.7.1.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/kr/motd/maven/os-maven-plugin/1.7.1/os-maven-plugin-1.7.1.pom",
+    "sha512": "129a6e859a55403365cac24a39281ca533a64525eb708fe99902670c6a54856fd47af86767e2a87cd91eec2b8301a49c433281fb3694ce46833eb5eb25a9ae60",
+    "dest": "offline-repository/kr/motd/maven/os-maven-plugin/1.7.1",
+    "dest-filename": "os-maven-plugin-1.7.1.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/17/javafx-base-17-linux.jar",
+    "sha512": "a273426ff217dbfb536e4eb8581a54b6c1a2f5e7971d46c06e61f87216c3360603184aa601475e17d170ce4c47e0324a07b14cfa44e450ea4c181c75be829404",
+    "dest": "offline-repository/org/openjfx/javafx-base/17",
+    "dest-filename": "javafx-base-17-linux.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/17/javafx-base-17.pom",
+    "sha512": "96ef3bd55cf0fccb68493012160e0fc6577318b4dfdca93508e772344e23cdc6cdca20fdcc6e820fbfc4e578dcd1b315693fe9021e0392b860ae41d2b6d63708",
+    "dest": "offline-repository/org/openjfx/javafx-base/17",
+    "dest-filename": "javafx-base-17.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-controls/17/javafx-controls-17-linux.jar",
+    "sha512": "729eec003400723be4b55edaa7b74bfe8b2953a97fa86ee524bc1136010dec825da08ae846fdadbb40455e8ba592b2754d149fd94328e262243bb3ce70bc57b3",
+    "dest": "offline-repository/org/openjfx/javafx-controls/17",
+    "dest-filename": "javafx-controls-17-linux.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-controls/17/javafx-controls-17.pom",
+    "sha512": "5feabea15348301b8fbb739f48339319a1b2ec443b07c428d972ca220d1d7946a29d93a968f1b660b33a311b478f17008821a21365f4fdfd81369233527ba91a",
+    "dest": "offline-repository/org/openjfx/javafx-controls/17",
+    "dest-filename": "javafx-controls-17.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-graphics/17/javafx-graphics-17-linux.jar",
+    "sha512": "f482529e14504f2d730cf0a5a6d6403653bf6a69057d23a3e450027e1c5caf89913b0e3549191a6d125ffd02be71b1438685e1cde3f2f09f55955c9230dac470",
+    "dest": "offline-repository/org/openjfx/javafx-graphics/17",
+    "dest-filename": "javafx-graphics-17-linux.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-graphics/17/javafx-graphics-17.pom",
+    "sha512": "a3ef16f94f089b3a6f76ba90cfc9ae48a3d0a013a2ebbd60c278f45e7eeea69f8e3a896c591f44d2fc474fd2497df6333a13b6f74a98269b037adc073dc6fa85",
+    "dest": "offline-repository/org/openjfx/javafx-graphics/17",
+    "dest-filename": "javafx-graphics-17.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.1.0/javafx-plugin-0.1.0.jar",
+    "sha512": "bcc4d23867a305f9aebc85a2c35d98e291e700d53278e1bd07ee713de5c83d4c2de4cdf87c798065b3ddbe5eb12fb8c194ed901232e08013e39dbc553d6f69a0",
+    "dest": "offline-repository/org/openjfx/javafx-plugin/0.1.0",
+    "dest-filename": "javafx-plugin-0.1.0.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.1.0/javafx-plugin-0.1.0.module",
+    "sha512": "2dbb611bdff787e7a183c14f2bfdbd53f6e437c991eecab0cb4bfc7603fa4a3558aa0275b9a4108192e8ce600708c685b4d1dec59f91a915cfb1f89ae95251f3",
+    "dest": "offline-repository/org/openjfx/javafx-plugin/0.1.0",
+    "dest-filename": "javafx-plugin-0.1.0.module",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.1.0/javafx-plugin-0.1.0.pom",
+    "sha512": "8a46fe24c776b03b9eb3bdc28e24d7b47e6f389382a78974a7e9a285693a4bffe918b8ab601f97f1c311a882e23b6dd58479ae7e1715e29007253b93ba89e1ee",
+    "dest": "offline-repository/org/openjfx/javafx-plugin/0.1.0",
+    "dest-filename": "javafx-plugin-0.1.0.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-swing/17/javafx-swing-17-linux.jar",
+    "sha512": "c63b799f61048c033ef51e5294c57d8700a5b6bf5fb424f253f8d3c35d48325459bc34f2b7eabfa4db146f291ae68158877276fe5f3250c4e31d87ba4c27c066",
+    "dest": "offline-repository/org/openjfx/javafx-swing/17",
+    "dest-filename": "javafx-swing-17-linux.jar",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx-swing/17/javafx-swing-17.pom",
+    "sha512": "075e78bb1e211e8a2c63c1efbf47dcf93418effc50578c8b00ca7b76a1ea67d66772f95c613845f76442871a402ba3a8aa51731e80f77a0357c83c4936e06870",
+    "dest": "offline-repository/org/openjfx/javafx-swing/17",
+    "dest-filename": "javafx-swing-17.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/openjfx/javafx/17/javafx-17.pom",
+    "sha512": "8f5acb2b4ae6deda6c1efac6288b235a3a0204714a48f5549d91833afb9b9599767c2a5c22fe1f98d128b7ee06d1ae7d716c00b004c543a1190ebabd073cc83a",
+    "dest": "offline-repository/org/openjfx/javafx/17",
+    "dest-filename": "javafx-17.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/openjfx/javafxplugin/org.openjfx.javafxplugin.gradle.plugin/0.1.0/org.openjfx.javafxplugin.gradle.plugin-0.1.0.pom",
+    "sha512": "87a895341d4fcd85342389df72c457b11b345f4277f6c8336cb6c705e1620de857b3868df40d4f5cb8f8dd4064748032f1a66d7ecd8d60359dc84b8485705057",
+    "dest": "offline-repository/org/openjfx/javafxplugin/org.openjfx.javafxplugin.gradle.plugin/0.1.0",
+    "dest-filename": "org.openjfx.javafxplugin.gradle.plugin-0.1.0.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/sonatype/oss/oss-parent/7/oss-parent-7.pom",
+    "sha512": "63b0951f793ee9d25239ee44760e4d51de3b8503e438e567862306f2d175019d8617eb854bc4ee2374c39f385e0a1094c3c7097f899b2074e4acda14fe6030fb",
+    "dest": "offline-repository/org/sonatype/oss/oss-parent/7",
+    "dest-filename": "oss-parent-7.pom",
+    "only-arches": ["x86_64"]
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/sonatype/oss/oss-parent/9/oss-parent-9.pom",
+    "sha512": "1c4f18cacd3a9f99a168bd20845d12d94824e66b5caebe57c164b6ac3dc89803508f60e35c4d1da81d3f3866c89ed407826f0d108f1e624c2d8a258e01e1064a",
+    "dest": "offline-repository/org/sonatype/oss/oss-parent/9",
+    "dest-filename": "oss-parent-9.pom",
+    "only-arches": ["x86_64"]
+  }
+]

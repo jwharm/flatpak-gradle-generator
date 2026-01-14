@@ -108,6 +108,11 @@ class TestDependencyOutput {
         testDependencyOutput("filekit-core");
     }
 
+    @Test
+    void testJavafx() throws IOException {
+        testDependencyOutput("javafx");
+    }
+
     /**
      * Run the flatpakGradleGenerator task on a temporary Gradle build, and
      * compare the results with the expected output.

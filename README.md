@@ -89,9 +89,23 @@ block in the build files of the subprojects, to generate separate files for
 each project.
 
 ### Architecture-specific sources
-The plugin doesn't output Flatpak sources with an `only-arches` line to specify
-dependencies for specific architectures. See issue [#9](https://github.com/jwharm/flatpak-gradle-generator/issues/9)
-for more details. Patches are welcome.
+Flatpak expects an `"only-arches"` identifier for architecture-specific
+sources. Most Java libraries are architecture-independent, but some, like
+JavaFX, contain different artifacts depending on the runtime platform. As far
+as I know, it is not possible to automatically recognize these in Gradle.
+However, as a workaround, we can generate json files with the `"only-arches"`
+field with a fixed value (set as a plugin task parameter) to all entries in the
+generated sources list.
+
+To do this, run the `flatpakGradleGenerator` task on each platform with the
+`"onlyArches"` parameter on the task set to a correct value such as `"x86_64"`,
+to produce multiple files that explicitly only support one specific platform,
+and then add all of those files as sources in the Flatpak manifest. Of course,
+a majority of the dependencies will end up being the same in all generated
+files, but they will be downloaded only once by `flatpak-builder`.
+
+Check out the [`javafx` testcase](plugin/src/test/resources/javafx) for an
+example on how to use the `"onlyArches"` parameter.
 
 ### Compatibility
 The plugin has been tested with Gradle 8.13 and 9.2. The published jar is built

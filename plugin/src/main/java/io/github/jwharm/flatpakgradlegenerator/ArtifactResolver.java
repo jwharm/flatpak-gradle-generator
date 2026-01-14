@@ -77,7 +77,8 @@ final class ArtifactResolver {
      */
     Optional<byte[]> tryResolve(DependencyDetails dep,
                                 String repository,
-                                String filename) throws IOException, InterruptedException, NoSuchAlgorithmException {
+                                String filename,
+                                String onlyArches) throws IOException, InterruptedException, NoSuchAlgorithmException {
 
         // Build the url and try to download the file
         String url = repository + dep.path() + "/" + filename;
@@ -96,13 +97,13 @@ final class ArtifactResolver {
             }
 
             // Generate and append the json
-            generateJsonBlock(url, sha512, dest, destFilename);
+            generateJsonBlock(url, sha512, dest, destFilename, onlyArches);
 
             // For snapshot versions, generate a second json with "-SNAPSHOT" instead of the actual filename
             if (dep.isSnapshot()) {
                 String ext = destFilename.substring(destFilename.lastIndexOf(".") + 1);
                 destFilename = "%s-%s.%s".formatted(dep.name(), dep.version(), ext);
-                generateJsonBlock(url, sha512, dest, destFilename);
+                generateJsonBlock(url, sha512, dest, destFilename, onlyArches);
             }
         }
         // Return the file contents
@@ -131,7 +132,8 @@ final class ArtifactResolver {
                           String repository,
                           String fileUrl,
                           boolean checkName,
-                          String fileName)
+                          String fileName,
+                          String onlyArches)
             throws IOException, NoSuchAlgorithmException, InterruptedException {
 
         for (var artifact : artifacts) {
@@ -186,7 +188,8 @@ final class ArtifactResolver {
                             url,
                             sha512,
                             dep.path(),
-                            checkName ? fileUrl : file.getName()
+                            checkName ? fileUrl : file.getName(),
+                            onlyArches
                     );
                 }
             }
@@ -227,12 +230,15 @@ final class ArtifactResolver {
      * @param sha512       the hash
      * @param path         the path in the target directory
      * @param destFilename the filename
+     * @param onlyArches   the supported architectures (optional)
      */
     void generateJsonBlock(String url,
                            String sha512,
                            String path,
-                           String destFilename) {
-        output.put(path + "/" + destFilename, """
+                           String destFilename,
+                           String onlyArches) {
+        if (onlyArches == null || onlyArches.isBlank()) {
+            output.put(path + "/" + destFilename, """
                   {
                     "type": "file",
                     "url": "%s",
@@ -240,8 +246,21 @@ final class ArtifactResolver {
                     "dest": "%s",
                     "dest-filename": "%s"
                 """
-                .formatted(url, sha512, this.dest + path, destFilename)
-                + "  }");
+                    .formatted(url, sha512, this.dest + path, destFilename)
+                    + "  }");
+        } else {
+            output.put(path + "/" + destFilename, """
+                  {
+                    "type": "file",
+                    "url": "%s",
+                    "sha512": "%s",
+                    "dest": "%s",
+                    "dest-filename": "%s",
+                    "only-arches": ["%s"]
+                """
+                    .formatted(url, sha512, this.dest + path, destFilename, onlyArches)
+                    + "  }");
+        }
     }
 
     /**
