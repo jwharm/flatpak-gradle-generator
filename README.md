@@ -53,9 +53,15 @@ write a json file with information about the dependencies:
   ...etc...
 ```
 
-Add the JSON filename to the `sources` list in your Flatpak manifest, and 
-flatpak-builder will automatically download all dependencies into the offline 
-Maven repository folder.
+Add the JSON filename to the `sources` list in your Flatpak manifest:
+
+```yaml
+    sources:
+      - flatpak-sources.json
+```
+
+With this addition, flatpak-builder will automatically download all
+dependencies into the offline Maven repository folder.
 
 ### Include and exclude configurations
 Specific configurations can be included and excluded with the
