@@ -109,7 +109,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     public abstract Property<String> getOnlyArches();
 
     private ArtifactResolver resolver;
-    private PomHandler POMHandler;
     private ModuleMetadata moduleMetadata;
     private String onlyArches;
 
@@ -132,7 +131,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     @TaskAction
     public void apply() throws IOException, ExecutionException, InterruptedException {
         resolver = ArtifactResolver.getInstance(getDest());
-        POMHandler = PomHandler.getInstance(resolver);
         moduleMetadata = ModuleMetadata.getInstance();
         onlyArches = getOnlyArches().getOrElse("");
         dependencyProcessingExecutorService = Executors.newFixedThreadPool(120);
@@ -405,7 +403,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
             // Add parent POMs
             pom.ifPresent(bytes ->
-                    POMHandler.addParentPOMs(bytes, repository, onlyArches));
+                PomHandler.getInstance(resolver).addParentPOMs(bytes, repository, onlyArches));
 
             // Add marker artifact
             // Only for plugin jar files downloaded from the Gradle Plugin Portal
