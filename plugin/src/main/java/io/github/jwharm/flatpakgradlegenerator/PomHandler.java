@@ -35,16 +35,17 @@ final class PomHandler {
     private final ArtifactResolver resolver;
     private final XMLInputFactory xmlInputFactory;
     private final boolean recursive;
-    private HashMap<String, String> properties;
+    private final HashMap<String, String> properties;
 
-    private PomHandler(ArtifactResolver resolver, boolean recursive) {
+    private PomHandler(ArtifactResolver resolver, boolean recursive, HashMap<String, String> properties) {
         this.resolver = resolver;
         this.xmlInputFactory = XMLInputFactory.newInstance();
         this.recursive = recursive;
+        this.properties = properties;
     }
 
     static PomHandler getInstance(ArtifactResolver resolver) {
-        return new PomHandler(resolver, false);
+        return new PomHandler(resolver, false, new HashMap<>());
     }
 
     /**
@@ -71,7 +72,6 @@ final class PomHandler {
             StringBuilder versionId  = new StringBuilder();
 
             var xpath = new XPath();
-            properties = new HashMap<>();
 
             // Parse the XML
             while (reader.hasNext()) {
@@ -128,7 +128,7 @@ final class PomHandler {
 
                                 // Recursively add the parent pom of the parent pom
                                 if (name.equals("parent") || isBom)
-                                    parent.ifPresent(bytes -> new PomHandler(resolver, true)
+                                    parent.ifPresent(bytes ->new PomHandler(resolver, true, properties)
                                             .addParentPOMs(bytes, repository, onlyArches));
                             }
                             default -> {} // ignored
