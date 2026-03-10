@@ -36,6 +36,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.work.DisableCachingByDefault;
 
 import java.io.*;
 import java.net.URI;
@@ -51,6 +52,7 @@ import java.util.concurrent.Executors;
  * A task that creates a sources list file with all Gradle dependencies,
  * so they can be downloaded for an offline build.
  */
+@DisableCachingByDefault(because = "Task resolves project dependencies")
 public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
     private static final String DEFAULT_DOWNLOAD_DIRECTORY = "offline-repository";
