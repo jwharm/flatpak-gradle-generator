@@ -25,6 +25,8 @@ import java.nio.file.Path;
 
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,7 +110,7 @@ class TestDependencyOutput {
         testDependencyOutput("filekit-core");
     }
 
-    @Test
+    @Test @EnabledOnOs(OS.LINUX)
     void testJavafx() throws IOException {
         testDependencyOutput("javafx");
     }
@@ -147,9 +149,14 @@ class TestDependencyOutput {
             .withProjectDir(tempDir)
             .build();
 
-        // Verify the result
+        // Read the expected and actual result
         String expected = readString(variant, "expected-output.json");
         String actual = Files.readString(Path.of(outputFile));
+
+        // Sanitize line breaks
+        expected = expected.replace("\r\n", "\n");
+        actual = actual.replace("\r\n", "\n");
+
         assertEquals(expected, actual);
     }
 
