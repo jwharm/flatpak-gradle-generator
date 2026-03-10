@@ -115,6 +115,11 @@ class TestDependencyOutput {
         testDependencyOutput("javafx");
     }
 
+    @Test
+    void testAnthropic() throws IOException {
+        testDependencyOutput("anthropic");
+    }
+
     /**
      * Run the flatpakGradleGenerator task on a temporary Gradle build, and
      * compare the results with the expected output.

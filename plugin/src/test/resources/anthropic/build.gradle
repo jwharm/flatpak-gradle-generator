@@ -1,0 +1,16 @@
+plugins {
+    id 'io.github.jwharm.flatpak-gradle-generator'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.anthropic:anthropic-java:2.15.0'
+}
+
+tasks.flatpakGradleGenerator {
+    outputFile = file('%s')
+}
