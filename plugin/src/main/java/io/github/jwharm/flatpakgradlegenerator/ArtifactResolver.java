@@ -22,6 +22,9 @@ package io.github.jwharm.flatpakgradlegenerator;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvedArtifact;
 
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,9 +47,15 @@ import java.util.stream.Collectors;
  */
 final class ArtifactResolver {
 
+    private static final Logger LOGGER = Logging.getLogger(ArtifactResolver.class);
+    private static final int MAX_RETRIES = 3;
+    private static final long RETRY_DELAY_MS = 500;
+    private static final int CONNECT_TIMEOUT_MS = 30_000;
+    private static final int READ_TIMEOUT_MS = 60_000;
+
     private final String dest;
     private final ConcurrentHashMap<String, Boolean> checkedUrls;
-    private final ConcurrentHashMap<String, Optional<byte[]>> downloadedFiles;
+    private final ConcurrentHashMap<String, byte[]> downloadedFiles;
     private final ConcurrentHashMap<String, String> output;
     private final Semaphore checksumComputationSemaphore;
 
@@ -207,6 +216,10 @@ final class ArtifactResolver {
             var fileUrl = new URI(url).toURL();
             var httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
 
+            // Set connection timeouts
+            httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT_MS);
+            httpURLConnection.setReadTimeout(READ_TIMEOUT_MS);
+
             // Set the request to follow redirects (303 for example)
             httpURLConnection.setInstanceFollowRedirects(true);
 
@@ -275,27 +288,125 @@ final class ArtifactResolver {
 
     /**
      * Download the contents from the provided url into a byte array and cache
-     * the results.
+     * the results. Only successful downloads are cached; failures are retried
+     * on subsequent calls.
      *
      * @param url the url of the file to download
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
      */
     private Optional<byte[]> getFileContentsFrom(String url) {
-        return downloadedFiles.computeIfAbsent(url, this::getFileContents);
+        // Return cached successful download immediately
+        byte[] cached = downloadedFiles.get(url);
+        if (cached != null) {
+            return Optional.of(cached);
+        }
+
+        // Attempt download with retries
+        var contents = getFileContentsWithRetry(url);
+
+        // Only cache successful downloads — failures are not stored so they
+        // can be retried by another thread processing the same dependency
+        if (contents.isPresent()) {
+            downloadedFiles.putIfAbsent(url, contents.get());
+        }
+        return contents;
     }
 
     /**
-     * Download the contents from the provided url into a byte array
+     * Download the contents from the provided url into a byte array, retrying
+     * on transient failures.
      *
      * @param url the url of the file to download
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
      */
-    private Optional<byte[]> getFileContents(String url) {
+    private Optional<byte[]> getFileContentsWithRetry(String url) {
+        Exception lastException = null;
+        int attempt;
+        for (attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+            var result = getFileContents(url);
+            if (result.isPresent()) {
+                return result.contents();
+            }
+            lastException = result.exception();
+
+            // Only retry on transient errors (429 or 5xx) or network exceptions
+            if (!result.isRetryable()) {
+                break;
+            }
+
+            if (attempt < MAX_RETRIES) {
+                try {
+                    long delay = result.retryAfterMs() > 0
+                            ? result.retryAfterMs()
+                            : RETRY_DELAY_MS * (1L << (attempt - 1)); // exponential backoff
+                    Thread.sleep(delay);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    return Optional.empty();
+                }
+            }
+        }
+        if (lastException != null) {
+            LOGGER.warn("Failed to download {} after {} attempt(s): {}",
+                    url, Math.min(attempt, MAX_RETRIES), lastException.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Result of a download attempt that preserves the exception on failure.
+     */
+    private record DownloadResult(Optional<byte[]> contents, Exception exception,
+                                  int httpStatus, long retryAfterMs) {
+        DownloadResult(Optional<byte[]> contents, Exception exception) {
+            this(contents, exception, -1, 0);
+        }
+
+        boolean isPresent() { return contents.isPresent(); }
+        byte[] get() { return contents.get(); }
+
+        boolean isRetryable() {
+            // Network exceptions are retryable
+            if (httpStatus < 0) return exception != null;
+            // 429 and 5xx are retryable; 4xx (like 404) are not
+            return httpStatus == 429 || httpStatus >= 500;
+        }
+    }
+
+    /**
+     * Download the contents from the provided url into a byte array.
+     *
+     * @param url the url of the file to download
+     * @return a {@link DownloadResult} with the contents or the exception
+     */
+    private DownloadResult getFileContents(String url) {
         var outStream = new ByteArrayOutputStream();
         try {
-            try (var inStream = new BufferedInputStream(new URI(url).toURL().openStream())) {
+            var connection = (HttpURLConnection) new URI(url).toURL().openConnection();
+            connection.setConnectTimeout(CONNECT_TIMEOUT_MS);
+            connection.setReadTimeout(READ_TIMEOUT_MS);
+            connection.setInstanceFollowRedirects(true);
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                long retryAfter = 0;
+                if (responseCode == 429) {
+                    String retryHeader = connection.getHeaderField("Retry-After");
+                    if (retryHeader != null) {
+                        try {
+                            retryAfter = Long.parseLong(retryHeader) * 1000L;
+                        } catch (NumberFormatException ignored) {}
+                    }
+                }
+                connection.disconnect();
+                return new DownloadResult(Optional.empty(),
+                        new IOException("HTTP " + responseCode),
+                        responseCode, retryAfter);
+            }
+
+            try (var inStream = new BufferedInputStream(connection.getInputStream())) {
                 byte[] dataBuffer = new byte[8192];
                 int bytesRead;
                 while ((bytesRead = inStream.read(dataBuffer, 0, 8192)) != -1) {
@@ -303,9 +414,9 @@ final class ArtifactResolver {
                 }
             }
         } catch (Exception e) {
-            return Optional.empty();
+            return new DownloadResult(Optional.empty(), e);
         }
-        return Optional.of(outStream.toByteArray());
+        return new DownloadResult(Optional.of(outStream.toByteArray()), null);
     }
 
     /**
