@@ -341,6 +341,8 @@ final class ArtifactResolver {
                     long delay = result.retryAfterMs() > 0
                             ? result.retryAfterMs()
                             : RETRY_DELAY_MS * (1L << (attempt - 1)); // exponential backoff
+                    LOGGER.warn("Retrying {} in {} ms (attempt {}/{})",
+                            url, delay, attempt, MAX_RETRIES);
                     Thread.sleep(delay);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
