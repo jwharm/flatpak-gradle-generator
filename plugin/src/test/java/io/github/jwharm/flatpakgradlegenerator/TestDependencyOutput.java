@@ -121,12 +121,34 @@ class TestDependencyOutput {
     }
 
     /**
+     * Test a build where a plugin depends on a Kotlin library with a version
+     * that Gradle overrides with its included version
+     */
+    @Test
+    void testGradleBuildconfigPlugin() throws IOException {
+        testDependencyOutput("gradle-buildconfig-plugin", "settings.gradle.kts", "build.gradle.kts");
+    }
+
+    /**
      * Run the flatpakGradleGenerator task on a temporary Gradle build, and
-     * compare the results with the expected output.
+     * compare the results with the expected output. Expects "settings.gradle"
+     * and "build.gradle" files.
      *
      * @param variant the resource name
      */
     private void testDependencyOutput(String variant) throws IOException {
+        testDependencyOutput(variant, "settings.gradle", "build.gradle");
+    }
+
+    /**
+     * Run the flatpakGradleGenerator task on a temporary Gradle build, and
+     * compare the results with the expected output.
+     *
+     * @param variant      the resource name
+     * @param settingsfile either "settings.gradle" or "settings.gradle.kts"
+     * @param buildfile    either "build.gradle" or "build.gradle.kts"
+     */
+    private void testDependencyOutput(String variant, String settingsfile, String buildfile) throws IOException {
         // Temporary build directory
         File tempDir = createTempDir(variant);
 
@@ -138,13 +160,21 @@ class TestDependencyOutput {
 
         // Write settings.gradle and build.gradle
         writeString(
-                new File(tempDir, "settings.gradle"),
-                readString(variant, "settings.gradle")
+                new File(tempDir, settingsfile),
+                readString(variant, settingsfile)
         );
         writeString(
-                new File(tempDir, "build.gradle"),
-                readString(variant, "build.gradle").formatted(outputFile)
+                new File(tempDir, buildfile),
+                readString(variant, buildfile).formatted(outputFile)
         );
+
+        // Log the dependency tree & build environment
+        GradleRunner.create()
+                .forwardOutput()
+                .withPluginClasspath()
+                .withArguments("dependencies", "buildEnvironment")
+                .withProjectDir(tempDir)
+                .build();
 
         // Run the build
         GradleRunner.create()

@@ -99,6 +99,20 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.module",
+    "sha512": "000de1855ba1004ef1dcc59e0c25cd178900cdca98c6d25635d28a23cfd92f1ffad0985a901a49c25580a8cde79bce996ad29293dff6dbf763431646a5e09fcb",
+    "dest": "offline-repository/com/fasterxml/jackson/core/jackson-core/2.17.2",
+    "dest-filename": "jackson-core-2.17.2.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.pom",
+    "sha512": "24964d840f108ad0a1121fe015b02b9ee99ed0a67bbbd00d4c9d4c59458615ed904407938bf755e124c3f5cc5b931b1f1f841b9fe61d1e897262fbc2ec4e6ff7",
+    "dest": "offline-repository/com/fasterxml/jackson/core/jackson-core/2.17.2",
+    "dest-filename": "jackson-core-2.17.2.pom"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.2/jackson-core-2.18.2.jar",
     "sha512": "2223f6d8235c6831b488dd2723a4569e4dab6c2371f0e39f867b57a3a443e093d1fce05dc070a350fa306d7e952888cb09c7c816254147b01083d122964fc3a5",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-core/2.18.2",
@@ -117,6 +131,20 @@
     "sha512": "4f72d09f9f6adfd344914f6bc535468e4e53d3789f72e728df886691b5626707062de6cdc056d6034cca56e757ddb4b78f6dbfa94c003d7f3476c98907ae9575",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-core/2.18.2",
     "dest-filename": "jackson-core-2.18.2.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.module",
+    "sha512": "2777a3a6cd98c81926a387ba37a4249306c8eeb28df96b55edc83743d49305d90b1e3564ba78f2e2cd562dd8bae0998fdb48674d6c2d8c00317f8906c92a2619",
+    "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.17.2",
+    "dest-filename": "jackson-databind-2.17.2.module"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.pom",
+    "sha512": "98b162de20d4b648e778b5b62f4778ec94f513bb093b86a21a75344913b555b33b46dc0b01c688569b1e17b37482fdb4baac04286b0aaf42344716a931fe200e",
+    "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.17.2",
+    "dest-filename": "jackson-databind-2.17.2.pom"
   },
   {
     "type": "file",
@@ -348,6 +376,13 @@
     "sha512": "1ad3c1ecf773a2a4bba3a4e49a0b4cb223d734d92f02711a1cd2c23d49e657d31f24e325da3a8ad0363a58461213fec7481a5508ea02977aa719377941a59b39",
     "dest": "offline-repository/com/fasterxml/jackson/datatype/jackson-datatype-pcollections/2.18.2",
     "dest-filename": "jackson-datatype-pcollections-2.18.2.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-base/2.17.2/jackson-base-2.17.2.pom",
+    "sha512": "29bba2ed365187e8c6d1ff22a116ecaf27d5d5efeea53b31359924d16470b33651fce80916b90ff79be2980fc074834417c1475a222081b90890a70f542378d9",
+    "dest": "offline-repository/com/fasterxml/jackson/jackson-base/2.17.2",
+    "dest-filename": "jackson-base-2.17.2.pom"
   },
   {
     "type": "file",
@@ -1051,6 +1086,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.21/kotlin-stdlib-jdk8-1.8.21.pom",
+    "sha512": "24d9dc63355bee04f6f69d68c27ff5aa1a0b6864cb9280d32824d19092e160750880d0405a156d31c38427ff5cd04265b30d646dfbfae503691f04eb9d9a0358",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.21",
+    "dest-filename": "kotlin-stdlib-jdk8-1.8.21.pom"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.10/kotlin-stdlib-jdk8-1.9.10.jar",
     "sha512": "b027fc4a0be8e69f41a86ae775ce350ef0084eb4652e50a0640dbcc600db76c3fc2983e17c96b6071b5698cea636e1b2cb015e84a6c0efe95e6db668036ba3cc",
     "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.9.10",
@@ -1076,6 +1118,13 @@
     "sha512": "886a45c8c6c181901121734a29d767b919c06528e1e6790a525539b6b733dde11d5e4e74643104475e6b7e4cfcefedc0f4b22d1ea2efc81f50eaaebafcee8d16",
     "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.0",
     "dest-filename": "kotlin-stdlib-1.8.0.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.8.10/kotlin-stdlib-1.8.10.pom",
+    "sha512": "a556de13b5d151084b9fcad9ca6290c225a77b4ed0c34f8577e165ab48258232287b042b934aeabcf00fd847a224451ba128433365a9a3645f7b3b570731ffce",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.10",
+    "dest-filename": "kotlin-stdlib-1.8.10.pom"
   },
   {
     "type": "file",
@@ -1114,6 +1163,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.pom",
+    "sha512": "22d22770b09854b13f601c39bdb4e8329c8a47f4399a567ab047c8ecf50e638949cda01913f01896cf6d76bb479fa4d7f8c6046274290ce8b1d014e580338768",
+    "dest": "offline-repository/org/slf4j/slf4j-api/1.7.36",
+    "dest-filename": "slf4j-api-1.7.36.pom"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar",
     "sha512": "91c2e7b30f24649bb3edfc7f138c2b7dc715ad36963af159defb80a71205eb7e4c5bcc80d779ef993b567a56724064f190c93985f32665a8df85198a03a2f1bb",
     "dest": "offline-repository/org/slf4j/slf4j-api/2.0.16",
@@ -1132,6 +1188,13 @@
     "sha512": "6890b88aec9464394058dbabcf3e2411bb33b995d1e3a46240970f56120633ce432f3626cab1c280c967a895495816346461e64262b299fb6a6af34f9f610add",
     "dest": "offline-repository/org/slf4j/slf4j-bom/2.0.16",
     "dest-filename": "slf4j-bom-2.0.16.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-parent/1.7.36/slf4j-parent-1.7.36.pom",
+    "sha512": "b83c1978e4f1b1edccf05276455f9d5c3aadda1c07736113cba4e484e4f01bcc306b52431aa9bb814ad669440652b206a7235c86dfc21c35c43cb7434f0a0c8f",
+    "dest": "offline-repository/org/slf4j/slf4j-parent/1.7.36",
+    "dest-filename": "slf4j-parent-1.7.36.pom"
   },
   {
     "type": "file",

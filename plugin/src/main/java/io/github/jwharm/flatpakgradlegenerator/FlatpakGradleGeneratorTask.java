@@ -23,11 +23,15 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Named;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvedArtifact;
+import org.gradle.api.artifacts.VersionConstraint;
+import org.gradle.api.artifacts.component.ModuleComponentSelector;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.result.ResolvedDependencyResult;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.internal.GradleInternal;
+import org.gradle.api.internal.artifacts.DefaultModuleVersionIdentifier;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.provider.Property;
@@ -297,12 +301,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
                         .map(dependency ->(Callable<Void>)( () -> {
                             try{
                                 processDependency(repositories, configuration, resolvedArtifactsForConfiguration, dependency);
-
-                                LOGGER.info(
-                                        "Dependency {} processed",
-                                        dependency.getSelected().getId().getDisplayName()
-                                );
-
                                 return null;
                             } catch (IOException | InterruptedException e) {
                                 throw new RuntimeException("Error while processing dependency", e);
@@ -334,12 +332,30 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
         if (id.startsWith("project "))
             return;
 
-        // Build simple helper object with the Maven coordinates of the artifact
         var dep = DependencyDetails.of(id);
+        processDependencyDetails(repositories, resolvedArtifactsForConfiguration, dependency.getSelected().getModuleVersion(), dep, variant);
+        LOGGER.info("Dependency {} in {} processed", id, configuration.getName());
 
-        // Loop through the repositories
+        // For Gradle-bundled libraries (like Kotlin), emit both the requested
+        // version and Gradle's embedded version (via the version constraint)
+        if (dependency.getRequested() instanceof ModuleComponentSelector selector) {
+            VersionConstraint constraint = selector.getVersionConstraint();
+            String required = constraint.getRequiredVersion();
+            if (!required.isEmpty() && !required.equals(dep.version())) {
+                var requiredDep = DependencyDetails.of(selector.getGroup() + ":" + selector.getModule() + ":" + required);
+                var requiredVersion = DefaultModuleVersionIdentifier.newId(selector.getGroup(), selector.getModule(), required);
+                processDependencyDetails(repositories, resolvedArtifactsForConfiguration, requiredVersion, requiredDep, variant);
+                LOGGER.info("Dependency version constraint {} in {} processed", requiredVersion, configuration.getName());
+            }
+        }
+    }
+
+    private void processDependencyDetails(List<String> repositories,
+                                          Set<ResolvedArtifact> artifacts,
+                                          ModuleVersionIdentifier version,
+                                          DependencyDetails dep,
+                                          String variant) throws InterruptedException, IOException, NoSuchAlgorithmException {
         for (var repository : repositories) {
-
             // Check for a Gradle module artifact
             var module = resolver.tryResolve(dep, repository, dep.filename("module"), onlyArches);
 
@@ -358,46 +374,19 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
                     if (files != null) {
                         for (var file : files) {
-                            resolver.tryResolveCached(
-                                    resolvedArtifactsForConfiguration,
-                                    dependency.getSelected().getModuleVersion(),
-                                    dep,
-                                    repository,
-                                    file.url,
-                                    true,
-                                    file.name,
-                                    onlyArches
-                            );
+                            resolver.tryResolveCached(artifacts, version, dep, repository, file.url, true, file.name, onlyArches);
                         }
                     }
                 } catch (NoSuchElementException noJar) {
                     // No files declared for this variant in the Gradle module
                     // Get jar artifact from local Gradle cache
-                    resolver.tryResolveCached(
-                            resolvedArtifactsForConfiguration,
-                            dependency.getSelected().getModuleVersion(),
-                            dep,
-                            repository,
-                            dep.filename("jar"),
-                            false,
-                            null,
-                            onlyArches
-                    );
+                    resolver.tryResolveCached(artifacts, version, dep, repository, dep.filename("jar"), false, null, onlyArches);
                 }
             }
 
             // Get jar artifact from local Gradle cache
             else {
-                resolver.tryResolveCached(
-                        resolvedArtifactsForConfiguration,
-                        dependency.getSelected().getModuleVersion(),
-                        dep,
-                        repository,
-                        dep.filename("jar"),
-                        false,
-                        null,
-                        onlyArches
-                );
+                resolver.tryResolveCached(artifacts, version, dep, repository, dep.filename("jar"), false, null, onlyArches);
             }
 
             // Download POM artifact
@@ -417,12 +406,6 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
             if (module.isPresent() || pom.isPresent())
                 break;
         }
-
-        LOGGER.info(
-                "Dependency {} in {} processed",
-                id,
-                configuration.getName()
-        );
     }
 
     /**

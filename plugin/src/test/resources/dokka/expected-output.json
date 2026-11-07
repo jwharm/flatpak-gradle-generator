@@ -64,6 +64,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.module",
+    "sha512": "6b86363674a5483cba92184f26e7ace1013b72ac72121e672ba4bbe986d7343cc3c03c126ea49d2ba46c2cb450d8b9fd2afdba52c55aecdf8a453aaac0490765",
+    "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.12.7",
+    "dest-filename": "jackson-databind-2.12.7.module"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.12.7/jackson-databind-2.12.7.pom",
     "sha512": "5b03831feb2afe7d41f6e2ee2b6026cee3171b5309ba1ac999118ac5b4fcf200686a39afbeaa7f1eb2bd75a3dac3fe6e6542467cffdbbd9423211be2cd8fc8dd",
     "dest": "offline-repository/com/fasterxml/jackson/core/jackson-databind/2.12.7",
@@ -736,6 +743,13 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/1.4.21/kotlin-reflect-1.4.21.pom",
+    "sha512": "49ee252c8b5cd6efae4a8463e09e1e5e36f8e03c86508a96ed20fc07ae678fdac3d03b92f37162371ff46f0f7d3aabe8904c6bb1e0c2c5a5c77f0d82079404ef",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-reflect/1.4.21",
+    "dest-filename": "kotlin-reflect-1.4.21.pom"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/1.8.10/kotlin-reflect-1.8.10.jar",
     "sha512": "43efd3dca21f2de51b3a358c4b297571ac7aa709e9d9036f68e35c1d204afe9e185716b45df412424029ad82de40f87fe3c51895791b469f4be82110cece5a14",
     "dest": "offline-repository/org/jetbrains/kotlin/kotlin-reflect/1.8.10",
@@ -747,6 +761,27 @@
     "sha512": "6d82e00c693ccb59a81d03b7ffeb330583eaaf4cf60f4196f7e9a1ff7b0cfcbc43d5fd21211f38e058c09e62e9eaa3d2f3ca287ff9308e461912f06b070736f6",
     "dest": "offline-repository/org/jetbrains/kotlin/kotlin-reflect/1.8.10",
     "dest-filename": "kotlin-reflect-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.31/kotlin-stdlib-common-1.5.31.pom",
+    "sha512": "b2dfc3a78f22ba30c0cc63fa44f680d517d96e5ca41b5bde9382ae75eac9dfbb1901ceb6173f4c410e39798b4826da796a94bf8e5df761e900d343d3bafbfa9b",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.31",
+    "dest-filename": "kotlin-stdlib-common-1.5.31.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.6.10/kotlin-stdlib-common-1.6.10.pom",
+    "sha512": "6b1b09d868b72e7de217049a8c6fdea27c65f1c1babf0eeeb55eb96986c88790462b1d1453a8817c9c69f76bdb628e427ec92419feecf7273c5b413b3420aac9",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.6.10",
+    "dest-filename": "kotlin-stdlib-common-1.6.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/1.6.21/kotlin-stdlib-common-1.6.21.pom",
+    "sha512": "c3b1808af5241b2434cc20b017d9fc4db16032ebe0686efcd3684ba646d0f28a06198df3bb67e7d2fdba7fa2883a50bda15f18e1d2c5eb0b09ed2bd38407c0ad",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.6.21",
+    "dest-filename": "kotlin-stdlib-common-1.6.21.pom"
   },
   {
     "type": "file",
@@ -778,6 +813,20 @@
   },
   {
     "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.6.10/kotlin-stdlib-jdk8-1.6.10.pom",
+    "sha512": "89911906d2a1ebd746702b2a8ebb711c6522210d4cc7ca2c37d159ca3ee93481efabb918030a733de03c4c8863f60afdf76b9f5d036b5e8c2752c98967a58ab3",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.6.10",
+    "dest-filename": "kotlin-stdlib-jdk8-1.6.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.6.21/kotlin-stdlib-jdk8-1.6.21.pom",
+    "sha512": "bcb1a110d1949e6e4755eb36dd7aec09dd8c5177c952886218e17f7cb0556895dca87ac4802dd4a7457f6e8771f22e900f84762b910eb41b2862fda3b6cd723b",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.6.21",
+    "dest-filename": "kotlin-stdlib-jdk8-1.6.21.pom"
+  },
+  {
+    "type": "file",
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10/kotlin-stdlib-jdk8-1.8.10.jar",
     "sha512": "237c0c80bc4a9bb11683fd0048d118f6af58c083bac467e7e9578ae97b611ff2d7658974a17102466002c3672b06866dd65f18982223b70fa1700c5f60dc8f15",
     "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10",
@@ -789,6 +838,13 @@
     "sha512": "e71e17cf87425bfb7280f46d0d019c5503c4a743f21c228ce5c25d26177f450717d4a3324fd86b56da6ca74913193006a862653b2bcd4bef1b45f931949f8dc6",
     "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.10",
     "dest-filename": "kotlin-stdlib-jdk8-1.8.10.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.5.31/kotlin-stdlib-1.5.31.pom",
+    "sha512": "4affdcac884a3d90105a7bb8a62caa2a239c2bf5bf00a7d293f8e67cffef309b369aa01ee99adb97139c6fc9c4447638fc6956d25ac0a6e78259809f1ae3cfbd",
+    "dest": "offline-repository/org/jetbrains/kotlin/kotlin-stdlib/1.5.31",
+    "dest-filename": "kotlin-stdlib-1.5.31.pom"
   },
   {
     "type": "file",
