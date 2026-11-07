@@ -1,5 +1,5 @@
 # flatpak-gradle-generator
-A Gradle plugin to generate a sources file for offline Flatpak builds.
+A Gradle plugin to generate a dependency manifest for offline Flatpak builds.
 
 The plugin will output all direct and transitive dependencies for all build 
 configurations (including plugin dependencies) in a JSON file. The JSON file 
@@ -11,8 +11,7 @@ Example `gradle.build`:
 
 ```groovy
 plugins {
-  id 'application'
-  id 'io.github.jwharm.flatpak-gradle-generator' version '1.8.0'
+  id 'io.github.jwharm.flatpak-gradle-generator' version '1.9.0'
 }
 
 repositories {
@@ -22,7 +21,7 @@ repositories {
 
 dependencies {
   // a random dependency for this example
-  implementation 'io.github.jwharm.javagi:adw:0.7.1'
+  implementation 'commons-io:commons-io:2.14.0'
 }
 
 tasks.flatpakGradleGenerator {
@@ -38,17 +37,17 @@ write a json file with information about the dependencies:
 [
   {
     "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.module",
-    "sha512": "d265d970864b3fb4c97b0fe87030ba76eafb252531d9da37cd7a51296b32e95bb70154f0075f6a0d0bc1e41fbd7f23280bdc6b317a1d5808c5a0c4b3a5ac70b5",
-    "dest": "./offline-repository/io/github/jwharm/javagi/adw/0.7.1",
-    "dest-filename": "adw-0.7.1.module"
+    "url": "https://repo.maven.apache.org/maven2/commons-io/commons-io/2.14.0/commons-io-2.14.0.jar",
+    "sha512": "b98a5739f029d535207d50854a63c581334864e6021ec81ef960c23971d0b4fffaebbaee4830025a307d65b586017fe0ebc5901a2e5271f54fba401bde7f5e8b",
+    "dest": "offline-repository/commons-io/commons-io/2.14.0",
+    "dest-filename": "commons-io-2.14.0.jar"
   },
   {
     "type": "file",
-    "url": "https://repo.maven.apache.org/maven2/io/github/jwharm/javagi/adw/0.7.1/adw-0.7.1.jar",
-    "sha512": "356a1c8f8ae89d7212bdfccd9afcd607ae86301485dd850d11eb378cbfe6f05f00cee27be368f907b0b941a065564f7ca3fb7ee18b21f4aaf8bec4d4176ba65a",
-    "dest": "./offline-repository/io/github/jwharm/javagi/adw/0.7.1",
-    "dest-filename": "adw-0.7.1.jar"
+    "url": "https://repo.maven.apache.org/maven2/commons-io/commons-io/2.14.0/commons-io-2.14.0.pom",
+    "sha512": "bf0b9feb8f7a64136a1d86967d86faf53e40b8d44186b6f09694f0dd06c5b2443c8c9b3b0a03f661b946c12bac82e70b0958497a96d5a4352ebe7bd55b969e77",
+    "dest": "offline-repository/commons-io/commons-io/2.14.0",
+    "dest-filename": "commons-io-2.14.0.pom"
   },
   ...etc...
 ```
@@ -81,7 +80,8 @@ tasks.flatpakGradleGenerator {
 ### Configuration cache
 The `flatpakGradleGenerator` task is incompatible with the Gradle Configuration
 Cache, so it needs to be run with the `--no-configuration-cache` command-line
-argument. 
+argument for now. (I'm planning to fix this, but it requires some larger
+changes in the plugin.)
 
 You can still use the Configuration Cache for other tasks in your project.
 
@@ -114,5 +114,5 @@ Check out the [`javafx` testcase](plugin/src/test/resources/javafx) for an
 example on how to use the `"onlyArches"` parameter.
 
 ### Compatibility
-The plugin has been tested with Gradle 9.5.1 but it should work with any recent
-version of Gradle. The published jar is built with Java 17.
+The plugin has been tested with Gradle 8 and 9. The published jar is built
+with Java 17.
