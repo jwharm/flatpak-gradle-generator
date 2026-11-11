@@ -150,6 +150,9 @@ class TestDependencyOutput {
     /**
      * Test a build where a plugin depends on a Kotlin library with a version
      * that Gradle overrides with its included version.
+     * <p>
+     * When this test fails, your Gradle version is probably different from the
+     * one that was used to generated the expected JSON output.
      */
     @Test
     void testGradleBuildconfigPlugin() throws IOException {
