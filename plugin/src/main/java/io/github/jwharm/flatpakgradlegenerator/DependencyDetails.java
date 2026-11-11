@@ -72,10 +72,6 @@ record DependencyDetails(
      * @return the filename to use in the url
      */
     String filename(String ext) {
-        return "%s-%s.%s".formatted(
-                name,
-                version.replace("SNAPSHOT", snapshotDetail),
-                ext
-        );
+        return "%s-%s.%s".formatted(name, version.replace("SNAPSHOT", snapshotDetail), ext);
     }
 }

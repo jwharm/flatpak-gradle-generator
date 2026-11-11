@@ -10,12 +10,11 @@ repositories {
 dependencies {
     implementation 'commons-io:commons-io:2.14.0'
 
-    // should be excluded by excludeProjectConfigurations
+    // should be excluded, because configuration is not in includeConfigurations
     testImplementation('org.jetbrains.kotlin:kotlin-test')
 }
 
 tasks.flatpakGradleGenerator {
     outputFile = file('%s')
-
     includeConfigurations = ['compileClasspath']
 }

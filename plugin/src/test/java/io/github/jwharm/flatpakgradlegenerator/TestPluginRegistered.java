@@ -35,7 +35,7 @@ class TestPluginRegistered {
         Project project = ProjectBuilder.builder().build();
         project.getPlugins().apply("io.github.jwharm.flatpak-gradle-generator");
 
-        // Verify the result
+        // Verify that the "flatpakGradleGenerator" task exists
         assertNotNull(project.getTasks().findByName("flatpakGradleGenerator"));
     }
 }

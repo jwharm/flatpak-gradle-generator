@@ -49,19 +49,18 @@ final class PomHandler {
     }
 
     /**
-     * A POM can refer to a parent POM, which must be available in the local repository.
-     * This method will parse the parent groupId:artifactId:version from the POM,
-     * download it from the repository, and generate and append the json, recursively.
+     * A POM can refer to a parent POM, which must be available in the local
+     * repository. This method will parse the parent groupId:artifactId:version
+     * from the POM, download it from the repository, and generate and append
+     * the JSON, recursively. It also downloads BOM dependencies.
      *
      * @param contents   the contents of the POM file
      * @param repository the repository from which this POM was downloaded
-     * @param onlyArches the supported architectures (optional)
      */
-    void addParentPOMs(byte[] contents, String repository, String onlyArches) {
+    void addParentPOMs(byte[] contents, String repository) {
         try {
             // Construct XML parser
-            var reader = xmlInputFactory.createXMLEventReader(
-                    new ByteArrayInputStream(contents));
+            var reader = xmlInputFactory.createXMLEventReader(new ByteArrayInputStream(contents));
 
             // Buffer for characters inside elements
             StringBuilder characters = new StringBuilder();
@@ -113,23 +112,22 @@ final class PomHandler {
                                 String id = "%s:%s:%s".formatted(groupId, artifactId, versionId);
                                 var dep = DependencyDetails.of(id);
 
-                                var isBom = name.equals("dependency")
-                                        && artifactId.toString().endsWith("-bom");
+                                var isBom = name.equals("dependency") && artifactId.toString().endsWith("-bom");
 
-                                // Download and add the parent pom to the list
+                                // Download and add the parent pom or -bom dependency to the list
                                 Optional<byte[]> parent = Optional.empty();
                                 if (name.equals("parent") || isBom || !recursive)
-                                    parent = resolver.tryResolve(dep, repository, dep.filename("pom"), onlyArches);
+                                    parent = resolver.tryResolve(dep, repository, dep.filename("pom"));
 
                                 // Reset string builders
                                 groupId    = new StringBuilder();
                                 artifactId = new StringBuilder();
                                 versionId  = new StringBuilder();
 
-                                // Recursively add the parent pom of the parent pom
+                                // Recursively add the parent pom of the parent pom (or -bom dependency)
                                 if (name.equals("parent") || isBom)
-                                    parent.ifPresent(bytes ->new PomHandler(resolver, true, properties)
-                                            .addParentPOMs(bytes, repository, onlyArches));
+                                    parent.ifPresent(bytes ->
+                                        new PomHandler(resolver, true, properties).addParentPOMs(bytes, repository));
                             }
                             default -> {} // ignored
                         }

@@ -20,30 +20,22 @@
 package io.github.jwharm.flatpakgradlegenerator;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.Named;
-import org.gradle.api.Project;
-import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ModuleVersionIdentifier;
-import org.gradle.api.artifacts.ResolvedArtifact;
-import org.gradle.api.artifacts.VersionConstraint;
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.component.ModuleComponentSelector;
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.artifacts.result.ResolutionResult;
+import org.gradle.api.artifacts.result.ResolvedArtifactResult;
 import org.gradle.api.artifacts.result.ResolvedDependencyResult;
 import org.gradle.api.file.RegularFileProperty;
-import org.gradle.api.internal.GradleInternal;
-import org.gradle.api.internal.artifacts.DefaultModuleVersionIdentifier;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.SetProperty;
-import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.*;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.TaskAction;
-import org.gradle.work.DisableCachingByDefault;
 
-import java.io.*;
-import java.net.URI;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -51,21 +43,20 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-/**
- * A task that creates a sources list file with all Gradle dependencies,
- * so they can be downloaded for an offline build.
- */
-@DisableCachingByDefault(because = "Task resolves project dependencies")
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
+
+@CacheableTask
 public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
-    private static final String DEFAULT_DOWNLOAD_DIRECTORY = "offline-repository";
     private static final String GRADLE_PLUGIN_PORTAL = "https://plugins.gradle.org/m2/";
-
+    private static final int    MAX_THREADS = 120;
     private static final Logger LOGGER = Logging.getLogger(FlatpakGradleGeneratorTask.class);
 
     /**
-     * Specifies where to write the resulting json file.
+     * Specifies where to write the resulting JSON file.
      *
      * @return the output file
      */
@@ -73,7 +64,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     public abstract RegularFileProperty getOutputFile();
 
     /**
-     * Specifies the value for the {@code "dest"} attribute in the json file.
+     * Specifies the value for the {@code "dest"} attribute in the JSON file.
      * <p>
      * Defaults to {@code "offline-repository"}.
      *
@@ -84,7 +75,7 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     public abstract Property<String> getDownloadDirectory();
 
     /**
-     * The names of Gradle's {@link org.gradle.api.artifacts.Configuration} for which dependencies should be collected.
+     * The configurations for which dependencies should be collected.
      * <p>
      * Defaults to all project's configurations.
      *
@@ -95,9 +86,11 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     public abstract SetProperty<String> getIncludeConfigurations();
 
     /**
-     * The names of Gradle's {@link org.gradle.api.artifacts.Configuration} to exclude from dependency collection.
+     * The configurations to exclude from dependency collection.
      * <p>
      * Overrides {@link #getIncludeConfigurations()}.
+     * <p>
+     * Defaults to an empty list.
      *
      * @return the excluded configurations
      */
@@ -108,23 +101,44 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     /**
      * The supported architectures.
      *
-     * @return the "only-arches" value that will be added to the generated json entries.
+     * @return the "only-arches" value that will be added to the generated JSON entries.
      */
     @Input
     @Optional
     public abstract Property<String> getOnlyArches();
 
-    private ArtifactResolver resolver;
-    private ModuleMetadata moduleMetadata;
-    private String onlyArches;
-
-    private ExecutorService dependencyProcessingExecutorService;
+    /**
+     * The Maven repository URLs of the project.
+     */
+    @Input
+    public abstract SetProperty<String> getRepositories();
 
     /**
-     * Create a new instance of the task.
+     * The buildscript Maven repositories.
      */
-    public FlatpakGradleGeneratorTask() {
-        getIncludeConfigurations().convention((Iterable<? extends String>) null);
+    @Input
+    public abstract SetProperty<String> getPluginRepositories();
+
+    @Internal
+    public abstract MapProperty<String, ResolutionResult> getResolutionResults();
+
+    @Internal
+    public abstract MapProperty<String, List<ResolvedArtifactResult>> getResolvedArtifacts();
+
+    @Internal
+    public abstract MapProperty<String, ResolutionResult> getBuildscriptResolutionResults();
+
+    @Internal
+    public abstract MapProperty<String, List<ResolvedArtifactResult>> getBuildscriptResolvedArtifacts();
+
+    /**
+     * Per-execution state. We avoid using private fields, because they would
+     * be serialized into the configuration cache.
+     */
+    private record Context(
+            ArtifactResolver resolver,
+            ModuleMetadata moduleMetadata,
+            ExecutorService executor) {
     }
 
     /**
@@ -132,198 +146,93 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
      *
      * @throws ExecutionException   error during execution
      * @throws InterruptedException interrupted during execution
-     * @throws IOException          error writing json list to output file
+     * @throws IOException          error writing JSON list to output file
      */
     @TaskAction
     public void apply() throws IOException, ExecutionException, InterruptedException {
-        resolver = ArtifactResolver.getInstance(getDest());
-        moduleMetadata = ModuleMetadata.getInstance();
-        onlyArches = getOnlyArches().getOrElse("");
-        dependencyProcessingExecutorService = Executors.newFixedThreadPool(120);
-        Project project = getProject();
+        ModuleMetadata moduleMetadata = new ModuleMetadata();
+        String dest = Utils.addSlash(getDownloadDirectory().get());
+        ArtifactResolver resolver = new ArtifactResolver(dest, getOnlyArches().get());
 
-        // Buildscript classpath dependencies
-        var buildScriptRepositories = filterRepositories(listPluginRepositories(project));
-        LOGGER.info(
-                "Resolving buildscript dependencies using repositories: {}",
-                buildScriptRepositories
-        );
-        generateSourcesListForConfigurations(buildScriptRepositories, project.getBuildscript().getConfigurations());
-        LOGGER.info("Buildscript dependencies resolved successfully");
+        List<String> pluginRepositories = filterRepositories(getPluginRepositories().get());
+        List<String> repositories = filterRepositories(Utils.concat(getRepositories().get(), pluginRepositories));
 
-        // List the declared repositories; include the buildscript classpath
-        // repositories too
-        var repositories = listRepositories(project);
-        repositories.addAll(buildScriptRepositories);
-        repositories = filterRepositories(repositories);
+        ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
+        try {
+            Context ctx = new Context(resolver, moduleMetadata, executor);
 
-        // Loop through configurations and generate json blocks for the
-        // resolved dependencies
-        LOGGER.info(
-                "Resolving project dependencies using repositories: {}",
-                repositories
-        );
-        generateSourcesListForConfigurations(repositories, getProjectConfigurationsToProcess());
-        LOGGER.info("Project dependencies resolved successfully");
+            LOGGER.info("Resolving buildscript dependencies using repositories: {}", pluginRepositories);
+            generateSourcesList(ctx,
+                    pluginRepositories,
+                    getBuildscriptResolutionResults().get(),
+                    getBuildscriptResolvedArtifacts().get(),
+                    getBuildscriptResolutionResults().get().keySet());
 
-        LOGGER.info("Writing result to {}", getOutputFile().getAsFile());
-        // Merge the json blocks into a json list, and write the result to the
-        // output file
-        Files.writeString(
-                getOutputFile().getAsFile().get().toPath(),
-                resolver.getJsonOutput()
-        );
-
-        dependencyProcessingExecutorService.shutdown();
-    }
-
-    private List<Configuration> getProjectConfigurationsToProcess() {
-        var projectConfigurations = new ArrayList<>(getProject().getConfigurations());
-
-        if(getIncludeConfigurations().isPresent()) {
-            var configurationsToInclude = getIncludeConfigurations().get();
-            projectConfigurations.removeIf( configuration -> !configurationsToInclude.contains(configuration.getName()));
+            LOGGER.info("Resolving project dependencies using repositories: {}", repositories);
+            generateSourcesList(ctx,
+                    repositories,
+                    getResolutionResults().get(),
+                    getResolvedArtifacts().get(),
+                    getResolutionResults().get().keySet());
+        } finally {
+            executor.shutdownNow();
         }
 
-        if(getExcludeConfigurations().isPresent()) {
-            var configurationsToExclude = getExcludeConfigurations().get();
-            projectConfigurations.removeIf( configuration -> configurationsToExclude.contains(configuration.getName()));
-        }
-
-        return projectConfigurations;
+        File outputFile = getOutputFile().get().getAsFile();
+        LOGGER.info("Writing result to {}", outputFile);
+        Files.createDirectories(outputFile.toPath().toAbsolutePath().getParent());
+        Files.writeString(outputFile.toPath(), resolver.getJsonOutput());
     }
 
-    private void generateSourcesListForConfigurations(
-            List<String> repositories,
-            Collection<Configuration> configurations
-    ) throws ExecutionException, InterruptedException {
-        var resolvedConfigurations = configurations.stream()
-                .filter(Configuration::isCanBeResolved)
-                .toList();
-
-        LOGGER.info(
-                "Following configurations will be processed: {}",
-                resolvedConfigurations.stream().map(Named::getName).toList()
-        );
-
-        for (Configuration configuration : resolvedConfigurations) {
-            generateSourcesList(repositories, configuration);
-        }
-    }
-
-    /**
-     * Get all Maven repositories that were declared in the build file.
-     *
-     * @param  project the project for which to list the repositories
-     * @return the repositories that are declared in the project
-     */
-    private List<String> listRepositories(Project project) {
-        return new ArrayList<>(project.getRepositories().stream()
-                .filter(MavenArtifactRepository.class::isInstance)
-                .map(MavenArtifactRepository.class::cast)
-                .map(MavenArtifactRepository::getUrl)
-                .map(URI::toString)
-                .map(repo -> repo.endsWith("/") ? repo : repo + "/")
-                .toList());
-    }
-
-    /**
-     * Get all Maven repositories that were declared in the settings file
-     * (pluginManagement block), and the Gradle Plugin Portal.
-     *
-     * @param  project the project for which to list the plugin repositories
-     * @return the urls of the plugin repositories that are declared in the
-     *         settings file (pluginManagement block), and the Gradle Plugin
-     *         Portal.
-     */
-    private List<String> listPluginRepositories(Project project) {
-        var settings = ((GradleInternal) project.getGradle()).getSettings();
-        var repositories = settings.getPluginManagement().getRepositories();
-        var urls = new ArrayList<>(repositories.stream()
-                .filter(MavenArtifactRepository.class::isInstance)
-                .map(MavenArtifactRepository.class::cast)
-                .map(MavenArtifactRepository::getUrl)
-                .map(URI::toString)
-                .map(repo -> repo.endsWith("/") ? repo : repo + "/")
-                .toList());
-
-        // The Gradle plugin repository is always included
-        urls.add(GRADLE_PLUGIN_PORTAL);
-
-        return urls;
-    }
-
-    private List<String> filterRepositories(List<String> repositories) {
-        // skip duplicates & local repositories
-        return repositories
-                .stream()
-                .distinct()
-                .filter(repository -> !repository.startsWith("file:/"))
-                .toList();
-    }
-
-    /**
-     * Generate json blocks for all dependencies in the provided configuration.
-     *
-     * @param repositories  the list of declared repositories
-     * @param configuration a configuration that may hold dependencies
-     *
-     */
-    private void generateSourcesList(List<String> repositories,
-                                     Configuration configuration)
+    // Generate sources for a set of configurations
+    private void generateSourcesList(Context ctx, List<String> repositories, Map<String, ResolutionResult> graphs,
+                                     Map<String, List<ResolvedArtifactResult>> artifacts, Set<String> configurations)
             throws ExecutionException, InterruptedException {
 
-        var dependencies = listDependencies(configuration);
+        List<String> names = Utils.sorted(configurations);
+        LOGGER.info("Following configurations will be processed: {}", names);
 
-        LOGGER.info(
-                "Starting processing of configuration {} with {} dependencies",
-                configuration.getName(),
-                dependencies.size()
-        );
-
-        LOGGER.info(
-                "Resolving artifacts for configuration: {}",
-                configuration.getName()
-        );
-
-        var resolvedArtifactsForConfiguration  = configuration
-                .getResolvedConfiguration()
-                .getResolvedArtifacts();
-
-        LOGGER.info(
-                "Finished resolving artifacts for configuration: {}, total {} artifacts",
-                configuration.getName(),
-                resolvedArtifactsForConfiguration.size()
-        );
-
-        var tasks = dependencyProcessingExecutorService.invokeAll(
-                dependencies.stream()
-                        .map(dependency ->(Callable<Void>)( () -> {
-                            try{
-                                processDependency(repositories, configuration, resolvedArtifactsForConfiguration, dependency);
-                                return null;
-                            } catch (IOException | InterruptedException e) {
-                                throw new RuntimeException("Error while processing dependency", e);
-                            }
-                        }))
-                        .toList()
-        );
-
-        // wait for all tasks
-        for(var task: tasks) {
-            task.get();
+        for (String configuration : names) {
+            ResolutionResult graph = graphs.get(configuration);
+            if (graph != null)
+                generateSourcesList(ctx, repositories, configuration, graph,
+                        artifacts.getOrDefault(configuration, emptyList()));
         }
-
-        LOGGER.info(
-                "Configuration {} processed",
-                configuration.getName()
-        );
     }
 
-    private void processDependency(List<String> repositories,
-                                   Configuration configuration,
-                                   Set<ResolvedArtifact> resolvedArtifactsForConfiguration,
-                                   ResolvedDependencyResult dependency) throws InterruptedException, IOException, NoSuchAlgorithmException {
+    // Generate sources for a specific configuration
+    private void generateSourcesList(Context ctx, List<String> repositories, String configuration,
+                                     ResolutionResult graph, List<ResolvedArtifactResult> artifacts)
+            throws ExecutionException, InterruptedException {
+
+        Map<String, File> cachedArtifacts = indexArtifacts(artifacts);
+
+        List<Callable<Void>> jobs = graph.getAllDependencies().stream()
+                .filter(ResolvedDependencyResult.class::isInstance)
+                .map(ResolvedDependencyResult.class::cast)
+                .map(dependency -> (Callable<Void>) () -> {
+                    try {
+                        processDependency(ctx, repositories, cachedArtifacts, configuration, dependency);
+                        return null;
+                    } catch (IOException | InterruptedException e) {
+                        throw new RuntimeException("Error while processing dependency", e);
+                    }
+                })
+                .toList();
+
+        LOGGER.info("Starting processing of configuration {} with {} dependencies",
+                configuration, jobs.size());
+
+        for (Future<Void> job : ctx.executor().invokeAll(jobs)) {
+            job.get();
+        }
+
+        LOGGER.info("Configuration {} processed", configuration);
+    }
+
+    private void processDependency(Context ctx, List<String> repositories, Map<String, File> cachedArtifacts,
+                                   String configurationName, ResolvedDependencyResult dependency)
+            throws InterruptedException, IOException, NoSuchAlgorithmException {
 
         String id = dependency.getSelected().getId().getDisplayName();
         String variant = dependency.getResolvedVariant().getDisplayName();
@@ -333,74 +242,75 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
             return;
 
         var dep = DependencyDetails.of(id);
-        processDependencyDetails(repositories, resolvedArtifactsForConfiguration, dependency.getSelected().getModuleVersion(), dep, variant);
-        LOGGER.info("Dependency {} in {} processed", id, configuration.getName());
+        var version = requireNonNull(dependency.getSelected().getModuleVersion());
+        processDependencyDetails(ctx, repositories, cachedArtifacts,
+                gav(version.getModule().getGroup(), version.getModule().getName(), version.getVersion()),
+                dep, variant);
+        LOGGER.info("Dependency {} in {} processed", id, configurationName);
 
         // For Gradle-bundled libraries (like Kotlin), emit both the requested
         // version and Gradle's embedded version (via the version constraint)
         if (dependency.getRequested() instanceof ModuleComponentSelector selector) {
-            VersionConstraint constraint = selector.getVersionConstraint();
-            String required = constraint.getRequiredVersion();
+            String required = selector.getVersionConstraint().getRequiredVersion();
             if (!required.isEmpty() && !required.equals(dep.version())) {
-                var requiredDep = DependencyDetails.of(selector.getGroup() + ":" + selector.getModule() + ":" + required);
-                var requiredVersion = DefaultModuleVersionIdentifier.newId(selector.getGroup(), selector.getModule(), required);
-                processDependencyDetails(repositories, resolvedArtifactsForConfiguration, requiredVersion, requiredDep, variant);
-                LOGGER.info("Dependency version constraint {} in {} processed", requiredVersion, configuration.getName());
+                var requiredDep = DependencyDetails.of(
+                        selector.getGroup() + ":" + selector.getModule() + ":" + required);
+                processDependencyDetails(ctx, repositories, cachedArtifacts,
+                        gav(selector.getGroup(), selector.getModule(), required), requiredDep, variant);
+                LOGGER.info("Dependency version constraint {} in {} processed", required, configurationName);
             }
         }
     }
 
-    private void processDependencyDetails(List<String> repositories,
-                                          Set<ResolvedArtifact> artifacts,
-                                          ModuleVersionIdentifier version,
-                                          DependencyDetails dep,
-                                          String variant) throws InterruptedException, IOException, NoSuchAlgorithmException {
-        for (var repository : repositories) {
+    private void processDependencyDetails(Context ctx, List<String> repositories, Map<String, File> cachedArtifacts,
+                                          String versionKey, DependencyDetails dep, String variant)
+            throws InterruptedException, IOException, NoSuchAlgorithmException {
+
+        for (String repository : repositories) {
             // Check for a Gradle module artifact
-            var module = resolver.tryResolve(dep, repository, dep.filename("module"), onlyArches);
+            var module = ctx.resolver().tryResolve(dep, repository, dep.filename("module"));
 
             // Add file artifacts from information in the Gradle module
             if (module.isPresent()) {
                 try {
                     List<ModuleMetadata.FileDTO> files = null;
                     try {
-                        files = moduleMetadata.process(new String(module.get()), variant);
+                        files = ctx.moduleMetadata().process(new String(module.get()), variant);
                     } catch (ModuleMetadata.RedirectedException redirected) {
                         // Download .module artifact from alternate URL
-                        module = resolver.tryResolve(dep, repository, redirected.url(), onlyArches);
+                        module = ctx.resolver().tryResolve(dep, repository, redirected.url());
                         if (module.isPresent())
-                            files = moduleMetadata.process(new String(module.get()), variant);
+                            files = ctx.moduleMetadata().process(new String(module.get()), variant);
                     }
 
                     if (files != null) {
                         for (var file : files) {
-                            resolver.tryResolveCached(artifacts, version, dep, repository, file.url, true, file.name, onlyArches);
+                            ctx.resolver().tryResolveCached(
+                                    cachedArtifacts, versionKey, dep, repository, file.url, true, file.name);
                         }
                     }
                 } catch (NoSuchElementException noJar) {
-                    // No files declared for this variant in the Gradle module
-                    // Get jar artifact from local Gradle cache
-                    resolver.tryResolveCached(artifacts, version, dep, repository, dep.filename("jar"), false, null, onlyArches);
+                    // No files declared for this variant: fall back to the local
+                    // Gradle cache
+                    ctx.resolver().tryResolveCached(
+                            cachedArtifacts, versionKey, dep, repository, dep.filename("jar"), false, null);
                 }
-            }
-
-            // Get jar artifact from local Gradle cache
-            else {
-                resolver.tryResolveCached(artifacts, version, dep, repository, dep.filename("jar"), false, null, onlyArches);
+            } else {
+                ctx.resolver().tryResolveCached(
+                        cachedArtifacts, versionKey, dep, repository, dep.filename("jar"), false, null);
             }
 
             // Download POM artifact
-            var pom = resolver.tryResolve(dep, repository, dep.filename("pom"), onlyArches);
+            var pom = ctx.resolver().tryResolve(dep, repository, dep.filename("pom"));
 
             // Add parent POMs
             pom.ifPresent(bytes ->
-                PomHandler.getInstance(resolver).addParentPOMs(bytes, repository, onlyArches));
+                PomHandler.getInstance(ctx.resolver()).addParentPOMs(bytes, repository));
 
             // Add marker artifact
             // Only for plugin jar files downloaded from the Gradle Plugin Portal
-            if (repository.equals(GRADLE_PLUGIN_PORTAL)
-                    && dep.group().startsWith("gradle.plugin."))
-                addPluginMarker(dep);
+            if (repository.equals(GRADLE_PLUGIN_PORTAL) && dep.group().startsWith("gradle.plugin."))
+                addPluginMarker(ctx, dep);
 
             // Success! No need to resolve this dependency against other repositories
             if (module.isPresent() || pom.isPresent())
@@ -409,50 +319,46 @@ public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
     }
 
     /**
-     * Get the downloadDirectory property, fill in the default if necessary,
-     * and append a slash if necessary.
+     * For Gradle plugins, we add the plugin marker artifact to the JSON file.
      *
-     * @return the download directory, ending with a slash
+     * @param ctx the context
+     * @param dep details about the dependency
      */
-    private String getDest() {
-        String dest = getDownloadDirectory().getOrElse(DEFAULT_DOWNLOAD_DIRECTORY);
-        return dest.endsWith("/") ? dest : (dest + "/");
+    private void addPluginMarker(Context ctx, DependencyDetails dep)
+            throws IOException, NoSuchAlgorithmException, InterruptedException {
+
+        String group = dep.group().substring("gradle.plugin.".length());
+        var marker = new DependencyDetails(
+                group, group + ".gradle.plugin", dep.version(), dep.snapshotDetail(), dep.isSnapshot());
+        ctx.resolver().tryResolve(marker, GRADLE_PLUGIN_PORTAL, dep.filename("pom"));
     }
 
     /**
-     * Find all resolved dependencies (both direct and transitive).
-     *
-     * @param  configuration the configuration to list the dependencies for
-     * @return all resolved dependencies (both direct and transitive)
+     * Index the locally cached artifacts by {@code group:module:version} so the
+     * resolver can look them up without holding {@code ResolvedArtifact}
+     * instances (which are not configuration-cache compatible).
      */
-    private List<ResolvedDependencyResult> listDependencies(Configuration configuration) {
-        return configuration
-                .getIncoming()
-                .getResolutionResult()
-                .getAllDependencies()
-                .stream()
-                .filter(ResolvedDependencyResult.class::isInstance)
-                .map(ResolvedDependencyResult.class::cast)
+    private Map<String, File> indexArtifacts(Collection<ResolvedArtifactResult> artifacts) {
+        Map<String, File> files = new HashMap<>();
+        for (ResolvedArtifactResult artifact : artifacts) {
+            if (artifact.getId().getComponentIdentifier() instanceof ModuleComponentIdentifier module) {
+                files.putIfAbsent(
+                        gav(module.getGroup(), module.getModule(), module.getVersion()),
+                        artifact.getFile());
+            }
+        }
+        return files;
+    }
+
+    // Skip duplicate & local repositories
+    private List<String> filterRepositories(Collection<String> repositories) {
+        return repositories.stream()
+                .distinct()
+                .filter(repository -> !repository.startsWith("file:/"))
                 .toList();
     }
 
-    /**
-     * For Gradle plugins, we add the plugin marker artifact to the JSON file.
-     *
-     * @param dep details about the dependency
-     */
-    private void addPluginMarker(DependencyDetails dep) throws IOException, NoSuchAlgorithmException, InterruptedException {
-
-        // This is the marker artifact we are looking for
-        var marker = new DependencyDetails(
-                dep.group().substring("gradle.plugin.".length()),
-                dep.group().substring("gradle.plugin.".length()) + ".gradle.plugin",
-                dep.version(),
-                dep.snapshotDetail(),
-                dep.isSnapshot()
-        );
-
-        // Download the artifact
-        resolver.tryResolve(marker, GRADLE_PLUGIN_PORTAL, dep.filename("pom"), onlyArches);
+    private static String gav(String group, String module, String version) {
+        return group + ":" + module + ":" + version;
     }
 }
