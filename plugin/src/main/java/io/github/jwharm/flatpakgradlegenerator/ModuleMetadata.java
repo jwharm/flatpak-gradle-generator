@@ -31,27 +31,17 @@ import static java.util.function.Predicate.not;
  * Helper class to parse Gradle module files.
  */
 final class ModuleMetadata {
-
-    // Use getInstance()
-    private ModuleMetadata() {
-    }
-
-    static ModuleMetadata getInstance() {
-        return new ModuleMetadata();
-    }
-
     /**
-     * Parse the module json file and return the artifact filenames for the
+     * Parse the module JSON file and return the artifact filenames for the
      * requested variant.
      *
      * @param  contents the contents of the module file
      * @param  variant  the requested variant
      * @return the filenames
      *
-     * @throws RedirectedException when the module redirects to another module file
+     * @throws RedirectedException when the module redirects to another module
      */
-    public List<FileDTO> process(String contents, String variant)
-            throws RedirectedException {
+    public List<FileDTO> process(String contents, String variant) throws RedirectedException {
 
         var gson = new Gson();
         var module = gson.fromJson(contents, ModuleDTO.class);
@@ -66,8 +56,8 @@ final class ModuleMetadata {
         if (redirectUrl.isPresent())
             throw new RedirectedException(redirectUrl.get());
 
-        // The module file contains sha-512 strings, but they are not always correct.
-        // We return only the filenames and urls.
+        // The module file contains sha-512 strings, but they are not always
+        // correct. We return only the filenames and urls.
 
         return module.variants.stream()
                 .filter(v -> v.attributes.category == null || v.attributes.category.equals("library"))
@@ -80,7 +70,8 @@ final class ModuleMetadata {
     }
 
     /**
-     * Thrown when a module redirects to another module with an "available-at" field
+     * Thrown when a module redirects to another module with an "available-at"
+     * field.
      */
     static class RedirectedException extends RuntimeException {
         private final String url;
@@ -88,7 +79,7 @@ final class ModuleMetadata {
         String url()                    { return url; }
     }
 
-    // The DTO classes for json deserialization:
+    // The DTO classes for JSON deserialization:
 
     static class ModuleDTO {
         List<VariantDTO> variants;

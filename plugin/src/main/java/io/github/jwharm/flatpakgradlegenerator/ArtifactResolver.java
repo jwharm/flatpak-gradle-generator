@@ -19,9 +19,6 @@
 
 package io.github.jwharm.flatpakgradlegenerator;
 
-import org.gradle.api.artifacts.ModuleVersionIdentifier;
-import org.gradle.api.artifacts.ResolvedArtifact;
-
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 
@@ -36,39 +33,44 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 /**
  * Helper class for resolving artifacts
  */
 final class ArtifactResolver {
-
     private static final Logger LOGGER = Logging.getLogger(ArtifactResolver.class);
-    private static final int MAX_RETRIES = 3;
+
+    private static final int  MAX_RETRIES = 3;
     private static final long RETRY_DELAY_MS = 500;
-    private static final int CONNECT_TIMEOUT_MS = 30_000;
-    private static final int READ_TIMEOUT_MS = 60_000;
+    private static final int  CONNECT_TIMEOUT_MS = 30_000;
+    private static final int  READ_TIMEOUT_MS = 60_000;
 
     private final String dest;
+    private final String onlyArches;
     private final ConcurrentHashMap<String, Boolean> checkedUrls;
     private final ConcurrentHashMap<String, byte[]> downloadedFiles;
     private final ConcurrentHashMap<String, String> output;
     private final Semaphore checksumComputationSemaphore;
 
-    private ArtifactResolver(String dest) {
+    /**
+     * Create a new ArtifactResolver.
+     *
+     * @param dest         the download directory
+     * @param onlyArches   the supported architectures (optional)
+     */
+    ArtifactResolver(String dest, String onlyArches) {
         this.dest = dest;
+        this.onlyArches = onlyArches;
         this.checkedUrls = new ConcurrentHashMap<>();
         this.downloadedFiles = new ConcurrentHashMap<>();
         this.output = new ConcurrentHashMap<>();
         this.checksumComputationSemaphore = new Semaphore(Runtime.getRuntime().availableProcessors(), false);
-    }
-
-    static ArtifactResolver getInstance(String dest) {
-        return new ArtifactResolver(dest);
     }
 
     /**
@@ -81,14 +83,9 @@ final class ArtifactResolver {
      *
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
-     *
-     * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
      */
-    Optional<byte[]> tryResolve(DependencyDetails dep,
-                                String repository,
-                                String filename,
-                                String onlyArches) throws IOException, InterruptedException, NoSuchAlgorithmException {
-
+    Optional<byte[]> tryResolve(DependencyDetails dep, String repository, String filename)
+            throws IOException, InterruptedException, NoSuchAlgorithmException {
         // Build the url and try to download the file
         String url = repository + dep.path() + "/" + filename;
         var contents = getFileContentsFrom(url);
@@ -105,14 +102,14 @@ final class ArtifactResolver {
                 destFilename = filename.substring(filename.lastIndexOf('/') + 1);
             }
 
-            // Generate and append the json
-            generateJsonBlock(url, sha512, dest, destFilename, onlyArches);
+            // Generate and append the JSON
+            generateJsonBlock(url, sha512, dest, destFilename);
 
-            // For snapshot versions, generate a second json with "-SNAPSHOT" instead of the actual filename
+            // For snapshot versions, generate a second JSON with "-SNAPSHOT" instead of the actual filename
             if (dep.isSnapshot()) {
                 String ext = destFilename.substring(destFilename.lastIndexOf(".") + 1);
                 destFilename = "%s-%s.%s".formatted(dep.name(), dep.version(), ext);
-                generateJsonBlock(url, sha512, dest, destFilename, onlyArches);
+                generateJsonBlock(url, sha512, dest, destFilename);
             }
         }
         // Return the file contents
@@ -124,82 +121,50 @@ final class ArtifactResolver {
      * find the artifact in the local Gradle file, and use that file to calculate the SHA-512 hash
      * and add it to the JSON output.
      *
-     * @param  artifacts     resolved artifacts for the gradle configuration containing the dependency
-     * @param  id            the id of the dependency
-     * @param  dep           a DependencyDetail instance with the Maven coordinates of the artifact
-     * @param  repository    the repository to try to download from
-     * @param  fileUrl       the remote filename of the artifact
-     * @param  checkName     whether to verify if the cached file name matches fileUrl or fileName
-     * @param  fileName      the local filename of the artifact (as specified in module file)
-     *
-     * @throws IOException              error while reading the jar file
-     * @throws NoSuchAlgorithmException no provider for the SHA-512 algorithm
+     * @param artifacts     resolved artifacts for the Gradle configuration containing the dependency
+     * @param versionKey    the id of the dependency
+     * @param dep           a DependencyDetail instance with the Maven coordinates of the artifact
+     * @param repository    the repository to try to download from
+     * @param fileUrl       the remote filename of the artifact
+     * @param checkName     whether to verify if the cached file name matches fileUrl or fileName
+     * @param fileName      the local filename of the artifact (as specified in module file)
      */
-    void tryResolveCached(Set<ResolvedArtifact> artifacts,
-                          ModuleVersionIdentifier id,
-                          DependencyDetails dep,
-                          String repository,
-                          String fileUrl,
-                          boolean checkName,
-                          String fileName,
-                          String onlyArches)
+    void tryResolveCached(Map<String, File> artifacts, String versionKey, DependencyDetails dep,
+                          String repository, String fileUrl, boolean checkName, String fileName)
             throws IOException, NoSuchAlgorithmException, InterruptedException {
 
-        for (var artifact : artifacts) {
-            if (artifact.getModuleVersion().getId().equals(id)) {
-                File file = artifact.getFile();
+        File file = artifacts.get(versionKey);
+        if (file != null) {
+            // Check against filenames in the .module file
+            if (checkName)
+                if (!(file.getName().equals(fileUrl) || file.getName().equals(fileName)))
+                    return;
 
-                // Check against filenames in the .module file
-                if (checkName)
-                    if (!(file.getName().equals(fileUrl) ||
-                            file.getName().equals(fileName)))
-                        continue;
+            // Skip files that are already included in the output
+            if (output.containsKey(dep.path() + "/" + (checkName ? fileUrl : file.getName())))
+                return;
 
-                // Skip files that are already included in the output
-                if (output.containsKey(dep.path() + "/" + (checkName ? fileUrl : file.getName())))
-                    continue;
+            // Build the url and check if it exists
+            String url = repository + dep.path() + "/" + file.getName();
+            var isValid = isValid(url);
 
-                // Build the url and check if it exists
-                String url = repository
-                        + dep.path()
-                        + "/"
-                        + file.getName();
-                var isValid = isValid(url);
+            // Try the filename from the .module
+            if (!isValid) {
+                url = repository + dep.path() + "/" + fileUrl;
+                isValid = isValid(url);
+            }
 
-                // Try the filename from the .module
-                if (!isValid) {
-                    url = repository
-                            + dep.path()
-                            + "/"
-                            + fileUrl;
-                    isValid = isValid(url);
-                }
+            if ((!isValid) && fileUrl.contains("SNAPSHOT")) {
+                // Try again, but this time, replace SNAPSHOT with snapshot details
+                url = repository + dep.path() + "/" + fileUrl.replace("SNAPSHOT", dep.snapshotDetail());
+                isValid = isValid(url);
+            }
 
-                if ((!isValid) && fileUrl.contains("SNAPSHOT")) {
-                    // Try again, but this time, replace SNAPSHOT with snapshot details
-                    url = repository
-                            + dep.path()
-                            + "/"
-                            + fileUrl.replace("SNAPSHOT", dep.snapshotDetail());
-                    isValid = isValid(url);
-                }
-
-                if (isValid) {
-                    String sha512;
-
-                    // Read the file from the local Gradle cache and calculate the SHA-512 hash
-                    try (var fileInputStream = Files.newInputStream(file.toPath())) {
-                        sha512 = calculateSHA512(fileInputStream);
-                    }
-
-                    // Generate and append the json
-                    generateJsonBlock(
-                            url,
-                            sha512,
-                            dep.path(),
-                            checkName ? fileUrl : file.getName(),
-                            onlyArches
-                    );
+            if (isValid) {
+                // Read the file from the local Gradle cache and calculate the SHA-512 hash
+                try (var fileInputStream = Files.newInputStream(file.toPath())) {
+                    String sha512 = calculateSHA512(fileInputStream);
+                    generateJsonBlock(url, sha512, dep.path(), checkName ? fileUrl : file.getName());
                 }
             }
         }
@@ -213,43 +178,26 @@ final class ArtifactResolver {
     // Test if the URL is valid (HTTP 200 OK response)
     private boolean testIsValid(String url) {
         try {
-            var fileUrl = new URI(url).toURL();
-            var httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
-
-            // Set connection timeouts
+            var httpURLConnection = (HttpURLConnection) new URI(url).toURL().openConnection();
             httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT_MS);
             httpURLConnection.setReadTimeout(READ_TIMEOUT_MS);
-
-            // Set the request to follow redirects (303 for example)
             httpURLConnection.setInstanceFollowRedirects(true);
-
-            // Set the request method to HEAD (only retrieve headers, not the entire file)
             httpURLConnection.setRequestMethod("HEAD");
-
-            // Get the response code
-            int responseCode = httpURLConnection.getResponseCode();
-
-            // Check if the response code indicates that the file exists (usually 200 OK)
-            return responseCode == HttpURLConnection.HTTP_OK;
+            return httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK;
         } catch (Exception e) {
-            return false; // File existence couldn't be determined
+            return false; // URL couldn't be validated
         }
     }
 
     /**
-     * Create a json string.
+     * Create a JSON string.
      *
      * @param url          the url
      * @param sha512       the hash
      * @param path         the path in the target directory
      * @param destFilename the filename
-     * @param onlyArches   the supported architectures (optional)
      */
-    void generateJsonBlock(String url,
-                           String sha512,
-                           String path,
-                           String destFilename,
-                           String onlyArches) {
+    void generateJsonBlock(String url, String sha512, String path, String destFilename) {
         if (onlyArches == null || onlyArches.isBlank()) {
             output.put(path + "/" + destFilename, """
                   {
@@ -277,13 +225,15 @@ final class ArtifactResolver {
     }
 
     /**
-     * Merge the json strings into one json list
+     * Merge the JSON strings into one JSON list.
      *
-     * @return the generated json list
+     * @return the generated JSON list
      */
     String getJsonOutput() {
-        return output.keySet().stream().sorted().map(output::get).collect(
-                Collectors.joining(",\n", "[\n", "\n]\n"));
+        return output.keySet().stream()
+                .sorted()
+                .map(output::get)
+                .collect(joining(",\n", "[\n", "\n]\n"));
     }
 
     /**
@@ -291,7 +241,7 @@ final class ArtifactResolver {
      * the results. Only successful downloads are cached; failures are retried
      * on subsequent calls.
      *
-     * @param url the url of the file to download
+     * @param  url the url of the file to download
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
      */
@@ -307,9 +257,7 @@ final class ArtifactResolver {
 
         // Only cache successful downloads — failures are not stored so they
         // can be retried by another thread processing the same dependency
-        if (contents.isPresent()) {
-            downloadedFiles.putIfAbsent(url, contents.get());
-        }
+        contents.ifPresent(bytes -> downloadedFiles.putIfAbsent(url, bytes));
         return contents;
     }
 
@@ -317,7 +265,7 @@ final class ArtifactResolver {
      * Download the contents from the provided url into a byte array, retrying
      * on transient failures.
      *
-     * @param url the url of the file to download
+     * @param  url the url of the file to download
      * @return an {@link Optional} with the contents of the file,
      *         or {@link Optional#empty()} when the URL does not resolve
      */
@@ -326,15 +274,15 @@ final class ArtifactResolver {
         int attempt;
         for (attempt = 1; attempt <= MAX_RETRIES; attempt++) {
             var result = getFileContents(url);
-            if (result.isPresent()) {
+            if (result.isPresent())
                 return result.contents();
-            }
-            lastException = result.exception();
+
+            if (!result.isNotFound())
+                lastException = result.exception();
 
             // Only retry on transient errors (429 or 5xx) or network exceptions
-            if (!result.isRetryable()) {
+            if (!result.isRetryable())
                 break;
-            }
 
             if (attempt < MAX_RETRIES) {
                 try {
@@ -357,17 +305,19 @@ final class ArtifactResolver {
         return Optional.empty();
     }
 
-    /**
-     * Result of a download attempt that preserves the exception on failure.
-     */
-    private record DownloadResult(Optional<byte[]> contents, Exception exception,
-                                  int httpStatus, long retryAfterMs) {
+    // Result of a download attempt that preserves the exception on failure.
+    private record DownloadResult(Optional<byte[]> contents, Exception exception, int httpStatus, long retryAfterMs) {
         DownloadResult(Optional<byte[]> contents, Exception exception) {
             this(contents, exception, -1, 0);
         }
 
-        boolean isPresent() { return contents.isPresent(); }
-        byte[] get() { return contents.get(); }
+        boolean isPresent() {
+            return contents.isPresent();
+        }
+
+        boolean isNotFound() {
+            return httpStatus == 404;
+        }
 
         boolean isRetryable() {
             // Network exceptions are retryable
@@ -380,7 +330,7 @@ final class ArtifactResolver {
     /**
      * Download the contents from the provided url into a byte array.
      *
-     * @param url the url of the file to download
+     * @param  url the url of the file to download
      * @return a {@link DownloadResult} with the contents or the exception
      */
     private DownloadResult getFileContents(String url) {
@@ -430,7 +380,8 @@ final class ArtifactResolver {
      * @throws InterruptedException interrupted during execution
      * @throws IOException error when reading input
      */
-    private String calculateSHA512(InputStream contentsInputStream) throws NoSuchAlgorithmException, InterruptedException, IOException {
+    private String calculateSHA512(InputStream contentsInputStream)
+            throws NoSuchAlgorithmException, InterruptedException, IOException {
         byte[] buffer = new byte[4096];
 
         checksumComputationSemaphore.acquire();
@@ -457,7 +408,7 @@ final class ArtifactResolver {
 
             // Return the SHA-512 hash as a string
             return sb.toString();
-        }finally {
+        } finally {
             checksumComputationSemaphore.release();
         }
     }

@@ -31,9 +31,9 @@ import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test the plugin with a temporary created Gradle build that
- * depends on junit-jupiter. It should generate a sources list
- * that contains all dependencies.
+ * Test the plugin with temporary created Gradle builds with varying
+ * dependencies. For every build a JSON is generated, and then compared to the
+ * expected JSON file.
  */
 class TestDependencyOutput {
 
@@ -41,7 +41,7 @@ class TestDependencyOutput {
     File projectDir;
 
     /**
-     * Test a dependency with transient dependencies
+     * Test a dependency with transient dependencies.
      */
     @Test
     void testJUnitJupiterDependencies() throws IOException {
@@ -49,7 +49,7 @@ class TestDependencyOutput {
     }
 
     /**
-     * Test a Gradle plugin dependency
+     * Test a Gradle plugin dependency.
      */
     @Test
     void testGradleLeanDependencies() throws IOException {
@@ -57,7 +57,7 @@ class TestDependencyOutput {
     }
 
     /**
-     * Test a dependency with parent POMs
+     * Test a dependency with parent POMs.
      */
     @Test
     void testCommonsIODependencies() throws IOException {
@@ -65,7 +65,7 @@ class TestDependencyOutput {
     }
 
     /**
-     * Test {@link FlatpakGradleGeneratorTask#getIncludeConfigurations()}
+     * Test "includeConfigurations" option.
      */
     @Test
     void testCommonsIODependenciesWithIncludeOption() throws IOException {
@@ -73,48 +73,75 @@ class TestDependencyOutput {
     }
 
     /**
-     * Test {@link FlatpakGradleGeneratorTask#getExcludeConfigurations()}
+     * Test "excludeConfigurations" option.
      */
     @Test
     void testCommonsIODependenciesWithExcludeOption() throws IOException {
         testDependencyOutput("commons-io-with-exclude-option");
     }
 
+    /**
+     * Test a build with BOM dependencies.
+     */
     @Test
     void testCommonsCodecDependencies() throws IOException {
         testDependencyOutput("commons-codec");
     }
 
+    /**
+     * Test a build with a commonly used dependency.
+     */
     @Test
     void testDokka() throws IOException {
         testDependencyOutput("dokka");
     }
 
+    /**
+     * Test a build with a commonly used dependency.
+     */
     @Test
     void testKotlinGradlePluginApi() throws IOException {
         testDependencyOutput("kotlin-gradle-plugin-api");
     }
 
+    /**
+     * Test a build with a dependency that is declared multiple times with
+     * different classifiers.
+     */
     @Test
     void testLeptonica() throws IOException {
         testDependencyOutput("leptonica");
     }
 
+    /**
+     * Test a build with a commonly used dependency.
+     */
     @Test
     void testLog4j() throws IOException {
         testDependencyOutput("log4j");
     }
 
+    /**
+     * Test a build where a module refers to a filename that is not in the
+     * local Gradle cache.
+     */
     @Test
     void testFilekitCore() throws IOException {
         testDependencyOutput("filekit-core");
     }
 
+    /**
+     * Test "onlyArches" option.
+     */
     @Test @EnabledOnOs(OS.LINUX)
     void testJavafx() throws IOException {
         testDependencyOutput("javafx");
     }
 
+    /**
+     * Test a build with a dependency POM that uses properties that are set in
+     * a parent POM.
+     */
     @Test
     void testAnthropic() throws IOException {
         testDependencyOutput("anthropic");
@@ -122,7 +149,7 @@ class TestDependencyOutput {
 
     /**
      * Test a build where a plugin depends on a Kotlin library with a version
-     * that Gradle overrides with its included version
+     * that Gradle overrides with its included version.
      */
     @Test
     void testGradleBuildconfigPlugin() throws IOException {
@@ -180,7 +207,7 @@ class TestDependencyOutput {
         GradleRunner.create()
             .forwardOutput()
             .withPluginClasspath()
-            .withArguments("flatpakGradleGenerator", "--info", "--no-configuration-cache")
+            .withArguments("flatpakGradleGenerator", "--info")
             .withProjectDir(tempDir)
             .build();
 
