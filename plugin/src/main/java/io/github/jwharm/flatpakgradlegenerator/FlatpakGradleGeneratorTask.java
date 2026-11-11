@@ -31,11 +31,8 @@ import org.gradle.api.logging.Logging;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.SetProperty;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.*;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.TaskAction;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +48,7 @@ import java.util.concurrent.Future;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 
+@CacheableTask
 public abstract class FlatpakGradleGeneratorTask extends DefaultTask {
 
     private static final String GRADLE_PLUGIN_PORTAL = "https://plugins.gradle.org/m2/";
